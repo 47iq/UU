@@ -9,7 +9,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ItemDTO {
+public class PointDTO {
 
     private Long userId;
     private double coordinateX;
@@ -21,14 +21,14 @@ public class ItemDTO {
     private Long pointId;
 
     public static Builder newBuilder() {
-        return new ItemDTO().new Builder();
+        return new PointDTO().new Builder();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ItemDTO that = (ItemDTO) o;
+        PointDTO that = (PointDTO) o;
         return Double.compare(that.pointId, pointId) == 0 && Double.compare(that.coordinateX, coordinateX) == 0 && Double.compare(that.coordinateY, coordinateY) == 0 && Double.compare(that.radius, radius) == 0;
     }
 
@@ -43,44 +43,44 @@ public class ItemDTO {
         }
 
         public Builder setCoordinateX(double coordinateX) {
-            ItemDTO.this.coordinateX = coordinateX;
+            PointDTO.this.coordinateX = coordinateX;
             return this;
         }
 
         public Builder setCoordinateY(double coordinateY) {
-            ItemDTO.this.coordinateY = coordinateY;
+            PointDTO.this.coordinateY = coordinateY;
             return this;
         }
 
         public Builder setRadius(double radius) {
-            ItemDTO.this.radius = radius;
+            PointDTO.this.radius = radius;
             return this;
         }
 
         public Builder setHit(Boolean hit) {
-            ItemDTO.this.hit = hit;
+            PointDTO.this.hit = hit;
             return this;
         }
 
         public Builder setLocalTime(LocalDateTime ldt) {
-            ItemDTO.this.ldt = ldt;
+            PointDTO.this.ldt = ldt;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
             time = ldt.format(formatter);
             return this;
         }
 
         public Builder setUserId(Long userId) {
-            ItemDTO.this.userId = userId;
+            PointDTO.this.userId = userId;
             return this;
         }
 
         public Builder setPointId(Long pointId) {
-            ItemDTO.this.pointId = pointId;
+            PointDTO.this.pointId = pointId;
             return this;
         }
 
-        public ItemDTO build() {
-            return ItemDTO.this;
+        public PointDTO build() {
+            return PointDTO.this;
         }
     }
 }

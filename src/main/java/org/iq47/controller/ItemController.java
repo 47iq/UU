@@ -1,17 +1,16 @@
 package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iq47.exception.ItemSaveException;
-import org.iq47.network.ItemDTO;
-import org.iq47.network.request.ItemPlaceRequest;
+import org.iq47.exception.PointSaveException;
+import org.iq47.network.PointDTO;
+import org.iq47.network.request.PointPlaceRequest;
 import org.iq47.network.response.ResponseWrapper;
 import org.iq47.security.userDetails.CustomUserDetails;
-import org.iq47.service.ItemService;
-import org.iq47.validate.ItemValidator;
+import org.iq47.service.PointService;
+import org.iq47.validate.PointValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.common.exceptions.InvalidRequestException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -19,18 +18,19 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/points")
 @Slf4j
+// почему работаем с point, а называется item?????????????????????????????????????????????????????????????
 public class ItemController {
 
-    private final ItemService itemService;
-    private final ItemValidator itemValidator;
+    private final PointService itemService;
+    private final PointValidator itemValidator;
 
     @Autowired
-    public ItemController(ItemService itemService, ItemValidator itemValidator) {
+    public ItemController(PointService itemService, PointValidator itemValidator) {
         this.itemService = itemService;
         this.itemValidator = itemValidator;
     }
 
-    @PostMapping("/check")
+    /*@PostMapping("/check")
     public ResponseEntity<?> check(@RequestBody ItemPlaceRequest req) {
         try {
             Optional<String> error = itemValidator.getErrorMessage(req);
@@ -43,7 +43,7 @@ public class ItemController {
         } catch (Exception e) {
             return reportError(req, e);
         }
-    }
+    }*/
 
     private ResponseEntity<ResponseWrapper> reportError(Object req, Exception e) {
         if(req != null)
@@ -53,15 +53,15 @@ public class ItemController {
         return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
     }
 
-    private ResponseEntity<?> save(Long userId, ItemPlaceRequest req) throws ItemSaveException {
-        ItemDTO pointDto = ItemDTO.newBuilder()
+    private ResponseEntity<?> save(Long userId, PointPlaceRequest req) throws PointSaveException {
+        PointDTO pointDto = PointDTO.newBuilder()
                 .setUserId(userId)
                 .setCoordinateX(req.getX())
                 .setCoordinateY(req.getY())
                 .setRadius(req.getR()).build();
-        Optional<ItemDTO> pointDtoOptional = itemService.savePoint(pointDto);
+        Optional<PointDTO> pointDtoOptional = itemService.savePoint(pointDto);
         if (!pointDtoOptional.isPresent()) {
-            throw new ItemSaveException("Point has not been saved.");
+            throw new PointSaveException("Point has not been saved.");
         }
         return ResponseEntity.ok().body(pointDtoOptional.get());
     }

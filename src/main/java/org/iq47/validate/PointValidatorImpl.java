@@ -1,15 +1,15 @@
 package org.iq47.validate;
 
-import org.iq47.network.request.ItemPlaceRequest;
+import org.iq47.network.request.PointPlaceRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class ItemValidatorImpl implements ItemValidator {
+public class PointValidatorImpl implements PointValidator {
 
     @Override
-    public Optional<String> getErrorMessage(ItemPlaceRequest point) {
+    public Optional<String> getErrorMessage(PointPlaceRequest point) {
         if(point.getX() == null)
             return Optional.of("X must be set");
         if(point.getX().isNaN() || point.getX().isInfinite())

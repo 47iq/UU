@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Data
 @ToString
-public class ItemPlaceRequest implements Serializable {
+public class PointPlaceRequest implements Serializable {
     Double x;
     Double y;
     Double r;

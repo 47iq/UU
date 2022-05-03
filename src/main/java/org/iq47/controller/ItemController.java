@@ -13,17 +13,14 @@ import org.iq47.service.ItemService;
 import org.iq47.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/uu_i")
+@RequestMapping("api/items")
 @Slf4j
 public class ItemController {
     private final ItemService itemService;
@@ -68,5 +65,18 @@ public class ItemController {
         return ResponseEntity.ok().body(itemDtoOptional.get());
     }
 
+    @GetMapping("/items")
+    private ResponseEntity<?> getItems(@RequestBody String itemName) {
+        return null;
+    }
 
+    @GetMapping("/item/{id}")
+    private ResponseEntity<?> getItem(@PathVariable long id) {
+        return null;
+    }
+
+    @GetMapping("/autocomplete")
+    private ResponseEntity<?> autocompleteItem(@RequestBody String query) {
+        return null;
+    }
 }

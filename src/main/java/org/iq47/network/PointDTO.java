@@ -1,10 +1,12 @@
 package org.iq47.network;
 
 import lombok.*;
+import org.iq47.model.entity.item.Tag;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter

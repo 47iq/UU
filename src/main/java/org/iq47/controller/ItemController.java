@@ -2,48 +2,36 @@ package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.exception.PointSaveException;
+import org.iq47.model.entity.item.Tag;
+import org.iq47.model.entity.item.TagEnum;
+import org.iq47.network.ItemDTO;
 import org.iq47.network.PointDTO;
+import org.iq47.network.request.ItemCreateRequest;
 import org.iq47.network.request.PointPlaceRequest;
 import org.iq47.network.response.ResponseWrapper;
-import org.iq47.security.userDetails.CustomUserDetails;
+import org.iq47.service.ItemService;
 import org.iq47.service.PointService;
-import org.iq47.validate.PointValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/points")
+@RequestMapping("api/uu_i")
 @Slf4j
-// почему работаем с point, а называется item?????????????????????????????????????????????????????????????
 public class ItemController {
-
-    private final PointService itemService;
-    private final PointValidator itemValidator;
+    private final ItemService itemService;
 
     @Autowired
-    public ItemController(PointService itemService, PointValidator itemValidator) {
-        this.itemService = itemService;
-        this.itemValidator = itemValidator;
+    public ItemController(ItemService service) {
+        this.itemService = service;
     }
-
-    /*@PostMapping("/check")
-    public ResponseEntity<?> check(@RequestBody ItemPlaceRequest req) {
-        try {
-            Optional<String> error = itemValidator.getErrorMessage(req);
-            if(error.isPresent())
-                throw new InvalidRequestException(error.get());
-            Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-            return save(userId, req);
-        } catch (ItemSaveException | InvalidRequestException ex) {
-            return ResponseEntity.badRequest().body(new ResponseWrapper(ex.getMessage()));
-        } catch (Exception e) {
-            return reportError(req, e);
-        }
-    }*/
 
     private ResponseEntity<ResponseWrapper> reportError(Object req, Exception e) {
         if(req != null)
@@ -53,41 +41,32 @@ public class ItemController {
         return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
     }
 
-    private ResponseEntity<?> save(Long userId, PointPlaceRequest req) throws PointSaveException {
-        PointDTO pointDto = PointDTO.newBuilder()
-                .setUserId(userId)
-                .setCoordinateX(req.getX())
-                .setCoordinateY(req.getY())
-                .setRadius(req.getR()).build();
-        Optional<PointDTO> pointDtoOptional = itemService.savePoint(pointDto);
-        if (!pointDtoOptional.isPresent()) {
-            throw new PointSaveException("Point has not been saved.");
+    @PostMapping("/create")
+    private ResponseEntity<?> save(Long userId, @RequestBody ItemCreateRequest req) throws PointSaveException {
+        if (req.getName() == null || req.getDescription() == null || req.getTags() == null) {
+            throw new PointSaveException("Item has not been saved.");
         }
-        return ResponseEntity.ok().body(pointDtoOptional.get());
+        ItemDTO itemDTO = ItemDTO.newBuilder()
+                .setName(req.getName())
+                .setDescription(req.getDescription())
+                .setPrice(req.getPrice())
+                .setCoordinatesX(req.getCoordinatesX())
+                .setCoordinatesY(req.getCoordinatesY())
+                .build();
+        HashSet<TagEnum> tags = new HashSet<>();
+
+        for (String tag : req.getTags()) {
+            if (Arrays.stream(TagEnum.values()).anyMatch((t) -> t.name().equals(tag))) {
+                tags.add(TagEnum.valueOf(tag));
+            }
+        }
+        itemDTO.setTags(tags);
+        Optional<ItemDTO> itemDtoOptional = itemService.saveItem(itemDTO);
+        if (!itemDtoOptional.isPresent()) {
+            throw new PointSaveException("Item has not been saved.");
+        }
+        return ResponseEntity.ok().body(itemDtoOptional.get());
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<?> get() {
-        try {
-            Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-            return ResponseEntity.ok().body(itemService.getPointsByUserId(userId));
-        } catch (ClassCastException e) {
-            return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
-        } catch (Exception e) {
-            return reportError(null, e);
-        }
-    }
 
-
-    @PostMapping("/clear")
-    public ResponseEntity<?> clear() {
-        try {
-            Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-            return ResponseEntity.ok().body(itemService.removePointsByUserId(userId));
-        } catch (ClassCastException e) {
-            return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
-        } catch (Exception e) {
-            return reportError(null, e);
-        }
-    }
 }

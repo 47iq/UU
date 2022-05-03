@@ -1,8 +1,11 @@
 package org.iq47;
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.model.entity.Role;
+import org.iq47.model.entity.item.Tag;
+import org.iq47.model.entity.item.TagEnum;
 import org.iq47.security.userDetails.UserRole;
 import org.iq47.service.RoleService;
+import org.iq47.service.TagService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -20,6 +23,13 @@ public class DataBaseLoader {
     CommandLineRunner runRoles(RoleService roleService) {
         return args -> {
             Arrays.stream(UserRole.values()).forEach(role -> roleService.saveRole(new Role(role)));
+        };
+    }
+
+    @Bean
+    CommandLineRunner runTags(TagService tagService) {
+        return args -> {
+            Arrays.stream(TagEnum.values()).forEach(tag -> tagService.saveRole(new Tag(tag)));
         };
     }
 }

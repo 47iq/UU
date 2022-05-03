@@ -7,13 +7,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="YourUnion" />
+        <module name="UU" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="UU" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="YourUnion" options="-parameters" />
+      <module name="UU" options="-parameters" />
     </option>
   </component>
 </project>

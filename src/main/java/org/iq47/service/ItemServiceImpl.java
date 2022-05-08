@@ -5,13 +5,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.iq47.converter.ItemDTOConverter;
 import org.iq47.converter.PointDTOConverter;
 import org.iq47.model.ItemRepository;
+import org.iq47.model.TagRepository;
 import org.iq47.model.entity.item.Item;
+import org.iq47.model.entity.item.Tag;
 import org.iq47.network.ItemDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 public class ItemServiceImpl implements ItemService{
 
     private final ItemRepository itemRepository;
+    private final TagRepository tagRepository;
 
     public Optional<ItemDTO> saveItem(ItemDTO item) {
         Item itemEntity = ItemDTOConverter.dtoToEntity(item);
@@ -36,5 +41,12 @@ public class ItemServiceImpl implements ItemService{
         Item item = itemRepository.getItemById(id);
         if (item == null) return Optional.empty();
         return Optional.of(ItemDTOConverter.entityToDto(item));
+    }
+
+    public Collection<String> getAutocompleteEntries(String query) {
+        Collection<Tag> tags = tagRepository.findByNameContains(query.toUpperCase(Locale.ROOT));
+        Collection<Item> items = itemRepository.getItemsByNameContains(query);
+        return Stream.concat(tags.stream().map(t -> t.getTagName().name()).distinct(),
+                items.stream().map(Item::getName).distinct()).collect(Collectors.toList());
     }
 }

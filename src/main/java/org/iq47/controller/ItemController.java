@@ -7,6 +7,7 @@ import org.iq47.model.entity.item.Tag;
 import org.iq47.model.entity.item.TagEnum;
 import org.iq47.network.ItemDTO;
 import org.iq47.network.PointDTO;
+import org.iq47.network.request.AutocompleteRequest;
 import org.iq47.network.request.ItemCreateRequest;
 import org.iq47.network.request.ItemNameGetRequest;
 import org.iq47.network.request.PointPlaceRequest;
@@ -84,7 +85,7 @@ public class ItemController {
     }
 
     @GetMapping("/autocomplete")
-    private ResponseEntity<?> autocompleteItem(@RequestBody String query) {
-        return null;
+    private ResponseEntity<?> autocompleteItem(@RequestBody AutocompleteRequest request) {
+        return ResponseEntity.ok().body(itemService.getAutocompleteEntries(request.getQuery()));
     }
 }

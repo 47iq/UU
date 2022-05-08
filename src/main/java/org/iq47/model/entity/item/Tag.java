@@ -17,8 +17,10 @@ public class Tag {
 
     @Enumerated(EnumType.STRING)
     private TagEnum tagName;
+    private String name;
 
     public Tag(TagEnum tagName) {
         this.tagName = tagName;
+        name = tagName.name();
     }
 }

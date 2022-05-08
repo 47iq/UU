@@ -7,4 +7,5 @@ import java.util.Collection;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
     Collection<Item> getItemsByName(String name);
+    Item getItemById(long id);
 }

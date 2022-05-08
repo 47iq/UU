@@ -31,4 +31,10 @@ public class ItemServiceImpl implements ItemService{
         return s.stream()
                 .map(ItemDTOConverter::entityToDto).collect(Collectors.toList());
     }
+
+    public Optional<ItemDTO> getItemById(long id) {
+        Item item = itemRepository.getItemById(id);
+        if (item == null) return Optional.empty();
+        return Optional.of(ItemDTOConverter.entityToDto(item));
+    }
 }

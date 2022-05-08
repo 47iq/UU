@@ -77,7 +77,10 @@ public class ItemController {
 
     @GetMapping("/item/{id}")
     private ResponseEntity<?> getItem(@PathVariable long id) {
-        return null;
+        Optional<ItemDTO> item = itemService.getItemById(id);
+        if (item.isPresent()) {
+            return ResponseEntity.ok().body(item.get());
+        } else return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/autocomplete")

@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface ItemService {
     Optional<ItemDTO> saveItem(ItemDTO item);
     Collection<ItemDTO> getItemsById(String name);
+    Optional<ItemDTO> getItemById(long id);
 }

@@ -2,11 +2,13 @@ package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.exception.PointSaveException;
+import org.iq47.model.entity.item.Item;
 import org.iq47.model.entity.item.Tag;
 import org.iq47.model.entity.item.TagEnum;
 import org.iq47.network.ItemDTO;
 import org.iq47.network.PointDTO;
 import org.iq47.network.request.ItemCreateRequest;
+import org.iq47.network.request.ItemNameGetRequest;
 import org.iq47.network.request.PointPlaceRequest;
 import org.iq47.network.response.ResponseWrapper;
 import org.iq47.service.ItemService;
@@ -16,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 
@@ -66,8 +69,10 @@ public class ItemController {
     }
 
     @GetMapping("/items")
-    private ResponseEntity<?> getItems(@RequestBody String itemName) {
-        return null;
+    private ResponseEntity<?> getItems(@RequestBody ItemNameGetRequest request) {
+        if (request.getItemName() == null) return ResponseEntity.badRequest().body(new ResponseWrapper("Item is not specified"));
+        Collection<ItemDTO> s = itemService.getItemsById(request.getItemName());
+        return ResponseEntity.ok().body(s);
     }
 
     @GetMapping("/item/{id}")

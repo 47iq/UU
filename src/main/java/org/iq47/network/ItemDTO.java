@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.iq47.model.entity.item.Tag;
 import org.iq47.model.entity.item.TagEnum;
 
+import java.util.Collection;
 import java.util.Set;
 
 @Getter
@@ -19,7 +20,7 @@ public class ItemDTO {
     private int price;
     private double coordinatesX;
     private double coordinatesY;
-    private Set<TagEnum> tags;
+    private Collection<TagEnum> tags;
 
     public static Builder newBuilder() {
         return new ItemDTO().new Builder();
@@ -55,6 +56,11 @@ public class ItemDTO {
 
         public Builder setCoordinatesY(double y) {
             ItemDTO.this.coordinatesY = y;
+            return this;
+        }
+
+        public Builder setTags(Collection<TagEnum> tags) {
+            ItemDTO.this.tags = tags;
             return this;
         }
 

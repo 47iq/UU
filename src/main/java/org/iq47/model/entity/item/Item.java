@@ -9,6 +9,7 @@ import org.iq47.model.entity.Role;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -35,7 +36,11 @@ public class Item {
     @Column(name = "coordinates_y")
     private double coordinatesY;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
     @JoinTable(name = "item_tags",
             joinColumns = @JoinColumn(
                     name = "id",
@@ -46,12 +51,17 @@ public class Item {
             ))
     private Collection<Tag> tagSet;
 
-    public Item(String name, String description, int price, double coordinatesX, double coordinatesY) {
+    public Collection<TagEnum> getTagSet() {
+        return tagSet.stream().map(Tag::getTagName).collect(Collectors.toSet());
+    }
+
+    public Item(String name, String description, int price, double coordinatesX, double coordinatesY, Collection<Tag> enums) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.coordinatesX = coordinatesX;
         this.coordinatesY = coordinatesY;
+        tagSet = enums;
     }
 
     @Override

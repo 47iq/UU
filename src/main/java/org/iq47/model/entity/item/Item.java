@@ -36,6 +36,9 @@ public class Item {
     @Column(name = "coordinates_y")
     private double coordinatesY;
 
+    @Column(name = "image_url")
+    private String imageURL;
+
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.PERSIST,
@@ -55,13 +58,15 @@ public class Item {
         return tagSet.stream().map(Tag::getTagName).collect(Collectors.toSet());
     }
 
-    public Item(String name, String description, int price, double coordinatesX, double coordinatesY, Collection<Tag> enums) {
+    public Item(String name, String description, int price,
+                double coordinatesX, double coordinatesY, Collection<Tag> enums, String imageURL) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.coordinatesX = coordinatesX;
         this.coordinatesY = coordinatesY;
         tagSet = enums;
+        this.imageURL = imageURL;
     }
 
     @Override

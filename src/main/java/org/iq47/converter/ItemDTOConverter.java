@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 public class ItemDTOConverter {
     public static Item dtoToEntity(ItemDTO itemDTO) {
         return new Item(itemDTO.getName(), itemDTO.getDescription(), itemDTO.getPrice(), itemDTO.getCoordinatesX(),
-                itemDTO.getCoordinatesY(), itemDTO.getTags().stream().map(Tag::new).collect(Collectors.toSet()));
+                itemDTO.getCoordinatesY(), itemDTO.getTags().stream().map(Tag::new).collect(Collectors.toSet()),
+                itemDTO.getImageURL());
     }
 
     public static ItemDTO entityToDto(Item itemEntity) {
@@ -23,6 +24,7 @@ public class ItemDTOConverter {
                 .setCoordinatesX(itemEntity.getCoordinatesX())
                 .setCoordinatesY(itemEntity.getCoordinatesY())
                 .setTags(itemEntity.getTagSet())
+                .setImageURL(itemEntity.getImageURL())
                 .build();
     }
 }

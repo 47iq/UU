@@ -20,6 +20,7 @@ public class ItemDTO {
     private int price;
     private double coordinatesX;
     private double coordinatesY;
+    private String imageURL;
     private Collection<TagEnum> tags;
 
     public static Builder newBuilder() {
@@ -61,6 +62,11 @@ public class ItemDTO {
 
         public Builder setTags(Collection<TagEnum> tags) {
             ItemDTO.this.tags = tags;
+            return this;
+        }
+
+        public Builder setImageURL(String imageURL) {
+            ItemDTO.this.imageURL = imageURL;
             return this;
         }
 

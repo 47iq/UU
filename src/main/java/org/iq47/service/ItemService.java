@@ -9,4 +9,5 @@ public interface ItemService {
     Optional<ItemDTO> saveItem(ItemDTO item);
     Collection<ItemDTO> getItemsById(String name);
     Optional<ItemDTO> getItemById(long id);
+    Collection<String> getAutocompleteEntries(String query);
 }

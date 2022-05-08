@@ -38,7 +38,7 @@ public class ItemServiceImpl implements ItemService{
         return Optional.of(ItemDTOConverter.entityToDto(i));
     }
 
-    public Collection<ItemDTO> getItemsById(String name) {
+    public Collection<ItemDTO> getItemsByName(String name) {
         Collection<Item> s = itemRepository.getItemsByName(name);
         return s.stream()
                 .map(ItemDTOConverter::entityToDto).collect(Collectors.toList());

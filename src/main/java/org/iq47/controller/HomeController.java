@@ -12,4 +12,14 @@ public class HomeController {
     public String index() {
         return "index"; // <3>
     }
+
+    @RequestMapping(value = "/create") // <2>
+    public String create() {
+        return "index"; // <3>
+    }
+
+    @RequestMapping(value = "/login") // <2>
+    public String login() {
+        return "index"; // <3>
+    }
 }

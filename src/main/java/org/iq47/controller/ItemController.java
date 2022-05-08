@@ -77,9 +77,9 @@ public class ItemController {
     }
 
     @GetMapping("/items")
-    private ResponseEntity<?> getItems(@RequestBody ItemNameGetRequest request) {
-        if (request.getItemName() == null) return ResponseEntity.badRequest().body(new ResponseWrapper("Item is not specified"));
-        Collection<ItemDTO> s = itemService.getItemsById(request.getItemName());
+    private ResponseEntity<?> getItems(@RequestParam String query) {
+        if (query == null) return ResponseEntity.badRequest().body(new ResponseWrapper("Item is not specified"));
+        Collection<ItemDTO> s = itemService.getItemsByName(query);
         return ResponseEntity.ok().body(s);
     }
 
@@ -92,7 +92,7 @@ public class ItemController {
     }
 
     @GetMapping("/autocomplete")
-    private ResponseEntity<?> autocompleteItem(@RequestBody AutocompleteRequest request) {
-        return ResponseEntity.ok().body(itemService.getAutocompleteEntries(request.getQuery()));
+    private ResponseEntity<?> autocompleteItem(@RequestParam String query) {
+        return ResponseEntity.ok().body(itemService.getAutocompleteEntries(query));
     }
 }

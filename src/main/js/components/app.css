@@ -9,7 +9,7 @@ body {
     margin: 0;
     padding: 0;
     /*background-image: url(./image.png);*/
-    background-color: #1a1a1a;
+    background-color: #F1F1F1FF;
 }
 
 input:-webkit-autofill,
@@ -18,7 +18,7 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active
 {
     transition-duration: 0s;
-    -webkit-box-shadow: 0 0 0 500px #1a1a1a inset;
+    -webkit-box-shadow: 0 0 0 500px #f1f1f1 inset;
     -webkit-text-stroke-color: white;
     -webkit-text-fill-color: white;
     color: white;
@@ -41,9 +41,9 @@ button {
 }
 
 button:hover {
-    background-color: #1a1a1a;
-    color: white;
-    border-color: white;
+    background-color: #f2deff;
+    color: #000000;
+    border-color: #000000;
 }
 
 @media screen and (max-width: 747px) {

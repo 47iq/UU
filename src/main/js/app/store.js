@@ -3,7 +3,8 @@ import {createStore} from "redux";
 const initialState = {
     login: sessionStorage.getItem("login"),
     checks: null,
-    radius: null
+    radius: null,
+    coordinates: null
 };
 
 function reducer(state, action) {
@@ -27,6 +28,10 @@ function reducer(state, action) {
             sessionStorage.setItem("checks", action.value)
             state.checks = action.value
             return state;
+        case "changeCoordinates":
+            sessionStorage.setItem("coordinates", action.value)
+            state.coordinates = action.value
+            return state
         default:
             return state;
     }

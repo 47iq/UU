@@ -182,18 +182,24 @@ class Main extends Component {
     render() {
         return (
             <div id="main">
-                <Header login={true}/>
-                <div className={"main-wrapper"}>
-                    <Graph submitInfo={this.handleCanvasSubmit}/>
+                <Header login={true} getChecks={this.getChecks}/>
+                {<div className={"main-wrapper"}>
+                    {/*<Graph submitInfo={this.handleCanvasSubmit}/>
                     <CoordinatesForm validate={this.validate} x_form={this.state.x_form} y_form={this.state.y_form}
                                      r_form={this.state.r_form} getChecks={this.getChecks} setX={this.setX} setY={this.setY}
                                      setR={this.setR} displayError={this.displayError} setFormValid={this.setFormValid}
                                      tryToRefresh={this.tryToRefresh} submit={this.submit} clear={this.clear}
                                      addError={this.setError} formErrors={this.state.formErrors} changeRState={this.changeRState}
                                      validateX={this.validateX} validateY={this.validateY} validateR={this.validateR}
-                    />
-                </div>
-                <Table coordinateX={"X"} coordinateY={"Y"} radius={"R"} hit={"Hit"} ldt={"Time"} checks={store.getState().checks}/>
+                    />*/}
+
+                    <div className={"filter-wrapper"}>
+                        В разработке...
+                    </div>
+                    <div className={"main-table"}>
+                        <Table photo={"Фото"} submit={"Ссылка"} coordinateX={"Название"} coordinateY={"Y"} radius={"R"} shop={"Магазин"} price={"Цена"} distance={"Расстояние"} checks={store.getState().checks}/>
+                    </div>
+                </div>}
             </div>)
     }
 

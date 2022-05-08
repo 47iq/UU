@@ -20,12 +20,12 @@
 }
 
 .main-wrapper {
-    margin-top: 5%;
     width: 100%;
     display: flex;
     align-items: center;
     text-align: center;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
+    justify-content: center;
 }
 
 .coordinates-wrapper {
@@ -96,3 +96,20 @@
         border-radius: 1vw;
     }
 }
+
+.filter-wrapper {
+    text-align: center;
+    align-items: center;
+    border-right: #d69cff;
+    border-radius: 2px;
+    flex: 1;
+    height: 100%;
+    width: 100%;
+    background-color: #e8c8ff;
+}
+
+.main-table {
+    margin-left: 1%;
+    flex: 4;
+}
+

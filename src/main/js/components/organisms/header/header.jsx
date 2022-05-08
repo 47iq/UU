@@ -15,7 +15,7 @@ class Header extends Component {
 
     render() {
         return (
-            <AppHeader isLoggedIn={this.props.login} logout={this.logout}/>
+            <AppHeader isLoggedIn={this.props.login} logout={this.logout} getChecks={this.props.getChecks}/>
         )
     }
 }

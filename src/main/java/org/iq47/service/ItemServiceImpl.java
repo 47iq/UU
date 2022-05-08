@@ -6,6 +6,8 @@ import org.iq47.converter.ItemDTOConverter;
 import org.iq47.converter.PointDTOConverter;
 import org.iq47.model.ItemRepository;
 import org.iq47.model.TagRepository;
+import org.iq47.model.UserRepository;
+import org.iq47.model.entity.User;
 import org.iq47.model.entity.item.Item;
 import org.iq47.model.entity.item.Tag;
 import org.iq47.network.ItemDTO;
@@ -24,9 +26,14 @@ public class ItemServiceImpl implements ItemService{
 
     private final ItemRepository itemRepository;
     private final TagRepository tagRepository;
+    private final UserRepository userRepository;
 
     public Optional<ItemDTO> saveItem(ItemDTO item) {
-        Item itemEntity = ItemDTOConverter.dtoToEntity(item);
+        Optional<User> userOptional = userRepository.findById(item.getUserId());
+        if (!userOptional.isPresent()) {
+            return Optional.empty();
+        }
+        Item itemEntity = ItemDTOConverter.dtoToEntity(item, userOptional.get());
         Item i = itemRepository.save(itemEntity);
         return Optional.of(ItemDTOConverter.entityToDto(i));
     }

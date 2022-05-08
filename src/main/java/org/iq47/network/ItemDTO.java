@@ -15,6 +15,7 @@ import java.util.Set;
 public class ItemDTO {
 
     private Long id;
+    private long userId;
     private String name;
     private String description;
     private int price;
@@ -37,6 +38,11 @@ public class ItemDTO {
 
         public Builder setId(Long id) {
             ItemDTO.this.id = id;
+            return this;
+        }
+
+        public Builder setUserId(Long id) {
+            ItemDTO.this.userId = id;
             return this;
         }
 

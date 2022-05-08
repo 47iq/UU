@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.iq47.model.entity.Point;
 import org.iq47.model.entity.Role;
+import org.iq47.model.entity.User;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -39,7 +40,11 @@ public class Item {
     @Column(name = "image_url")
     private String imageURL;
 
-    @ManyToMany(fetch = FetchType.EAGER,
+    @ManyToOne
+    @JoinColumn(name = "user_uid", referencedColumnName = "uid")
+    private User user;
+
+    @ManyToMany(
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
@@ -58,8 +63,8 @@ public class Item {
         return tagSet.stream().map(Tag::getTagName).collect(Collectors.toSet());
     }
 
-    public Item(String name, String description, int price,
-                double coordinatesX, double coordinatesY, Collection<Tag> enums, String imageURL) {
+    public Item(String name, String description, int price, double coordinatesX,
+                double coordinatesY, Collection<Tag> enums, String imageURL, User user) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -67,6 +72,7 @@ public class Item {
         this.coordinatesY = coordinatesY;
         tagSet = enums;
         this.imageURL = imageURL;
+        this.user = user;
     }
 
     @Override

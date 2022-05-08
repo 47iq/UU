@@ -12,10 +12,12 @@ import org.iq47.network.request.ItemCreateRequest;
 import org.iq47.network.request.ItemNameGetRequest;
 import org.iq47.network.request.PointPlaceRequest;
 import org.iq47.network.response.ResponseWrapper;
+import org.iq47.security.userDetails.CustomUserDetails;
 import org.iq47.service.ItemService;
 import org.iq47.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -47,7 +49,11 @@ public class ItemController {
         if (req.getName() == null || req.getDescription() == null || req.getTags() == null) {
             throw new PointSaveException("Item has not been saved.");
         }
+
+        Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+
         ItemDTO itemDTO = ItemDTO.newBuilder()
+                .setUserId(uid)
                 .setName(req.getName())
                 .setDescription(req.getDescription())
                 .setPrice(req.getPrice())

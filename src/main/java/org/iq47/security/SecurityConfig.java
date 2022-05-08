@@ -35,12 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/*").permitAll()
                 .antMatchers("/built/**").permitAll()
-                .antMatchers("/api/users/**").permitAll()
-                .antMatchers("/api/points/check/*").hasAnyAuthority(
-                        UserRole.ROLE_USER.getAuthority())
-                .antMatchers("/api/points/get/*").hasAnyAuthority(
-                        UserRole.ROLE_USER.getAuthority())
-                .antMatchers("/api/points/clear/*").hasAnyAuthority(
+                .antMatchers("/api/items/items/**").permitAll()
+                .antMatchers("/api/items/item/**").permitAll()
+                .antMatchers("/api/items/autocomplete").permitAll()
+                .antMatchers("/api/items/create").hasAnyAuthority(
                         UserRole.ROLE_USER.getAuthority())
                 .anyRequest().authenticated();
         http.apply(new JwtFilterConfigurer(jwtProvider));

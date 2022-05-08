@@ -59,6 +59,7 @@ public class ItemController {
                 .setPrice(req.getPrice())
                 .setCoordinatesX(req.getCoordinatesX())
                 .setCoordinatesY(req.getCoordinatesY())
+                .setImageURL(req.getImageUrl())
                 .build();
         HashSet<TagEnum> tags = new HashSet<>();
 

@@ -12,4 +12,5 @@ public class ItemCreateRequest implements Serializable {
     private double coordinatesX;
     private double coordinatesY;
     private String[] tags;
+    private String imageUrl;
 }

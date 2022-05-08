@@ -1,13 +1,14 @@
 th {
     /*cursor: pointer;*/
-    background-color: rgba(1, 1, 210, 0.68);
-    color: white;
+    background-color: rgb(232, 200, 255);
+    color: #000000;
 }
 
 th, td {
     overflow: hidden;
     width: 100%;
     text-align: center;
+    height: 4vw;
 }
 
 th i {
@@ -15,35 +16,40 @@ th i {
 }
 
 tr {
-    color: white;
+    color: #000000;
 }
 
 tbody tr:nth-child(odd) {
-    background-color: #000000;
+    background-color: #f1f1f1;
 }
 
 tbody tr:nth-child(even) {
-    background-color: #151515;
+    background-color: #f2deff;
 }
 
 table {
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 1%;
+    margin-right: 1%;
 
     table-layout: fixed;
     width: 100%;
     /*border: 5px outset ;*/
     overflow:hidden;
-    border-radius: 2vw;
+    /*border-radius: 2vw;*/
     /*border: 7px outset rgba(0, 0, 255, 0.68);*/
 
-    border-collapse: collapse;
+    /*border-collapse: collapse;*/
 }
 
 .table-wrapper {
-    margin-top: 5%;
+    margin-top: 1.5%;
     display: flex;
     margin-bottom: 5%;
+}
+
+.name-column {
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 

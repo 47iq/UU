@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import './appHeader.css'
+import SearchForm from "../../organisms/search/search";
 
 class AppHeader extends Component {
 
@@ -10,16 +11,14 @@ class AppHeader extends Component {
     render() {
         return (
             <header className={"header"}>
-                <div className={"header-button-wrapper"}>
-                    {this.props.isLoggedIn ? <button className={"logout"} onClick={this.props.logout}>Log Out</button> : ""}
+                <div className={"header-name-wrapper"}>
+                    <h1><span>Your</span><span>Union</span></h1>
+                </div>
+                <div className={"search"}>
+                    {this.props.isLoggedIn ? <SearchForm getChecks={this.props.getChecks}/> : ""}
                 </div>
                 <div>
-                <span>
-                    Pavel Danilov, P3210
-                </span>
-                    <span>
-                    Variant 1777
-                </span>
+                    {this.props.isLoggedIn ? <button className={"logout"} onClick={this.props.logout}>Выйти</button> : ""}
                 </div>
             </header>
         )

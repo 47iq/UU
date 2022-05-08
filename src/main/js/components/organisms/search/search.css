@@ -1,0 +1,8 @@
+#search-input {
+    padding: 1vw 20vw;
+    margin: 1vw 2vw 1vw;
+    display: inline-block;
+    border: 0.15vw solid white;
+    border-radius: 0.5vw;
+    box-sizing: border-box;
+}

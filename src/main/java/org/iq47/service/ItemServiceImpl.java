@@ -38,8 +38,8 @@ public class ItemServiceImpl implements ItemService{
         return Optional.of(ItemDTOConverter.entityToDto(i));
     }
 
-    public Collection<ItemDTO> getItemsByName(String name) {
-        Collection<Item> s = itemRepository.getItemsByName(name);
+    public Collection<ItemDTO> getItemsByNameStartsWith(String query) {
+        Collection<Item> s = itemRepository.getItemsByNameStartsWith(query);
         return s.stream()
                 .map(ItemDTOConverter::entityToDto).collect(Collectors.toList());
     }
@@ -52,7 +52,7 @@ public class ItemServiceImpl implements ItemService{
 
     public Collection<String> getAutocompleteEntries(String query) {
         Collection<Tag> tags = tagRepository.findByNameContains(query.toUpperCase(Locale.ROOT));
-        Collection<Item> items = itemRepository.getItemsByNameContains(query);
+        Collection<Item> items = itemRepository.getTop5ItemsByNameContains(query);
         return Stream.concat(tags.stream().map(t -> t.getTagName().name()).distinct(),
                 items.stream().map(Item::getName).distinct()).collect(Collectors.toList());
     }

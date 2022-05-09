@@ -79,7 +79,7 @@ public class ItemController {
     @GetMapping("/items")
     private ResponseEntity<?> getItems(@RequestParam String query) {
         if (query == null) return ResponseEntity.badRequest().body(new ResponseWrapper("Item is not specified"));
-        Collection<ItemDTO> s = itemService.getItemsByName(query);
+        Collection<ItemDTO> s = itemService.getItemsByNameStartsWith(query);
         return ResponseEntity.ok().body(s);
     }
 

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ItemService {
     Optional<ItemDTO> saveItem(ItemDTO item);
-    Collection<ItemDTO> getItemsByName(String name);
+    Collection<ItemDTO> getItemsByNameStartsWith(String name);
     Optional<ItemDTO> getItemById(long id);
     Collection<String> getAutocompleteEntries(String query);
 }

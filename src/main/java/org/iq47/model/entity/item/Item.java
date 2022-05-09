@@ -37,7 +37,8 @@ public class Item {
     @Column(name = "coordinates_y")
     private double coordinatesY;
 
-    @Column(name = "image_url")
+    //Only PostgreSQL compatible
+    @Column(name = "image_url", columnDefinition = "TEXT")
     private String imageURL;
 
     @ManyToOne

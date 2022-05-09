@@ -15,7 +15,7 @@ class AppHeader extends Component {
                     <h1><span>Your</span><span>Union</span></h1>
                 </div>
                 <div className={"search"}>
-                    {this.props.isLoggedIn ? <SearchForm getChecks={this.props.getChecks}/> : ""}
+                    {this.props.isLoggedIn && this.props.search ? <SearchForm getChecks={this.props.getChecks}/> : ""}
                 </div>
                 <div>
                     {this.props.isLoggedIn ? <button className={"logout"} onClick={this.props.logout}>Выйти</button> : ""}

@@ -11,16 +11,19 @@ class SearchForm extends Component {
         }
     }
 
-    handleSearch() {
-        this.props.getChecks()
+    submitSearch = (e) => {
+        if(e.key === 'Enter') {
+            this.props.getChecks(e.target.value)
+        }
     }
 
     render() {
         return (
             <div className={"search-wrapper"}>
-                <form id="search-form">
-                    <input type={"text"} id={"search-input"} placeholder={"Введите строку для поиска"} onSubmit={this.handleSearch}/>
-                </form>
+                <input type={"text"} id={"search-input"} placeholder={"Введите строку для поиска"} onKeyDown={this.submitSearch}/>
+                <div className="input-group-btn">
+                    <button className="btn btn-default" type="submit">🔎</button>
+                </div>
             </div>
         )
     }

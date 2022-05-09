@@ -10,8 +10,16 @@ export function getAll() {
     return getResponse('/api/points/get', {}, 'GET')
 }
 
+export function getAllItems(query) {
+    return getResponse('/api/items/items', {query: query}, 'GET')
+}
+
 export function check(point) {
     return getResponse('/api/points/check', point)
+}
+
+export function create(item) {
+    return getResponse('/api/items/create', item)
 }
 
 export function refresh() {

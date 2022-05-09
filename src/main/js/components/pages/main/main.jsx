@@ -3,10 +3,11 @@ import CoordinatesForm from "../../organisms/coordinatesForm/coordinatesForm";
 import Table from "../../molecules/table/table";
 import "./main.css"
 import Graph from "../../atoms/graph/graph";
-import {check, clear, getAll, refresh} from "../../../api/request";
+import {check, clear, getAllItems, refresh} from "../../../api/request";
 import Header from "../../organisms/header/header";
 import {clearCanvas, drawCanvas, drawPoint} from "../../../app/canvas";
 import store from "../../../app/store";
+import Footer from "../../organisms/footer/footer";
 
 class Main extends Component {
 
@@ -33,22 +34,21 @@ class Main extends Component {
             if (this.state.mounted)
                 this.setState({reduxState: store.getState()});
         })
-        if (store.getState().checks === null) {
+        /*if (store.getState().checks === null) {
             this.getChecks()
-        }
+        }*/
     }
 
     componentWillUnmount() {
         this.state.mounted = false;
     }
 
-    getChecks = () => {
-        getAll()
+    getChecks = (query) => {
+        getAllItems(query)
             .then(response => {
                 if (response.ok) {
                     response.text().then(text => {
                         store.dispatch({type: "setChecks", value: JSON.parse(text)})
-                        drawCanvas(document.getElementById("canvas"))
                     })
                 } else {
                     refresh().then(response => response.json().then(json => {
@@ -182,7 +182,7 @@ class Main extends Component {
     render() {
         return (
             <div id="main">
-                <Header login={true} getChecks={this.getChecks}/>
+                <Header login={true} getChecks={this.getChecks} search={true}/>
                 {<div className={"main-wrapper"}>
                     {/*<Graph submitInfo={this.handleCanvasSubmit}/>
                     <CoordinatesForm validate={this.validate} x_form={this.state.x_form} y_form={this.state.y_form}
@@ -200,6 +200,7 @@ class Main extends Component {
                         <Table photo={"Фото"} submit={"Ссылка"} coordinateX={"Название"} coordinateY={"Y"} radius={"R"} shop={"Магазин"} price={"Цена"} distance={"Расстояние"} checks={store.getState().checks}/>
                     </div>
                 </div>}
+                <Footer/>
             </div>)
     }
 

@@ -17,7 +17,7 @@
 }
 
 .details-description {
-    margin-top: 10%;
+    margin-top: 5%;
     flex: 1;
     min-height: 200px;
     font-size: larger;
@@ -46,4 +46,8 @@
 #item-name {
     font-size: xx-large;
     font-weight: bolder;
+}
+
+.push {
+    margin-bottom: 90px;
 }

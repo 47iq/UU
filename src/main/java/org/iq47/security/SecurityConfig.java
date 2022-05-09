@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/points/clear/*").hasAnyAuthority()
                 .antMatchers("/api/items/items/**").permitAll()
                 .antMatchers("/api/items/item/**").permitAll()
-                .antMatchers("/api/items/autocomplete").permitAll()
+                .antMatchers("/api/items/autocomplete/**").permitAll()
                 .antMatchers("/api/items/create").hasAnyAuthority(
                         UserRole.ROLE_USER.getAuthority())
                 .anyRequest().authenticated();

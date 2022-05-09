@@ -34,9 +34,7 @@ class Main extends Component {
             if (this.state.mounted)
                 this.setState({reduxState: store.getState()});
         })
-        if (store.getState().checks === null) {
-            this.getChecks("")
-        }
+        this.getChecks("")
     }
 
     componentWillUnmount() {
@@ -200,6 +198,7 @@ class Main extends Component {
                         <Table photo={"Фото"} submit={"Ссылка"} coordinateX={"Название"} coordinateY={"Y"} radius={"R"} shop={"Магазин"} price={"Цена"} distance={"Расстояние"} checks={store.getState().checks}/>
                     </div>
                 </div>}
+                <div className={"push"}/>
                 <Footer redirect={"/create"}/>
             </div>)
     }

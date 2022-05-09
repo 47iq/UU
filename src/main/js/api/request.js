@@ -18,6 +18,11 @@ export function getDetails(query) {
     return getResponse('/api/items/item/' + query,{},'GET')
 }
 
+export function getAutocomplete(query) {
+    return getResponse('/api/items/autocomplete/', {query: query},'GET')
+}
+
+
 export function check(point) {
     return getResponse('/api/points/check', point)
 }

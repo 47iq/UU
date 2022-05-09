@@ -8,6 +8,7 @@ import {clearCanvas, drawCanvas, drawPoint} from "../../../app/canvas";
 import store from "../../../app/store";
 import Footer from "../../organisms/footer/footer";
 import "./create.css"
+import {Navigate} from "react-router-dom";
 
 class Create extends Component {
 
@@ -41,6 +42,11 @@ class Create extends Component {
                 if (response.ok) {
                     response.text().then(text => {
                         this.setState({refreshAttempted: false})
+                        this.setState({successMessage: "Успешно создано"})
+                        setTimeout(() => {
+                            this.setState({successMessage: null})
+                            this.setState({redirect: "/"})
+                        }, 1000)
                     })
                 } else {
                     this.tryToRefresh(this.submitInfo, response, information)
@@ -50,7 +56,7 @@ class Create extends Component {
 
     tryToRefresh = (func, response, body = null) => {
         response.json().then(json => {
-            if (json.message === "Expired or invalid JWT token" || json.message === "Access denied") {
+            if (json.message === "Expired or invalid JWT token" || json.message === "Access Denied") {
                 refresh().then(response => response.json().then(json => {
                     if (response.ok) {
                         sessionStorage.setItem("token", json.accessToken)
@@ -64,6 +70,7 @@ class Create extends Component {
                         setTimeout(() => {
                             this.setError("important", '')
                             store.dispatch({type: "changeLogin", value: null})
+                            this.setState({redirect: "/login"})
                         }, 3000)
                     }
                 }))
@@ -119,6 +126,11 @@ class Create extends Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return (
+                <Navigate to={this.state.redirect} replace={true}/>
+            )
+        }
         return (
             <div id="main">
                 <Header login={true} getChecks={this.getChecks} search={false}/>
@@ -149,7 +161,9 @@ class Create extends Component {
                     <textarea name={"description"} onChange={this.handleUserInput}
                            placeholder={"Описание"}/>
                     <button onClick={this.sendData}>Создать</button>
+                    <div className={"success-message"}>{this.state.successMessage}</div>
                 </div>}
+                <div className={"push"}/>
                 <Footer/>
             </div>)
     }

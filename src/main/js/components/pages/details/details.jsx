@@ -6,6 +6,7 @@ import Footer from "../../organisms/footer/footer";
 import GoogleMapReact from 'google-map-react';
 import "./details.css"
 import {getDistance} from "../../../app/utils";
+import {Navigate} from "react-router-dom";
 
 class Details extends Component {
 
@@ -17,12 +18,17 @@ class Details extends Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.state.mounted = true;
         store.subscribe(() => {
             if (this.state.mounted)
                 this.setState({reduxState: store.getState()});
         })
+        if(!this.state.item)
+            this.getData()
+    }
+
+    getData = () => {
         const query = new URLSearchParams(window.location.search);
         this.setState({id: query.get("id")})
         console.log(query.get("id"))
@@ -39,21 +45,36 @@ class Details extends Component {
                         this.setState({item: JSON.parse(text)})
                     })
                 } else {
-                    refresh().then(response => response.json().then(json => {
-                        if (response.ok) {
-                            sessionStorage.setItem("token", json.accessToken)
-                            sessionStorage.setItem("refreshToken", json.refreshToken)
-                            this.getChecks()
-                        } else {
-                            this.setError("important", "Session has expired");
-                            setTimeout(() => {
-                                this.setError("important", '')
-                                store.dispatch({type: "changeLogin", value: null})
-                            }, 3000)
-                        }
-                    }))
+                    this.tryToRefresh(this.getDetails, response, id)
                 }
             })
+    }
+
+    tryToRefresh = (func, response, body = null) => {
+        response.json().then(json => {
+            if (json.message === "Expired or invalid JWT token" || json.message === "Access Denied") {
+                refresh().then(response => response.json().then(json => {
+                    if (response.ok) {
+                        sessionStorage.setItem("token", json.accessToken)
+                        sessionStorage.setItem("refreshToken", json.refreshToken)
+                        if(body)
+                            func(body)
+                        else
+                            func()
+                    } else {
+                        this.setError("important",json.message);
+                        setTimeout(() => {
+                            this.setError("important", '')
+                            this.setState({redirect: "/login"})
+                            store.dispatch({type: "changeLogin", value: null})
+                        }, 3000)
+                    }
+                }))
+            } else {
+                this.setError("important", json.message)
+                setTimeout(() => this.setError("important", ''), 3000)
+            }
+        })
     }
 
     componentWillUnmount() {
@@ -61,6 +82,11 @@ class Details extends Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return (
+                <Navigate to={this.state.redirect} replace={true}/>
+            )
+        }
         if (!this.state.item) {
             return (<div id="main">
                 <Header login={true} getChecks={this.getChecks} search={false}/>
@@ -84,7 +110,8 @@ class Details extends Component {
                                 <span>Расстояние: {getDistance(store.getState().coordinates, {longitude: this.state.item.coordinatesX, latitude: this.state.item.coordinatesY})}</span>
                         </div>
                     </div>
-                    <div className={"details-description"}>Описание: {this.state.description}</div>
+                    <div className={"details-description"}>Описание: {this.state.item.description}</div>
+                    <div className={"push"}/>
                 </div>}
                 <Footer/>
             </div>)

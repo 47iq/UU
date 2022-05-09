@@ -15,6 +15,7 @@ import {
     Outlet
 } from "react-router-dom";
 import Create from "./pages/create/create";
+import Details from "./pages/details/details";
 
 const PrivateRoute = () => {
     const auth = store.getState().login; // determine if authorized, from context or however you're doing it
@@ -61,6 +62,9 @@ class App extends Component {
                     </Route>
                     <Route exact path="/" element={<PrivateRoute/>}>
                         <Route exact path="/" element={<Main/>}/>
+                    </Route>
+                    <Route path="/details" element={<PrivateRoute/>}>
+                        <Route path="/details" element={<Details/>}/>
                     </Route>
                     <Route exact path="/login" element={<Login/>}/>
                 </Routes>

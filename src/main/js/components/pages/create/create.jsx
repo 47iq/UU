@@ -9,7 +9,7 @@ import store from "../../../app/store";
 import Footer from "../../organisms/footer/footer";
 import "./create.css"
 
-class Main extends Component {
+class Create extends Component {
 
     constructor(props) {
         super(props);
@@ -129,16 +129,21 @@ class Main extends Component {
                                  alt={"Введите корректную ссылку на фото для предпросмотра"}/>
                         </div>
                         <div className={"inputs-wrapper"}>
-                            <input type={"text"} name={"name"} onChange={this.handleUserInput}
-                                   placeholder={"Название"}/>
-                            <input type={"text"} name={"photo_url"} onChange={this.handleUserInput}
-                                   placeholder={"Ссылка на фото"}/>
-                            <input type={"text"} name={"price"} onChange={this.handleUserInput}
-                                   placeholder={"Стоимость (руб)"}/>
-                            <input type={"text"} name={"longitude"} onChange={this.handleUserInput}
-                                   placeholder={"Долгота"}/>
-                            <input type={"text"} name={"latitude"} onChange={this.handleUserInput}
-                                   placeholder={"Широта"}/>
+                            <div className={"main-inputs-wrapper"}>
+                                <input type={"text"} name={"name"} onChange={this.handleUserInput}
+                                       placeholder={"Название"}/>
+                                <input type={"text"} name={"photo_url"} onChange={this.handleUserInput}
+                                       placeholder={"Ссылка на фото"}/>
+                                <input type={"text"} name={"price"} onChange={this.handleUserInput}
+                                       placeholder={"Стоимость (руб)"}/>
+                            </div>
+                            <div className={"coords-wrapper"}>
+                                <span>Координаты магазина</span>
+                                <input type={"text"} name={"longitude"} onChange={this.handleUserInput}
+                                       placeholder={"Долгота"}/>
+                                <input type={"text"} name={"latitude"} onChange={this.handleUserInput}
+                                       placeholder={"Широта"}/>
+                            </div>
                         </div>
                     </div>
                     <textarea name={"description"} onChange={this.handleUserInput}
@@ -152,4 +157,4 @@ class Main extends Component {
 
 }
 
-export default Main
+export default Create

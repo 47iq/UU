@@ -2,6 +2,7 @@ package org.iq47.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -20,6 +21,11 @@ public class HomeController {
 
     @RequestMapping(value = "/login") // <2>
     public String login() {
+        return "index"; // <3>
+    }
+
+    @RequestMapping(value = "/details") // <2>
+    public String details(@RequestParam String id) {
         return "index"; // <3>
     }
 }

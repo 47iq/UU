@@ -9,6 +9,7 @@ class SearchForm extends Component {
             yValid: false,
             rValid: false,
         }
+        this.search = React.createRef();
     }
 
     submitSearch = (e) => {
@@ -17,12 +18,17 @@ class SearchForm extends Component {
         }
     }
 
+    submitSearchButton = (e) => {
+        let search = this.search.current.value
+        this.props.getChecks(search)
+    }
+
     render() {
         return (
             <div className={"search-wrapper"}>
-                <input type={"text"} id={"search-input"} placeholder={"Введите строку для поиска"} onKeyDown={this.submitSearch}/>
+                <input ref={this.search} type={"text"} id={"search-input"} placeholder={"Введите строку для поиска"} onKeyDown={this.submitSearch}/>
                 <div className="input-group-btn">
-                    <button className="btn btn-default" type="submit">🔎</button>
+                    <button className="btn btn-default search-button" type="submit" onClick={this.submitSearchButton}>Искать</button>
                 </div>
             </div>
         )

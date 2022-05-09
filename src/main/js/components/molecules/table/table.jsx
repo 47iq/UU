@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import './table.css';
 import store from "../../../app/store";
 import {getDistance} from "../../../app/utils";
+import {Navigate} from "react-router-dom";
 
 class Table extends Component {
 
@@ -17,13 +18,23 @@ class Table extends Component {
         })
     }
 
+    handleSubmit = (e) => {
+        console.log(e)
+    }
+
     render() {
         if (!this.props.checks || this.props.checks.length === 0)
             return (
-                <div className={"table-wrapper"}/>
+                <div className={"no-results"}>
+                    Нет подходящих результатов по запросу
+                </div>
             )
 
-        function setSortedField(name) {
+        const handleClick = (e) => {
+            this.setState({redirect: "/details/?id=" + e.target.name})
+        }
+        const setSortedField = (e) => {
+            let name = e.target.name
             let checks = store.getState().checks
             checks.sort((a, b) => {
                 if (a[name] < b[name]) {
@@ -36,12 +47,13 @@ class Table extends Component {
             })
             store.dispatch({type: "setChecks", value: checks})
         }
-
-        function handleSubmit(id) {
-            console.log(id)
+        if (this.state.redirect) {
+            return (
+                <Navigate to={this.state.redirect} replace={true}/>
+            )
         }
-
         return (
+
             <div className={"table-wrapper"}>
                 <table className="table is-bordered is-hoverable is-fullwidth has-text-centered">
                     <thead>
@@ -49,16 +61,16 @@ class Table extends Component {
                         <th>
                             {this.props.photo}
                         </th>
-                        <th className={"name-column"} onClick={() => setSortedField('X')}>
+                        <th className={"name-column"} name="name" onClick={setSortedField}>
                             {this.props.coordinateX}
                         </th>
-                        <th onClick={() => setSortedField('Y')}>
+                        <th name="shop" onClick={setSortedField}>
                             {this.props.shop}
                         </th>
-                        <th onClick={() => setSortedField('ldt')}>
+                        <th name="distance" onClick={setSortedField}>
                             {this.props.distance}
                         </th>
-                        <th onClick={() => setSortedField('ldt')}>
+                        <th name="price" onClick={setSortedField}>
                             {this.props.price}
                         </th>
                         <th>
@@ -70,13 +82,13 @@ class Table extends Component {
                     {(this.props.checks) ? this.props.checks.map(function (check) {
                             return (
                                 <tr key={check.pointId}>
-                                    <td><img src={'https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350'} /></td>
+                                    <td><img src={check.imageURL} /></td>
                                     <td>{check.name}</td>
-                                    <td>{check.userId}</td>
+                                    <td>{check.userName}</td>
                                     <td>{getDistance(store.getState().coordinates, {longitude: check.coordinatesX, latitude: check.coordinatesY})}</td>
                                     <td>{check.price.toString() + ' рублей'}</td>
                                     <td>
-                                        <button className={"item_button"} onClick={handleSubmit(check.id)}>Смотреть</button>
+                                        <button className={"item_button"} name={check.id} onClick={handleClick}>Смотреть</button>
                                     </td>
                                 </tr>
                             );

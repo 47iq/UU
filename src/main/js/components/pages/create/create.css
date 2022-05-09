@@ -8,6 +8,10 @@
     flex-flow: row nowrap;
 }
 
+.create-wrapper input{
+    padding: 0 10% 0 10%;
+}
+
 .preview-wrapper {
     margin: 2% 0 0 5%;
     width: 200px;
@@ -17,15 +21,32 @@
     border: #d69cff solid 2px;
 }
 
+.coords-wrapper, .main-inputs-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    flex: 1;
+    align-items: center;
+    text-align: center;
+}
+
+.coords-wrapper span {
+    flex: 1;
+}
+
 .inputs-wrapper {
     flex: 2;
-    flex-flow: column;
+    display: flex;
+    flex-flow: row nowrap;
 }
 
 .create-wrapper input,
+.create-wrapper span{
+    margin: 2% 20% 0 5%
+}
+
 .create-wrapper textarea,
 .create-wrapper button {
-    margin: 2% 20% 0 5%
+    margin: 2% 10% 0 5%
 }
 
 .create-wrapper input[type=text] {

@@ -27,7 +27,7 @@ header {
 .header > div {
     display: flex;
     align-items: center;
-    margin: 1vh 2vw auto auto;
+    margin: 1vh 2vw auto 2%;
     flex-direction: column;
 }
 

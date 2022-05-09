@@ -34,9 +34,9 @@ class Main extends Component {
             if (this.state.mounted)
                 this.setState({reduxState: store.getState()});
         })
-        /*if (store.getState().checks === null) {
-            this.getChecks()
-        }*/
+        if (store.getState().checks === null) {
+            this.getChecks("")
+        }
     }
 
     componentWillUnmount() {

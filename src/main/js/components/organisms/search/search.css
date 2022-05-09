@@ -16,3 +16,7 @@
     margin-left: 8%;
     flex: 1;
 }
+
+.search-button {
+    font-size: small;
+}

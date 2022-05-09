@@ -14,6 +14,10 @@ export function getAllItems(query) {
     return getResponse('/api/items/items', {query: query}, 'GET')
 }
 
+export function getDetails(query) {
+    return getResponse('/api/items/item/' + query,{},'GET')
+}
+
 export function check(point) {
     return getResponse('/api/points/check', point)
 }

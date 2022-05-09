@@ -1,0 +1,49 @@
+.details-wrapper {
+    margin: 5% 10% 0 10%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.details-row-wrapper {
+    flex: 4;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.details-row-wrapper {
+    flex: 4;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.details-description {
+    margin-top: 10%;
+    flex: 1;
+    min-height: 200px;
+    font-size: larger;
+}
+
+.details-image-wrapper img {
+    flex: 2;
+    max-height: 450px;
+    max-width: 600px;
+}
+
+.outputs-wrapper {
+    margin-left: 10%;
+    flex: 4;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.outputs-wrapper span {
+    flex: 1;
+    margin-left: 5%;
+    margin-bottom: 5%;
+    font-size: larger;
+}
+
+#item-name {
+    font-size: xx-large;
+    font-weight: bolder;
+}

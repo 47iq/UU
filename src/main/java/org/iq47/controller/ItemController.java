@@ -51,9 +51,11 @@ public class ItemController {
         }
 
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+        String username = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
 
         ItemDTO itemDTO = ItemDTO.newBuilder()
                 .setUserId(uid)
+                .setUsername(username)
                 .setName(req.getName())
                 .setDescription(req.getDescription())
                 .setPrice(req.getPrice())

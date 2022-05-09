@@ -19,6 +19,7 @@ public class ItemDTOConverter {
         return ItemDTO.newBuilder()
                 .setId(itemEntity.getId())
                 .setUserId(itemEntity.getUser().getUid())
+                .setUsername(itemEntity.getUser().getUsername())
                 .setName(itemEntity.getName())
                 .setDescription(itemEntity.getDescription())
                 .setPrice(itemEntity.getPrice())

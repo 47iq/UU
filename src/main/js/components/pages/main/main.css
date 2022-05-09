@@ -103,13 +103,13 @@
     border-right: #d69cff;
     border-radius: 2px;
     flex: 1;
+    display: none;
     height: 100%;
     width: 100%;
     background-color: #e8c8ff;
 }
 
 .main-table {
-    margin-left: 1%;
     flex: 4;
 }
 

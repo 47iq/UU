@@ -6,6 +6,7 @@ import FormErrors from "../../molecules/errors/errors";
 import Header from "../../organisms/header/header";
 import AuthInput from "../../atoms/authInput/authInput";
 import FormButton from "../../atoms/formButton/formButton";
+import { Navigate } from "react-router-dom";
 
 class Login extends Component {
 
@@ -25,6 +26,9 @@ class Login extends Component {
     }
 
     componentDidMount() {
+        store.subscribe(() => {
+            this.setState({reduxState: store.getState()});
+        })
         this.state.component_mounted = true
     }
 
@@ -40,6 +44,7 @@ class Login extends Component {
                     sessionStorage.setItem("token", json.accessToken)
                     sessionStorage.setItem("refreshToken", json.refreshToken)
                     store.dispatch({type: "changeLogin", value: "true"});
+                    this.setState({login: true})
                 } else {
                     this.setError("important", json.message)
                     setTimeout(() => this.setError("important",  ""), 3000)
@@ -117,9 +122,14 @@ class Login extends Component {
     }
 
     render() {
+        if(this.state.login != null) {
+            return (
+                <Navigate to="/" replace={true}/>
+            )
+        }
         return (
             <div>
-                <Header login={false}/>
+                <Header login={false} search={false}/>
                 <div className="login-form-wrapper">
                     <form className={`login-form`}>
                         <AuthInput name={"username"} type={"text"} errorClass={this.errorClass}

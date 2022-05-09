@@ -4,6 +4,25 @@ import './app.css'
 import Login from "./pages/login/login";
 import store from "../app/store";
 import {getGeolocation} from "../app/utils";
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link,
+    useRouteMatch,
+    useParams,
+    Navigate,
+    Outlet
+} from "react-router-dom";
+import Create from "./pages/create/create";
+
+const PrivateRoute = () => {
+    const auth = store.getState().login; // determine if authorized, from context or however you're doing it
+
+    // If authorized, return an outlet that will render child elements
+    // If not, return element that will navigate to login page
+    return auth ? <Outlet /> : <Navigate to="/login" />;
+}
 
 class App extends Component {
 
@@ -35,9 +54,20 @@ class App extends Component {
 
     render() {
         return (
-            <div className="first-page">
+            <Router>
+                <Routes>
+                    <Route exact path="/create" element={<PrivateRoute/>}>
+                        <Route exact path="/create" element={<Create/>}/>
+                    </Route>
+                    <Route exact path="/" element={<PrivateRoute/>}>
+                        <Route exact path="/" element={<Main/>}/>
+                    </Route>
+                    <Route exact path="/login" element={<Login/>}/>
+                </Routes>
+            </Router>
+            /*<div className="first-page">
                 {store.getState().login && store.getState().login !== "null" ? <Main/> : <Login/>}
-            </div>
+            </div>*/
         )
     }
 }

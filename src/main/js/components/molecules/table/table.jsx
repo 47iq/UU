@@ -71,10 +71,10 @@ class Table extends Component {
                             return (
                                 <tr key={check.pointId}>
                                     <td><img src={'https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350'} /></td>
-                                    <td>{Math.floor(check.coordinateX * 100) / 100}</td>
-                                    <td>{Math.floor(check.coordinateY * 100) / 100}</td>
-                                    <td>{getDistance(store.getState().coordinates, {longitude: 0, latitude: 0})}</td>
-                                    <td>{check.time.toString() + ' рублей'}</td>
+                                    <td>{check.name}</td>
+                                    <td>{check.userId}</td>
+                                    <td>{getDistance(store.getState().coordinates, {longitude: check.coordinatesX, latitude: check.coordinatesY})}</td>
+                                    <td>{check.price.toString() + ' рублей'}</td>
                                     <td>
                                         <button className={"item_button"} onClick={handleSubmit(check.id)}>Смотреть</button>
                                     </td>

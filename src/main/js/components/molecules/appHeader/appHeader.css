@@ -53,34 +53,6 @@ button .logout {
     padding: 1vw 2vw;
 }
 
-@media screen and (max-width: 747px){
-    .header span {
-        font-size: 3vw;
-    }
-    .header-button-wrapper * {
-        font-size: 2vw;
-        padding: 2vw 5vw;
-    }
-}
-
-@media screen and (max-width: 490px){
-    .header span {
-        font-size: 3.5vw;
-    }
-    .header-button-wrapper {
-        font-size: 4vw;
-    }
-}
-
-@media screen and (min-width: 1176px) {
-    .header span {
-        font-size: 1.5vw;
-    }
-    .header-button-wrapper * {
-        font-size: 1vw;
-        padding: 1vw 2vw;
-    }
-}
 
 .header h1 {
     transition-duration: 0.6s;

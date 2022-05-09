@@ -11,5 +11,5 @@ import java.util.Collection;
 public interface TagRepository extends JpaRepository<Tag, Long> {
 
     Tag findByTagName(TagEnum tagName);
-    Collection<Tag> findByNameContains(String name);
+    Collection<Tag> findByNameContainsIgnoreCase(String name);
 }

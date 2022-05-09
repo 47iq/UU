@@ -3,7 +3,6 @@ package org.iq47.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.converter.ItemDTOConverter;
-import org.iq47.converter.PointDTOConverter;
 import org.iq47.model.ItemRepository;
 import org.iq47.model.TagRepository;
 import org.iq47.model.UserRepository;
@@ -39,7 +38,7 @@ public class ItemServiceImpl implements ItemService{
     }
 
     public Collection<ItemDTO> getItemsByNameStartsWith(String query) {
-        Collection<Item> s = itemRepository.getItemsByNameStartsWith(query);
+        Collection<Item> s = itemRepository.getItemsByNameStartsWithIgnoreCase(query);
         return s.stream()
                 .map(ItemDTOConverter::entityToDto).collect(Collectors.toList());
     }
@@ -51,8 +50,8 @@ public class ItemServiceImpl implements ItemService{
     }
 
     public Collection<String> getAutocompleteEntries(String query) {
-        Collection<Tag> tags = tagRepository.findByNameContains(query.toUpperCase(Locale.ROOT));
-        Collection<Item> items = itemRepository.getTop5ItemsByNameContains(query);
+        Collection<Tag> tags = tagRepository.findByNameContainsIgnoreCase(query);
+        Collection<Item> items = itemRepository.getTop5ItemsByNameContainsIgnoreCase(query);
         return Stream.concat(tags.stream().map(t -> t.getTagName().name()).distinct(),
                 items.stream().map(Item::getName).distinct()).collect(Collectors.toList());
     }

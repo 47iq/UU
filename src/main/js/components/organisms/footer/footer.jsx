@@ -14,7 +14,7 @@ class Footer extends Component {
     }
 
     handleClick = () => {
-        this.setState({redirect: "/create"})
+        this.setState({redirect: this.props.redirect})
     }
 
     render() {
@@ -23,11 +23,16 @@ class Footer extends Component {
                 <Navigate to={this.state.redirect} replace={true}/>
             )
         }
+        if (this.props.redirect)
+            return (
+                <footer className={"footer"}>
+                    <button onClick={this.handleClick}>+</button>
+                </footer>
+
+            )
         return (
             <footer className={"footer"}>
-                <button onClick={this.handleClick}>Добавить товар</button>
             </footer>
-
         )
     }
 }

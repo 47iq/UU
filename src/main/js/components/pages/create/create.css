@@ -1,0 +1,48 @@
+.create-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.row-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.preview-wrapper {
+    margin: 2% 0 0 5%;
+    width: 200px;
+    height: 200px;
+    min-height: 200px;
+    min-width: 200px;
+    border: #d69cff solid 2px;
+}
+
+.inputs-wrapper {
+    flex: 2;
+    flex-flow: column;
+}
+
+.create-wrapper input,
+.create-wrapper textarea,
+.create-wrapper button {
+    margin: 2% 20% 0 5%
+}
+
+.create-wrapper input[type=text] {
+    flex: 1
+}
+
+.create-wrapper textarea {
+    flex: 2;
+    min-height: 200px;
+    max-height: 400px;
+}
+
+.create-wrapper button {
+    flex: 1
+}
+
+img {
+    max-width: 200px;
+    max-height: 200px;
+}

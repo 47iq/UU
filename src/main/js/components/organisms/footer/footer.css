@@ -4,10 +4,15 @@
     bottom: 0;
     width: 100%;
     /* Height of the footer*/
-    height: 40px;
-    background: grey;
+    height: 60px;
+    background: #d69cff;
+    display: flex;
 }
 
 .footer button {
+    font-size: 30px;
     margin: auto;
+    border: #d69cff 2px solid;
+    border-radius: 100%;
+    padding: 5px 18px 10px 18px;
 }

@@ -6,6 +6,8 @@ import {check, clear, create, getAll, refresh} from "../../../api/request";
 import Header from "../../organisms/header/header";
 import {clearCanvas, drawCanvas, drawPoint} from "../../../app/canvas";
 import store from "../../../app/store";
+import Footer from "../../organisms/footer/footer";
+import "./create.css"
 
 class Main extends Component {
 
@@ -53,12 +55,12 @@ class Main extends Component {
                     if (response.ok) {
                         sessionStorage.setItem("token", json.accessToken)
                         sessionStorage.setItem("refreshToken", json.refreshToken)
-                        if(body)
+                        if (body)
                             func(body)
                         else
                             func()
                     } else {
-                        this.setError("important",json.message);
+                        this.setError("important", json.message);
                         setTimeout(() => {
                             this.setError("important", '')
                             store.dispatch({type: "changeLogin", value: null})
@@ -97,11 +99,10 @@ class Main extends Component {
                 break
             }
             case "latitude": {
-                this.setState({longitude: value})
+                this.setState({latitude: value})
                 break
             }
         }
-        this.setState({name: value})
     }
 
     sendData = (e) => {
@@ -122,14 +123,29 @@ class Main extends Component {
             <div id="main">
                 <Header login={true} getChecks={this.getChecks} search={false}/>
                 {<div className={"create-wrapper"}>
-                    <input type={"text"} name={"name"} onChange={this.handleUserInput} placeholder={"Название"}/>
-                    <input type={"textarea"} name={"description"} onChange={this.handleUserInput} placeholder={"Описание"}/>
-                    <input type={"text"} name={"photo_url"} onChange={this.handleUserInput} placeholder={"Ссылка на фото"}/>
-                    <input type={"text"} name={"price"} onChange={this.handleUserInput} placeholder={"Стоимость (руб)"}/>
-                    <input type={"text"} name={"longitude"} onChange={this.handleUserInput} placeholder={"Долгота"}/>
-                    <input type={"text"} name={"latitude"} onChange={this.handleUserInput} placeholder={"Широта"}/>
-                    <button type={"submit"} onClick={this.sendData}/>
+                    <div className={"row-wrapper"}>
+                        <div className={"preview-wrapper"}>
+                            <img src={this.state.photo_url}
+                                 alt={"Введите корректную ссылку на фото для предпросмотра"}/>
+                        </div>
+                        <div className={"inputs-wrapper"}>
+                            <input type={"text"} name={"name"} onChange={this.handleUserInput}
+                                   placeholder={"Название"}/>
+                            <input type={"text"} name={"photo_url"} onChange={this.handleUserInput}
+                                   placeholder={"Ссылка на фото"}/>
+                            <input type={"text"} name={"price"} onChange={this.handleUserInput}
+                                   placeholder={"Стоимость (руб)"}/>
+                            <input type={"text"} name={"longitude"} onChange={this.handleUserInput}
+                                   placeholder={"Долгота"}/>
+                            <input type={"text"} name={"latitude"} onChange={this.handleUserInput}
+                                   placeholder={"Широта"}/>
+                        </div>
+                    </div>
+                    <textarea name={"description"} onChange={this.handleUserInput}
+                           placeholder={"Описание"}/>
+                    <button onClick={this.sendData}>Создать</button>
                 </div>}
+                <Footer/>
             </div>)
     }
 

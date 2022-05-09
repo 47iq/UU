@@ -200,7 +200,7 @@ class Main extends Component {
                         <Table photo={"Фото"} submit={"Ссылка"} coordinateX={"Название"} coordinateY={"Y"} radius={"R"} shop={"Магазин"} price={"Цена"} distance={"Расстояние"} checks={store.getState().checks}/>
                     </div>
                 </div>}
-                <Footer/>
+                <Footer redirect={"/create"}/>
             </div>)
     }
 

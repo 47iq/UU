@@ -31,4 +31,22 @@ public class Cart implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "cart_id")
     )
     private List<ShopItem> shopItem;
+
+    public Cart(User user, int item_count) {
+        this.user = user;
+        this.item_count = item_count;
+    }
+
+    public void addShopItem(ShopItem shopItem) {
+        this.shopItem.add(shopItem);
+        shopItem.getCarts().add(this);
+    }
+
+    public void removeShopItem(long shopItemId) {
+        ShopItem shopItem = this.shopItem.stream().filter(t -> t.getId() == shopItemId).findFirst().orElse(null);
+        if (shopItem != null) {
+            this.shopItem.remove(shopItem);
+            shopItem.getCarts().remove(this);
+        }
+    }
 }

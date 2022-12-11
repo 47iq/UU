@@ -3,22 +3,28 @@ package org.iq47.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
+@Check(constraints = "created_at > '1970-01-01'")
 @Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Column
+    private Date created_at;
+
     @ManyToOne
-    @JoinColumn(name = "name")
+    @JoinColumn(name = "promo_code")
     private Promocode promocode;
 
     @ManyToOne

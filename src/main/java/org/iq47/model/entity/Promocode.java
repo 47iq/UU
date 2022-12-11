@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.checkerframework.checker.units.qual.Length;
+import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
+@Check(constraints = "valid_before > '1970-01-01'")
 @Table(name = "promo_code")
 public class Promocode {
     @Id

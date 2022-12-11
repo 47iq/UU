@@ -24,11 +24,11 @@ public class Cart implements Serializable {
     @Column(nullable = false)
     private int item_count;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "cart_items",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            joinColumns = @JoinColumn(name = "shop_item_id"),
+            inverseJoinColumns = @JoinColumn(name = "cart_id")
     )
     private List<ShopItem> shopItem;
 }

@@ -28,8 +28,8 @@ public class Item {
     @ManyToMany
     @JoinTable(
             name = "item_categories",
-            joinColumns = @JoinColumn(name = "name"),
-            inverseJoinColumns = @JoinColumn(name = "id")
+            joinColumns = @JoinColumn(name = "category_name"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
     )
     private List<Category> categories;
 
@@ -39,8 +39,8 @@ public class Item {
     @ManyToMany
     @JoinTable(
             name = "item_promo_codes",
-            joinColumns = @JoinColumn(name = "promo_code_name"),
-            inverseJoinColumns = @JoinColumn(name = "item_id")
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "promo_code_name")
     )
     private List<Promocode> promocodes;
 

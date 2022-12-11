@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/union
-    username: union
-    password: union
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 123
     driver-class-name: org.postgresql.Driver
 
   jpa:

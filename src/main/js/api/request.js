@@ -14,6 +14,22 @@ export function getAllItems(query) {
     return getResponse('/api/items/items', {query: query}, 'GET')
 }
 
+export function getFavouriteItems(query) {
+    return getResponse('/api/items/favourite', {query: query}, 'GET')
+}
+
+export function getOrderInfo(query) {
+    return getResponse('/api/orders/', {query: query}, 'GET')
+}
+
+export function getBasket(query) {
+    return getResponse('/api/basket/', {query: query}, 'GET')
+}
+
+export function addToBasket(query) {
+    return getResponse('/api/basket/', {query: query})
+}
+
 export function getDetails(query) {
     return getResponse('/api/items/item/' + query,{},'GET')
 }

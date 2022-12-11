@@ -28,4 +28,24 @@ public class HomeController {
     public String details(@RequestParam String id) {
         return "index"; // <3>
     }
+
+    @RequestMapping(value = "/order") // <2>
+    public String order(@RequestParam String id) {
+        return "index"; // <3>
+    }
+
+    @RequestMapping(value = "/basket") // <2>
+    public String basket() {
+        return "index"; // <3>
+    }
+
+    @RequestMapping(value = "/favourites") // <2>
+    public String favourites() {
+        return "index"; // <3>
+    }
+
+    @RequestMapping(value = "/orders") // <2>
+    public String orders() {
+        return "index"; // <3>
+    }
 }

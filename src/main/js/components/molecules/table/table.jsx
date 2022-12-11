@@ -33,20 +33,6 @@ class Table extends Component {
         const handleClick = (e) => {
             this.setState({redirect: "/details/?id=" + e.target.name})
         }
-        const setSortedField = (e) => {
-            let name = e.target.name
-            let checks = store.getState().checks
-            checks.sort((a, b) => {
-                if (a[name] < b[name]) {
-                    return -1;
-                }
-                if (a[name] > b[name]) {
-                    return 1;
-                }
-                return 0;
-            })
-            store.dispatch({type: "setChecks", value: checks})
-        }
         if (this.state.redirect) {
             return (
                 <Navigate to={this.state.redirect} replace={true}/>
@@ -61,16 +47,10 @@ class Table extends Component {
                         <th>
                             {this.props.photo}
                         </th>
-                        <th className={"name-column"} name="name" onClick={setSortedField}>
+                        <th className={"name-column"} name="name">
                             {this.props.coordinateX}
                         </th>
-                        <th name="shop" onClick={setSortedField}>
-                            {this.props.shop}
-                        </th>
-                        <th name="distance" onClick={setSortedField}>
-                            {this.props.distance}
-                        </th>
-                        <th name="price" onClick={setSortedField}>
+                        <th name="price">
                             {this.props.price}
                         </th>
                         <th>
@@ -81,11 +61,9 @@ class Table extends Component {
                     <tbody>
                     {(this.props.checks) ? this.props.checks.map(function (check) {
                             return (
-                                <tr key={check.pointId}>
+                                <tr key={check.id}>
                                     <td><img src={check.imageURL} /></td>
                                     <td>{check.name}</td>
-                                    <td>{check.userName}</td>
-                                    <td>{getDistance(store.getState().coordinates, {longitude: check.coordinatesX, latitude: check.coordinatesY})}</td>
                                     <td>{check.price.toString() + ' рублей'}</td>
                                     <td>
                                         <button className={"item_button"} name={check.id} onClick={handleClick}>Смотреть</button>

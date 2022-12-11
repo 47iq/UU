@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Check(constraints = "price > 0")
 @Table(name = "items")
 public class Item {
     @Id
@@ -20,7 +19,11 @@ public class Item {
     int id;
 
     @Column(nullable = false)
-    int price;
+    String name;
+
+    @Column(columnDefinition = "TEXT")
+    String description;
+
 
     @OneToMany(mappedBy = "item")
     private List<ShopItem> shopItems;

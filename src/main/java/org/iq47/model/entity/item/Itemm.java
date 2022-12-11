@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "items")
+@Table(name = "jlkdfgsashdgklsdafhjgsdfjklghf")
 public class Itemm {
     @Id
     @GeneratedValue

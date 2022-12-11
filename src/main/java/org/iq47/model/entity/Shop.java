@@ -25,4 +25,8 @@ public class Shop {
 
     @OneToMany(mappedBy = "shop")
     private List<ShopItem> shopItems;
+
+    public Shop(String shopName) {
+        name = shopName;
+    }
 }

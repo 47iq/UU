@@ -2,31 +2,32 @@ package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.exception.PointSaveException;
+import org.iq47.model.entity.ShopItem;
 import org.iq47.model.entity.item.TagEnum;
 import org.iq47.network.ItemDTO;
 import org.iq47.network.request.ItemCreateRequest;
 import org.iq47.network.response.ResponseWrapper;
 import org.iq47.security.userDetails.CustomUserDetails;
 import org.iq47.service.ItemService;
+import org.iq47.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("api/items")
 @Slf4j
 public class ItemController {
     private final ItemService itemService;
+    private final ShopService shopService;
 
     @Autowired
-    public ItemController(ItemService service) {
+    public ItemController(ItemService service, ShopService shopService) {
         this.itemService = service;
+        this.shopService = shopService;
     }
 
     private ResponseEntity<ResponseWrapper> reportError(Object req, Exception e) {
@@ -71,12 +72,7 @@ public class ItemController {
         return ResponseEntity.ok().body(itemDtoOptional.get());
     }
 
-    @GetMapping("/items")
-    private ResponseEntity<?> getItems(@RequestParam String query) {
-        if (query == null) return ResponseEntity.badRequest().body(new ResponseWrapper("Item is not specified"));
-        Collection<ItemDTO> s = itemService.getItemsByNameStartsWith(query);
-        return ResponseEntity.ok().body(s);
-    }
+
 
     @GetMapping("/item/{id}")
     private ResponseEntity<?> getItem(@PathVariable long id) {

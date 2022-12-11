@@ -10,4 +10,5 @@ import java.util.List;
 public interface ShopService {
     ResponseWrapper createShop(ShopCreateRequest request);
     List<ShopItemDTO> getAllShopItems();
+    ShopItemDTO getShopItemById(long id);
 }

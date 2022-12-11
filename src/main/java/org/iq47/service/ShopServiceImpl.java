@@ -38,4 +38,8 @@ public class ShopServiceImpl implements ShopService{
     public List<ShopItemDTO> getAllShopItems() {
         return shopItemRepository.findAll().stream().map(ShopItemDTOConverter::entityToDto).collect(Collectors.toList());
     }
+
+    public ShopItemDTO getShopItemById(long id) {
+        return shopItemRepository.findById(id).map(ShopItemDTOConverter::entityToDto).orElse(null);
+    }
 }

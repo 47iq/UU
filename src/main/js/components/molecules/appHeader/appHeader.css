@@ -27,7 +27,7 @@ header {
 .header > div {
     display: flex;
     align-items: center;
-    margin: 1vh 2vw auto 2%;
+    margin: 1vh 2vw auto 0;
     flex-direction: column;
 }
 
@@ -89,5 +89,12 @@ button .logout {
     }
     80%, 100% {
         transform: scale(1) rotateZ(-3deg);
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .header-name-wrapper {
+        margin: 0 0 0 2%;
+        color: white;
     }
 }

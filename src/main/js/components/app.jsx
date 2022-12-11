@@ -16,6 +16,9 @@ import {
 } from "react-router-dom";
 import Create from "./pages/create/create";
 import Details from "./pages/details/details";
+import Order from "./pages/order/order";
+import Favourites from "./pages/favourites/favourites";
+import Basket from "./pages/basket/basket";
 
 const PrivateRoute = () => {
     const auth = store.getState().login; // determine if authorized, from context or however you're doing it
@@ -65,6 +68,15 @@ class App extends Component {
                     </Route>
                     <Route path="/details" element={<PrivateRoute/>}>
                         <Route path="/details" element={<Details/>}/>
+                    </Route>
+                    <Route exact path="/favourites" element={<PrivateRoute/>}>
+                        <Route exact path="/favourites" element={<Favourites/>}/>
+                    </Route>
+                    <Route path="/basket" element={<PrivateRoute/>}>
+                        <Route path="/basket" element={<Basket/>}/>
+                    </Route>
+                    <Route path="/order" element={<PrivateRoute/>}>
+                        <Route path="/order" element={<Order/>}/>
                     </Route>
                     <Route exact path="/login" element={<Login/>}/>
                 </Routes>

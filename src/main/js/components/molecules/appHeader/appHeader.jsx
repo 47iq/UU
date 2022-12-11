@@ -16,8 +16,16 @@ class AppHeader extends Component {
         this.setState({redirect: "/"})
     }
 
+    handleBasket = () => {
+        this.setState({redirect: "/basket"})
+    }
+
+    handleFavourites = () => {
+        this.setState({redirect: "/favourites"})
+    }
+
     render() {
-        if (this.state.redirect && window.location.pathname !== "/") {
+        if (this.state.redirect && !(window.location.pathname === "/" && this.state.redirect === "/" || window.location.pathname === "/basket" && this.state.redirect === "/basket")) {
             return (
                 <Navigate to={this.state.redirect} replace={true}/>
             )
@@ -30,7 +38,13 @@ class AppHeader extends Component {
                 <div className={"search"}>
                     {this.props.isLoggedIn && this.props.search ? <SearchForm getChecks={this.props.getChecks}/> : ""}
                 </div>
-                <div>
+                <div className={"header-buttons"}>
+                    {this.props.isLoggedIn && window.location.pathname !== "/basket" ? <button className={"logout"} onClick={this.handleBasket}>Корзина</button> : ""}
+                </div>
+                <div className={"header-buttons"}>
+                    {this.props.isLoggedIn && window.location.pathname !== "/favourites" ? <button className={"logout"} onClick={this.handleFavourites}>Избранное</button> : ""}
+                </div>
+                <div className={"header-buttons"}>
                     {this.props.isLoggedIn ? <button className={"logout"} onClick={this.props.logout}>Выйти</button> : ""}
                 </div>
             </header>

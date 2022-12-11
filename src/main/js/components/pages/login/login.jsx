@@ -44,7 +44,7 @@ class Login extends Component {
                     sessionStorage.setItem("token", json.accessToken)
                     sessionStorage.setItem("refreshToken", json.refreshToken)
                     store.dispatch({type: "changeLogin", value: "true"});
-                    this.setState({login: true})
+                    this.setState({login: this.state.username})
                 } else {
                     this.setError("important", json.message)
                     setTimeout(() => this.setError("important",  ""), 3000)

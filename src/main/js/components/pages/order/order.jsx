@@ -1,14 +1,14 @@
 import React, {Component} from "react";
-import {getDetails, addToBasket, refresh} from "../../../api/request";
+import {getOrderInfo, refresh} from "../../../api/request";
 import Header from "../../organisms/header/header";
 import store from "../../../app/store";
 import Footer from "../../organisms/footer/footer";
 import GoogleMapReact from 'google-map-react';
-import "./details.css"
 import {getDistance} from "../../../app/utils";
 import {Navigate} from "react-router-dom";
+import Table from "../../molecules/table/table";
 
-class Details extends Component {
+class Order extends Component {
 
     constructor(props) {
         super(props);
@@ -33,19 +33,19 @@ class Details extends Component {
         this.setState({id: query.get("id")})
         console.log(query.get("id"))
         if (query.get("id")) {
-            this.getDetails(query.get("id"))
+            this.getOrder(query.get("id"))
         }
     }
 
-    getDetails = (id) => {
-        getDetails(id)
+    getOrder = (id) => {
+        getOrderInfo(id)
             .then(response => {
                 if (response.ok) {
                     response.text().then(text => {
                         this.setState({item: JSON.parse(text)})
                     })
                 } else {
-                    this.tryToRefresh(this.getDetails, response, id)
+                    this.tryToRefresh(this.getOrder, response, id)
                 }
             })
     }
@@ -94,55 +94,17 @@ class Details extends Component {
                 <Footer/>
             </div>)
         }
-        const handleClick = (e) => {
-            addToBasket({id: e.target.name})
-        }
         return (
             <div id="main">
                 <Header login={true} search={false}/>
                 {<div className={"details-wrapper"}>
                     <div className={"details-row-wrapper"}>
-                        <div className={"details-image-wrapper"}>
-                            <img src={this.state.item.imageURL}
-                                 alt={"Фото недоступно"}/>
-                        </div>
-                        <div className={"outputs-wrapper"}>
-                                <span id={"item-name"}>{this.state.item.name}</span>
-                                <span>Рейтинг: {this.state.item.rating}</span>
-                        </div>
+                        <span> Статус: {this.state.item.status}</span>
+                        <span> Адрес: {this.state.item.address.description}</span>
+                        <span> Дата заказа: {this.state.item.created_at}</span>
+                        <Table photo={"Фото"} submit={"Ссылка"} coordinateX={"Название"} coordinateY={"Y"} radius={"R"} shop={"Магазин"} price={"Цена"} distance={"Расстояние"} checks={this.state.item.items}/>
                     </div>
                     <div className={"details-description"}>Описание: {this.state.item.description}</div>
-                    <table className="table is-bordered is-hoverable is-fullwidth has-text-centered">
-                        <thead>
-                        <tr>
-                            <th name="shop">
-                                Магазин
-                            </th>
-                            <th name="price">
-                                Стоимость
-                            </th>
-                            <th>
-                                Добавить в корзину
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {(this.state.items) ? this.state.items.map(function (check) {
-                                return (
-                                    <tr key={check.shop}>
-                                        <td>{check.shop}</td>
-                                        <td>{check.price.toString() + ' рублей'}</td>
-                                        <td>
-                                            <button className={"item_button"} name={check.id} onClick={handleClick}>Добавить</button>
-                                        </td>
-                                    </tr>
-                                );
-                            }) :
-                            <tr>
-                                <td colSpan={3}>Loading...</td>
-                            </tr>}
-                        </tbody>
-                    </table>
                     <div className={"push"}/>
                 </div>}
                 <Footer/>
@@ -150,5 +112,4 @@ class Details extends Component {
     }
 }
 
-
-export default Details
+export default Order

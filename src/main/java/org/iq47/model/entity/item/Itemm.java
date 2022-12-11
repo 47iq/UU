@@ -3,8 +3,6 @@ package org.iq47.model.entity.item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.iq47.model.entity.Point;
-import org.iq47.model.entity.Role;
 import org.iq47.model.entity.User;
 
 import javax.persistence.*;
@@ -17,7 +15,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Entity
 @Table(name = "items")
-public class Item {
+public class Itemm {
     @Id
     @GeneratedValue
     private Long id;
@@ -64,8 +62,8 @@ public class Item {
         return tagSet.stream().map(Tag::getTagName).collect(Collectors.toSet());
     }
 
-    public Item(String name, String description, int price, double coordinatesX,
-                double coordinatesY, Collection<Tag> enums, String imageURL, User user) {
+    public Itemm(String name, String description, int price, double coordinatesX,
+                 double coordinatesY, Collection<Tag> enums, String imageURL, User user) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -80,7 +78,7 @@ public class Item {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Item item = (Item) o;
+        Itemm item = (Itemm) o;
         return getPrice() == item.getPrice() && Double.compare(item.getCoordinatesX(), getCoordinatesX()) == 0 && Double.compare(item.getCoordinatesY(), getCoordinatesY()) == 0 && Objects.equals(getId(), item.getId()) && Objects.equals(getName(), item.getName()) && Objects.equals(getDescription(), item.getDescription());
     }
 

@@ -7,13 +7,12 @@ import org.iq47.model.ItemRepository;
 import org.iq47.model.TagRepository;
 import org.iq47.model.UserRepository;
 import org.iq47.model.entity.User;
-import org.iq47.model.entity.item.Item;
+import org.iq47.model.entity.item.Itemm;
 import org.iq47.model.entity.item.Tag;
 import org.iq47.network.ItemDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,27 +31,27 @@ public class ItemServiceImpl implements ItemService{
         if (!userOptional.isPresent()) {
             return Optional.empty();
         }
-        Item itemEntity = ItemDTOConverter.dtoToEntity(item, userOptional.get());
-        Item i = itemRepository.save(itemEntity);
+        Itemm itemEntity = ItemDTOConverter.dtoToEntity(item, userOptional.get());
+        Itemm i = itemRepository.save(itemEntity);
         return Optional.of(ItemDTOConverter.entityToDto(i));
     }
 
     public Collection<ItemDTO> getItemsByNameStartsWith(String query) {
-        Collection<Item> s = itemRepository.getItemsByNameStartsWithIgnoreCase(query);
+        Collection<Itemm> s = itemRepository.getItemsByNameStartsWithIgnoreCase(query);
         return s.stream()
                 .map(ItemDTOConverter::entityToDto).collect(Collectors.toList());
     }
 
     public Optional<ItemDTO> getItemById(long id) {
-        Item item = itemRepository.getItemById(id);
+        Itemm item = itemRepository.getItemById(id);
         if (item == null) return Optional.empty();
         return Optional.of(ItemDTOConverter.entityToDto(item));
     }
 
     public Collection<String> getAutocompleteEntries(String query) {
         Collection<Tag> tags = tagRepository.findByNameContainsIgnoreCase(query);
-        Collection<Item> items = itemRepository.getTop5ItemsByNameContainsIgnoreCase(query);
+        Collection<Itemm> items = itemRepository.getTop5ItemsByNameContainsIgnoreCase(query);
         return Stream.concat(tags.stream().map(t -> t.getTagName().name()).distinct(),
-                items.stream().map(Item::getName).distinct()).collect(Collectors.toList());
+                items.stream().map(Itemm::getName).distinct()).collect(Collectors.toList());
     }
 }

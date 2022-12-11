@@ -39,6 +39,17 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
+    @ManyToMany
+    @JoinTable(
+            name = "favorite_items",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
+    private List<Item> items;
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviews;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(

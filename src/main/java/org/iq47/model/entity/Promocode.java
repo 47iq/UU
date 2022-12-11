@@ -28,4 +28,7 @@ public class Promocode {
     @OneToMany(mappedBy = "promocode")
     private List<Order> orders;
 
+    @ManyToMany
+    private List<Item> items;
+
 }

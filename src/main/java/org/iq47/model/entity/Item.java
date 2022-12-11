@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,5 +22,26 @@ public class Item {
     @Column(nullable = false)
     int price;
 
+    @OneToMany(mappedBy = "item")
+    private List<ShopItem> shopItems;
+
+    @ManyToMany
+    @JoinTable(
+            name = "item_categories",
+            joinColumns = @JoinColumn(name = "name"),
+            inverseJoinColumns = @JoinColumn(name = "id")
+    )
+    private List<Category> categories;
+
+    @ManyToMany
+    private List<User> users;
+
+    @ManyToMany
+    @JoinTable(
+            name = "item_promo_codes",
+            joinColumns = @JoinColumn(name = "promo_code_name"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
+    private List<Promocode> promocodes;
 
 }

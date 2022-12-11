@@ -6,35 +6,30 @@ import lombok.Setter;
 import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Check(constraints = "longitude > -180 AND longitude < 180")
-@Table(name = "order_address")
-public class OrderAddress {
+@Table(name = "reviews")
+public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-
-    @Column(nullable = false, length = 40)
-    String name;
+    private int reviewId;
 
     @Column(columnDefinition = "TEXT")
-    String description;
+    private String reviewText;
 
     @Column(nullable = false)
-    double longitude;
-
-    @Column(nullable = false)
-    double latitude;
+    private int grade;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "address")
-    private List<Order> orders;
+    @ManyToOne
+    @JoinColumn(name = "order_item_id")
+    private OrderItem orderItem;
+
+
 }

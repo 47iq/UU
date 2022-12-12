@@ -77,4 +77,17 @@ public class User {
     public User() {
 
     }
+
+    public void addFavoriteItem(Item item) {
+        this.items.add(item);
+        item.getUsers().add(this);
+    }
+
+    public void removeFavoriteItem(long itemId) {
+        Item item = this.items.stream().filter(t -> t.getId() == itemId).findFirst().orElse(null);
+        if (item != null) {
+            this.items.remove(item);
+            item.getUsers().remove(this);
+        }
+    }
 }

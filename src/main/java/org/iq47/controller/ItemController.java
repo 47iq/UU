@@ -63,4 +63,16 @@ public class ItemController {
     private ResponseEntity<?> autocompleteItem(@RequestParam String query) {
         return ResponseEntity.ok().body(itemService.getAutocompleteEntries(query));
     }
+
+    @PostMapping("/favorite_item/add/{item_id}")
+    private ResponseEntity<?> addFavoriteItemToUser(@PathVariable long item_id) {
+        Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+        return ResponseEntity.ok().body(itemService.addFavoriteItem(uid, item_id));
+    }
+
+    @PostMapping("/favorite_item/remove/{item_id}")
+    private ResponseEntity<?> removeFavoriteItemFromUser(@PathVariable long item_id) {
+        Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+        return ResponseEntity.ok().body(itemService.removeFavoriteItem(uid, item_id));
+    }
 }

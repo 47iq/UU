@@ -53,7 +53,6 @@ public class ShopServiceImpl implements ShopService{
         Shop shop = shopRepository.getById(request.getShop_id());
         Item item = itemRepository.getItemById(request.getItem_id());
 
-
         ShopItem shopItem = new ShopItem();
         shopItem.setShop(shop);
         shopItem.setItem(item);

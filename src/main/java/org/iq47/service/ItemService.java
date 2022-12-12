@@ -12,4 +12,6 @@ public interface ItemService {
     Collection<ItemDTO> getItemsByNameStartsWith(String name);
     Optional<ItemDTO> getItemById(long id);
     Collection<String> getAutocompleteEntries(String query);
+    ResponseWrapper addFavoriteItem(long userId, long itemId);
+    ResponseWrapper removeFavoriteItem(long userId, long itemId);
 }

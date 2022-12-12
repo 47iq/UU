@@ -75,4 +75,20 @@ public class ItemServiceImpl implements ItemService{
         return Stream.concat(tags.stream().map(Category::getName).distinct(),
                 items.stream().map(Item::getName).distinct()).collect(Collectors.toList());
     }
+
+    public ResponseWrapper addFavoriteItem(long userId, long itemId) {
+        User user = userRepository.getById(userId);
+
+        user.addFavoriteItem(itemRepository.getItemById(itemId));
+        userRepository.save(user);
+        return new ResponseWrapper("ok");
+    }
+
+    public ResponseWrapper removeFavoriteItem(long userId, long itemId) {
+        User user = userRepository.getById(userId);
+
+        user.removeFavoriteItem(itemId);
+        userRepository.save(user);
+        return new ResponseWrapper("ok");
+    }
 }

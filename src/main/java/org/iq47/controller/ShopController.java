@@ -24,7 +24,7 @@ public class ShopController {
         this.shopService = shopService;
     }
 
-    @PostMapping("/shop")
+    @PostMapping("/create")
     public ResponseEntity<?> createShop(@RequestBody ShopCreateRequest request) {
         ResponseWrapper wrapper = shopService.createShop(request);
 
@@ -32,6 +32,11 @@ public class ShopController {
             return ResponseEntity.ok(wrapper);
         } else return ResponseEntity.internalServerError().body(wrapper);
     }
+
+    /*@GetMapping("/all")
+    public ResponseEntity<?> getShops() {
+
+    }*/
 
     @GetMapping("/shop_items")
     private ResponseEntity<?> getShopItems() {

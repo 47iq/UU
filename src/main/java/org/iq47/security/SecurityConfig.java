@@ -35,13 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/*").permitAll()
                 .antMatchers("/details/**").permitAll()
-                .antMatchers("/basket/**").permitAll()
-                .antMatchers("/order/**").permitAll()
-                .antMatchers("/orders/**").permitAll()
-                .antMatchers("/favourites/**").permitAll()
                 .antMatchers("/built/**").permitAll()
                 .antMatchers("/api/users/**").permitAll()
                 .antMatchers("/api/shop/**").permitAll()
+                .antMatchers("/api/orders/**").permitAll()
                 .antMatchers("/create/**").hasAnyAuthority(
                         UserRole.ROLE_USER.getAuthority())
                 .antMatchers("/api/points/check/*").hasAnyAuthority(

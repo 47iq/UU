@@ -16,9 +16,12 @@ import java.util.List;
 @Check(constraints = "item_count >= 0")
 @Table(name = "carts")
 public class Cart implements Serializable {
+
     @Id
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    private long user_id;
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "uid")
+    @MapsId
     private User user;
 
     @Column(nullable = false)

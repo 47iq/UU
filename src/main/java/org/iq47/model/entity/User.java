@@ -25,10 +25,10 @@ public class User {
     String password;
 
     @Column(nullable = false, length = 40)
-    String surname;
+    String surname = "name";
 
     @Column(nullable = false, length = 40)
-    String name;
+    String name = "name";
 
     @Column
     Date birthday;

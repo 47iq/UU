@@ -1,0 +1,20 @@
+.order-description input {
+    margin-top: 2%;
+    padding: 10px 20px 10px 20px;
+}
+
+.order-description button {
+    margin-top: 5%;
+}
+
+.details-wrapper .order {
+    margin-bottom: 5%;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.order-description .address {
+    font-size: large;
+    margin-bottom: 5%;
+    font-weight: bold;
+}

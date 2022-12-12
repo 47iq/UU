@@ -39,6 +39,7 @@ public class ItemServiceImpl implements ItemService{
         item.setName(request.getName());
         item.setDescription(request.getDescription());
         item.setCategories(new ArrayList<>());
+        item.setImageURL(request.getImageUrl());
         for (int i = 0; i < request.getCategories().length; i++) {
             if ( ! categoryRepository.existsCategoryByName(request.getCategories()[i])) {
                 Category category = new Category();

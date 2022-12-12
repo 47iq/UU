@@ -38,6 +38,9 @@ public class Item {
     @ManyToMany
     private List<User> users;
 
+    @Column(name = "image_url", columnDefinition = "TEXT")
+    private String imageURL;
+
     public Item(String name, String description, List<Category> categories) {
         this.name = name;
         this.description = description;

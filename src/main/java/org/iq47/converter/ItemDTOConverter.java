@@ -19,6 +19,7 @@ public class ItemDTOConverter {
                 (long) itemEntity.getId(),
                 itemEntity.getName(),
                 itemEntity.getDescription(),
+                itemEntity.getImageURL(),
                 itemEntity.getCategories().stream().map(Category::getName).collect(Collectors.toList())
         );
     }

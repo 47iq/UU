@@ -19,6 +19,7 @@ public class ItemDTO {
     private Long id;
     private String name;
     private String description;
+    private String imageUrl;
     private List<String> categories;
 
 }

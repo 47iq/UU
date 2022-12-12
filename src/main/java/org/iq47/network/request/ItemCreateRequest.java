@@ -8,5 +8,6 @@ import java.io.Serializable;
 public class ItemCreateRequest implements Serializable {
     private String name;
     private String description;
+    private String imageUrl;
     private String[] categories;
 }

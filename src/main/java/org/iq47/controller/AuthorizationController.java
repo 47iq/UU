@@ -66,6 +66,7 @@ public class AuthorizationController {
         this.userService = userService;
         this.refreshTokenService = refreshTokenService;
         this.userValidator = userValidator;
+
     }
 
     @PostMapping(value = "/login")

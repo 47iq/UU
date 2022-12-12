@@ -13,6 +13,7 @@ import org.iq47.network.response.ResponseWrapper;
 import org.iq47.security.JwtTokenService;
 import org.iq47.security.userDetails.CustomUserDetails;
 import org.iq47.security.userDetails.UserRole;
+import org.iq47.service.CartService;
 import org.iq47.service.RefreshTokenService;
 import org.iq47.service.UserService;
 import org.iq47.validate.PointValidator;
@@ -47,15 +48,27 @@ public class AuthorizationController {
     private final RefreshTokenService refreshTokenService;
     private final UserValidator userValidator;
 
+    private final CartService cartService;
+
     private final String TOKEN_TYPE = "Bearer";
 
     @Autowired
-    public AuthorizationController(JwtTokenService jwtTokenService, AuthenticationManager authenticationManager, UserService userService, RefreshTokenService refreshTokenService, PointValidator itemValidator, UserValidator userValidator, PasswordEncoder passwordEncoder) {
+    public AuthorizationController(
+            JwtTokenService jwtTokenService,
+            AuthenticationManager authenticationManager,
+            UserService userService,
+            RefreshTokenService refreshTokenService,
+            PointValidator itemValidator,
+            UserValidator userValidator,
+            PasswordEncoder passwordEncoder,
+            CartService cartService
+    ) {
         this.authService = jwtTokenService;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.refreshTokenService = refreshTokenService;
         this.userValidator = userValidator;
+        this.cartService = cartService;
     }
 
     @PostMapping(value = "/login")

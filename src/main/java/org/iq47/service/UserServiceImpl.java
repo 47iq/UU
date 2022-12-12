@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepo;
     private final PasswordEncoder passwordEncoder;
 
+    private final CartService cartService;
+
     @Override
     public UserDTO saveUser(UserDTO userDto) {
         String password = userDto.getPassword();
@@ -36,6 +38,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setRoleSet(rolePersistSet);
         User savedEntity = userRepo.save(userEntity);
         savedEntity.setPassword(password);
+        cartService.createCart(savedEntity.getUid());
         return UserDTOConverter.entityToDto(savedEntity);
     }
 

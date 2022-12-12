@@ -51,7 +51,7 @@ public class ShopServiceImpl implements ShopService{
 
     public ResponseWrapper addShopItem(ShopItemCreateRequest request) {
         Shop shop = shopRepository.getById(request.getShop_id());
-        Item item = itemRepository.getItemById(request.getItem_id());
+        Item item = itemRepository.getItemByName(request.getItemName());
 
         ShopItem shopItem = new ShopItem();
         shopItem.setShop(shop);

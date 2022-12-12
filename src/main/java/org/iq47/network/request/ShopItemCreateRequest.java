@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ShopItemCreateRequest {
-    private long item_id;
+    private String itemName;
     private long shop_id;
     private int price;
 

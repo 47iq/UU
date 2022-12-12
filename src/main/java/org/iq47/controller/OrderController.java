@@ -37,7 +37,7 @@ public class OrderController {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
             if (request == null) return ResponseEntity.badRequest().body("empty request");
-            return ResponseEntity.ok().body(orderService.createOrder(userId));
+            return ResponseEntity.ok().body(orderService.createOrder(userId, request.getAddrId()));
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {

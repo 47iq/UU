@@ -30,13 +30,13 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderAddressRepository orderAddressRepository;
 
-    public ResponseWrapper createOrder(long userId) {
+    public ResponseWrapper createOrder(long userId, long addrId) {
         User user = userRepository.getById(userId);
         Cart cart = cartRepository.findCartByUser(user);
-        //OrderAddress address = orderAddressRepository.getByUser(user);
+        OrderAddress address = orderAddressRepository.getById(addrId);
 
         Order order = new Order();
-        //order.setAddress(address);
+        order.setAddress(address);
         order.setOrderStatus(OrderStatus.CREATED);
 
         for (int i = 0; i < cart.getShopItem().size(); i++) {

@@ -48,7 +48,6 @@ public class AuthorizationController {
     private final RefreshTokenService refreshTokenService;
     private final UserValidator userValidator;
 
-    private final CartService cartService;
 
     private final String TOKEN_TYPE = "Bearer";
 
@@ -60,15 +59,13 @@ public class AuthorizationController {
             RefreshTokenService refreshTokenService,
             PointValidator itemValidator,
             UserValidator userValidator,
-            PasswordEncoder passwordEncoder,
-            CartService cartService
+            PasswordEncoder passwordEncoder
     ) {
         this.authService = jwtTokenService;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.refreshTokenService = refreshTokenService;
         this.userValidator = userValidator;
-        this.cartService = cartService;
     }
 
     @PostMapping(value = "/login")

@@ -8,9 +8,5 @@ import java.io.Serializable;
 public class ItemCreateRequest implements Serializable {
     private String name;
     private String description;
-    private int price;
-    private double coordinatesX;
-    private double coordinatesY;
-    private String[] tags;
-    private String imageUrl;
+    private String[] categories;
 }

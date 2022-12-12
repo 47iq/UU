@@ -3,7 +3,6 @@ package org.iq47.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
 import java.util.List;
@@ -38,6 +37,12 @@ public class Item {
 
     @ManyToMany
     private List<User> users;
+
+    public Item(String name, String description, List<Category> categories) {
+        this.name = name;
+        this.description = description;
+        this.categories = categories;
+    }
 
     @ManyToMany
     @JoinTable(

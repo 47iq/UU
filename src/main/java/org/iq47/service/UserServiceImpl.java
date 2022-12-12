@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toSet());
         userEntity.setRoleSet(rolePersistSet);
         User savedEntity = userRepo.save(userEntity);
-        savedEntity.setPassword(password);
         cartService.createCart(savedEntity.getUid());
+        savedEntity.setPassword(password);
         return UserDTOConverter.entityToDto(savedEntity);
     }
 

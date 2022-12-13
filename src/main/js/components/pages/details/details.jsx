@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {getDetails, addToBasket, refresh, addToFavourites} from "../../../api/request";
+import {getDetails, addToBasket, refresh, addToFavourites, getShopItems} from "../../../api/request";
 import Header from "../../organisms/header/header";
 import store from "../../../app/store";
 import Footer from "../../organisms/footer/footer";
@@ -43,6 +43,19 @@ class Details extends Component {
                 if (response.ok) {
                     response.text().then(text => {
                         this.setState({item: JSON.parse(text)})
+                    })
+                } else {
+                    this.tryToRefresh(this.getDetails, response, id)
+                }
+            })
+    }
+
+    getShopItems = (id) => {
+        getShopItems(id)
+            .then(response => {
+                if (response.ok) {
+                    response.text().then(text => {
+                        this.setState({items: JSON.parse(text)})
                     })
                 } else {
                     this.tryToRefresh(this.getDetails, response, id)
@@ -94,6 +107,9 @@ class Details extends Component {
                 <Navigate to={this.state.redirect} replace={true}/>
             )
         }
+        if (!this.state.items) {
+            this.getShopItems(this.state.id)
+        }
         if (!this.state.item) {
             return (<div id="main">
                 <Header login={true} getChecks={this.getChecks} search={false}/>
@@ -105,7 +121,7 @@ class Details extends Component {
             addToFavourites(e.target.name)
         }
         const handleClick = (e) => {
-            addToBasket({id: e.target.name})
+            addToBasket(e.target.name)
         }
         return (
             <div id="main">
@@ -113,12 +129,11 @@ class Details extends Component {
                 {<div className={"details-wrapper"}>
                     <div className={"details-row-wrapper"}>
                         <div className={"details-image-wrapper"}>
-                            <img src={this.state.item.imageURL}
+                            <img src={this.state.item.imageUrl}
                                  alt={"Фото недоступно"}/>
                         </div>
                         <div className={"outputs-wrapper"}>
                                 <span id={"item-name"}>{this.state.item.name}</span>
-                                <span>Рейтинг: {this.state.item.rating}</span>
                                 <button className={"fav_button"} name={this.state.item.id} onClick={handleFavourite}>В избранное</button>
                         </div>
                     </div>
@@ -140,8 +155,8 @@ class Details extends Component {
                         <tbody>
                         {(this.state.items) ? this.state.items.map(function (check) {
                                 return (
-                                    <tr key={check.shop}>
-                                        <td>{check.shop}</td>
+                                    <tr key={check.shopName}>
+                                        <td>{check.shopName}</td>
                                         <td>{check.price.toString() + ' рублей'}</td>
                                         <td>
                                             <button className={"item_button"} name={check.id} onClick={handleClick}>Добавить</button>

@@ -5,6 +5,7 @@ import store from "../../../app/store";
 import Footer from "../../organisms/footer/footer";
 import GoogleMapReact from 'google-map-react';
 import {getDistance} from "../../../app/utils";
+import "./order.css"
 import {Navigate} from "react-router-dom";
 import Table from "../../molecules/table/table";
 
@@ -87,6 +88,9 @@ class Order extends Component {
                 <Navigate to={this.state.redirect} replace={true}/>
             )
         }
+        const handleClick = (e) => {
+            this.setState({redirect: "/details/?id=" + e.target.name})
+        }
         if (!this.state.item) {
             return (<div id="main">
                 <Header login={true} getChecks={this.getChecks} search={false}/>
@@ -97,14 +101,45 @@ class Order extends Component {
         return (
             <div id="main">
                 <Header login={true} search={false}/>
-                {<div className={"details-wrapper"}>
+                {<div className={"details-new-wrapper"}>
+                    <span> Статус: {this.state.item.orderStatus}</span>
+                    <br/>
+                    <span> Дата заказа: {this.state.item.created_at}</span>
+                    <br/>
+                    <span> Состав заказа:</span>
                     <div className={"details-row-wrapper"}>
-                        <span> Статус: {this.state.item.status}</span>
-                        <span> Адрес: {this.state.item.address.description}</span>
-                        <span> Дата заказа: {this.state.item.created_at}</span>
-                        <Table photo={"Фото"} submit={"Ссылка"} coordinateX={"Название"} coordinateY={"Y"} radius={"R"} shop={"Магазин"} price={"Цена"} distance={"Расстояние"} checks={this.state.item.items}/>
+                        <div className={"table-wrapper"}>
+                            <table className="table is-bordered is-hoverable is-fullwidth has-text-centered">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Магазин
+                                    </th>
+                                    <th className={"name-column"} name="name">
+                                        Название
+                                    </th>
+                                    <th name="price">
+                                        Стоимость
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {(this.state.item.orderItems) ? this.state.item.orderItems.map(function (check) {
+                                        return (
+                                            <tr key={check.id}>
+                                                <td>{check.shopItem.shopName}</td>
+                                                <td>{check.shopItem.name}</td>
+                                                <td>{check.shopItem.price + ' рублей'}</td>
+                                            </tr>
+                                        );
+                                    }) :
+                                    <tr>
+                                        <td colSpan={5}>Loading...</td>
+                                    </tr>}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div className={"details-description"}>Описание: {this.state.item.description}</div>
                     <div className={"push"}/>
                 </div>}
                 <Footer/>

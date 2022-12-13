@@ -14,24 +14,44 @@ export function getAllItems(query) {
     return getResponse('/api/items/items', {query: query}, 'GET')
 }
 
-export function getFavouriteItems(query) {
-    return getResponse('/api/items/favourite', {query: query}, 'GET')
+export function getFavouriteItems() {
+    return getResponse('/api/items/favourite_item', null, 'GET')
 }
 
 export function getOrders() {
-    return getResponse('/api/', null, 'GET')
+    return getResponse('/api/orders/all', null, 'GET')
 }
 
 export function getOrderInfo(query) {
-    return getResponse('/api/orders/' + query, 'GET')
+    return getResponse('/api/orders/' + query, null,'GET')
 }
 
-export function getBasket(query) {
-    return getResponse('/api/basket/', {query: query}, 'GET')
+export function getBasket() {
+    return getResponse('/api/cart/cart/', null, 'GET')
+}
+
+export function getAddresses() {
+    return getResponse('/api/order_address/', null, 'GET')
+}
+
+export function addAddress(data) {
+    return getResponse('/api/order_address/create', data, 'POST')
+}
+
+export function createOrder(data) {
+    return getResponse('/api/orders/create', data, 'POST')
+}
+
+export function deleteFromBasket(id) {
+    return getResponse('/api/cart/cart/remove/' + id, null, 'POST')
+}
+
+export function deleteFromFavourites(id) {
+    return getResponse('/api/items/favorite_item/remove/' + id, null, 'POST')
 }
 
 export function addToBasket(query) {
-    return getResponse('/api/basket/', {query: query})
+    return getResponse('/api/cart/cart/add/' + query, null)
 }
 
 export function getDetails(query) {
@@ -47,7 +67,11 @@ export function createItem(query) {
 }
 
 export function createShopItem(query) {
-    return getResponse('/api/items/autocomplete/', query,'GET')
+    return getResponse('/api/shop/shop_items/add', query,'POST')
+}
+
+export function getShopItems(query) {
+    return getResponse('/api/shop/shop_items/item_id/' + query, null,'GET')
 }
 
 export function addToFavourites(query) {

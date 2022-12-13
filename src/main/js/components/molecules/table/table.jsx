@@ -62,7 +62,7 @@ class Table extends Component {
                     {(this.props.checks) ? this.props.checks.map(function (check) {
                             return (
                                 <tr key={check.id}>
-                                    <td><img src={check.imageURL} /></td>
+                                    <td><img src={check.imageUrl} /></td>
                                     <td>{check.name}</td>
                                     <td>{check.price + ' рублей'}</td>
                                     <td>

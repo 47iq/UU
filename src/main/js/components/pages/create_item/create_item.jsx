@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import CoordinatesForm from "../../organisms/coordinatesForm/coordinatesForm";
 import Table from "../../molecules/table/table";
 import Graph from "../../atoms/graph/graph";
-import {check, clear, create, getAll, refresh, createItem, createShopItem} from "../../../api/request";
+import {check, clear, create, getAll, refresh, createItem, createShopItem, deleteFromBasket} from "../../../api/request";
 import Header from "../../organisms/header/header";
 import {clearCanvas, drawCanvas, drawPoint} from "../../../app/canvas";
 import store from "../../../app/store";
@@ -119,6 +119,18 @@ class CreateItem extends Component {
                 this.setState({tags: value})
                 break
             }
+            case "shop_name": {
+                this.setState({shop_name: value})
+                break
+            }
+            case "item_id": {
+                this.setState({item_id: value})
+                break
+            }
+            case "item_price": {
+                this.setState({item_price: value})
+                break
+            }
         }
     }
 
@@ -134,7 +146,7 @@ class CreateItem extends Component {
 
     sendDataShopItem = (e) => {
         let information = {
-            "shop_name": this.state.shop_name,
+            "shopName": this.state.shop_name,
             "item_id": this.state.item_id,
             "price": this.state.item_price,
         };

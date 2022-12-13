@@ -2,11 +2,12 @@ import React, {Component} from "react";
 import CoordinatesForm from "../../organisms/coordinatesForm/coordinatesForm";
 import Table from "../../molecules/table/table";
 import Graph from "../../atoms/graph/graph";
-import {check, clear, getFavouriteItems, refresh} from "../../../api/request";
+import {check, clear, deleteFromFavourites, getFavouriteItems, refresh} from "../../../api/request";
 import Header from "../../organisms/header/header";
 import {clearCanvas, drawCanvas, drawPoint} from "../../../app/canvas";
 import store from "../../../app/store";
 import Footer from "../../organisms/footer/footer";
+import {Navigate} from "react-router-dom";
 
 class Favourites extends Component {
 
@@ -41,11 +42,11 @@ class Favourites extends Component {
     }
 
     getChecks = () => {
-        getFavouriteItems({username: store.getState().login})
+        getFavouriteItems()
             .then(response => {
                 if (response.ok) {
                     response.text().then(text => {
-                        store.dispatch({type: "setChecks", value: JSON.parse(text)})
+                        this.setState({items: JSON.parse(text)})
                     })
                 } else {
                     refresh().then(response => response.json().then(json => {
@@ -73,6 +74,18 @@ class Favourites extends Component {
     }
 
     render() {
+        const handleClick = (e) => {
+            this.setState({redirect: "/details/?id=" + e.target.name})
+        }
+        const handleDelete = (e) => {
+            deleteFromFavourites(e.target.name)
+            setTimeout(this.getChecks, 1000)
+        }
+        if (this.state.redirect) {
+            return (
+                <Navigate to={this.state.redirect} replace={true}/>
+            )
+        }
         return (
             <div id="main">
                 <Header login={true} getChecks={this.getChecks} search={true}/>
@@ -81,7 +94,49 @@ class Favourites extends Component {
                         В разработке...
                     </div>
                     <div className={"main-table"}>
-                        <Table photo={"Фото"} submit={"Ссылка"} coordinateX={"Название"} coordinateY={"Y"} radius={"R"} shop={"Магазин"} price={"Цена"} distance={"Расстояние"} checks={this.state.checks}/>
+                        <div className={"table-wrapper"}>
+                            <table className="table is-bordered is-hoverable is-fullwidth has-text-centered">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Фото
+                                    </th>
+                                    <th className={"name-column"} name="name">
+                                        Название
+                                    </th>
+                                    <th name="price">
+                                        Стоимость
+                                    </th>
+                                    <th>
+                                        Ссылка
+                                    </th>
+                                    <th>
+                                        Убрать из избранного
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {(this.state.items) ? this.state.items.map(function (check) {
+                                        return (
+                                            <tr key={check.id}>
+                                                <td><img src={check.imageUrl} /></td>
+                                                <td>{check.name}</td>
+                                                <td>{check.price + ' рублей'}</td>
+                                                <td>
+                                                    <button className={"item_button"} name={check.id} onClick={handleClick}>Смотреть</button>
+                                                </td>
+                                                <td>
+                                                    <button className={"item_button"} name={check.id} onClick={handleDelete}>Убрать</button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    }) :
+                                    <tr>
+                                        <td colSpan={5}>Loading...</td>
+                                    </tr>}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>}
                 <div className={"push"}/>

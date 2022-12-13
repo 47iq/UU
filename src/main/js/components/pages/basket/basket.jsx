@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {create, getBasket, refresh} from "../../../api/request";
+import {create, deleteFromBasket, getBasket, refresh, getAddresses, addAddress, createOrder} from "../../../api/request";
 import Header from "../../organisms/header/header";
 import store from "../../../app/store";
 import Footer from "../../organisms/footer/footer";
@@ -16,6 +16,8 @@ class Basket extends Component {
         this.state = {
             id: null,
             item: null,
+            newAddress: false,
+            address_id: null
         }
     }
 
@@ -31,32 +33,46 @@ class Basket extends Component {
 
     getData = () => {
         this.getBasket()
+        this.getAddresses()
     }
 
-    // getBasket = () => {
-    //     getBasket()
-    //         .then(response => {
-    //             if (response.ok) {
-    //                 response.text().then(text => {
-    //                     this.setState({item: JSON.parse(text)})
-    //                 })
-    //             } else {
-    //                 this.tryToRefresh(this.getBasket, response, id)
-    //             }
-    //         })
-    // }
-
     getBasket = () => {
-        this.setState({item: {
-                items: [
-                    {
-                        id: "7",
-                        name: "11111",
-                        price: "1111",
-                        imageURL: "11111"
-                    },
-                ]
-            }})
+        getBasket()
+            .then(response => {
+                if (response.ok) {
+                    response.text().then(text => {
+                        this.setState({item: JSON.parse(text)})
+                    })
+                } else {
+                    this.tryToRefresh(this.getBasket, response)
+                }
+            })
+    }
+
+    getAddresses = () => {
+        getAddresses()
+            .then(response => {
+                if (response.ok) {
+                    response.text().then(text => {
+                        this.setState({addresses: JSON.parse(text)})
+                    })
+                } else {
+                    this.tryToRefresh(this.getBasket, response)
+                }
+            })
+    }
+
+    addAddress = (info) => {
+        addAddress(info)
+            .then(response => {
+                if (response.ok) {
+                    response.text().then(text => {
+                        this.setState({addresses: JSON.parse(text)})
+                    })
+                } else {
+                    this.tryToRefresh(this.getBasket, response)
+                }
+            })
     }
 
     tryToRefresh = (func, response, body = null) => {
@@ -106,16 +122,31 @@ class Basket extends Component {
     }
 
     sendData = (e) => {
-        let information = {
-            "name": this.state.name,
-            "description": this.state.description,
-            "promo_code": this.state.promo_code,
-        };
-        this.submitInfo(information)
+        if (this.state.addresses && this.state.addresses.length > 0)
+            this.setState({address_id: this.state.addresses[0].name})
+        if (this.state.newAddress) {
+            let information = {
+                "name": this.state.name,
+                "description": this.state.description,
+                "longitude": 0,
+                "latitude": 0,
+            }
+            this.addAddress(information)
+            this.setState({address_id: this.state.name})
+            setTimeout(this.getData, 500)
+        }
+        setTimeout(() => {
+            console.log(this.state.addresses.filter(x => x.name === this.state.address_id))
+            let information = {
+                "addrId": this.state.addresses.filter(x => x.name === this.state.address_id)[0].id,
+                "promo_code": this.state.promo_code,
+            };
+            this.submitInfo(information)
+        }, 1000)
     }
 
     submitInfo = (information) => {
-        create(information)
+        createOrder(information)
             .then(response => {
                 if (response.ok) {
                     response.text().then(text => {
@@ -142,6 +173,26 @@ class Basket extends Component {
                 <Navigate to={this.state.redirect} replace={true}/>
             )
         }
+        const handleClick = (e) => {
+            this.setState({redirect: "/details/?id=" + e.target.name})
+        }
+        const handleDelete = (e) => {
+            deleteFromBasket(e.target.name)
+            setTimeout(this.getData, 1000)
+        }
+        const onAddressChanged = (e) => {
+            if (e.target.value === "Использовать существующий")
+                this.setState({
+                    newAddress: false,
+                });
+            else
+                this.setState({
+                    newAddress: true,
+                });
+        };
+        const onAddressOptionChanged = (e) => {
+            this.setState({ [e.target.name]: e.target.value });
+        }
         if (!this.state.item) {
             return (<div id="main">
                 <Header login={true} getChecks={this.getChecks} search={false}/>
@@ -154,13 +205,72 @@ class Basket extends Component {
                 <Header login={true} search={false}/>
                 {<div className={"details-wrapper"}>
                     <span className={"order"}>Оформление заказа</span>
-                    <Table photo={"Фото"} submit={"Ссылка"} coordinateX={"Название"} coordinateY={"Y"} radius={"R"} shop={"Магазин"} price={"Цена"} distance={"Расстояние"} checks={this.state.item.items}/>
+                    <div className={"table-wrapper"}>
+                        <table className="table is-bordered is-hoverable is-fullwidth has-text-centered">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Магазин
+                                </th>
+                                <th className={"name-column"} name="name">
+                                    Название
+                                </th>
+                                <th name="price">
+                                    Стоимость
+                                </th>
+                                <th>
+                                    Ссылка
+                                </th>
+                                <th>
+                                    Убрать из корзины
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {(this.state.item.shopItems) ? this.state.item.shopItems.map(function (check) {
+                                    return (
+                                        <tr key={check.id}>
+                                            <td>{check.shopName}</td>
+                                            <td>{check.name}</td>
+                                            <td>{check.price + ' рублей'}</td>
+                                            <td>
+                                                <button className={"item_button"} name={check.id} onClick={handleClick}>Смотреть</button>
+                                            </td>
+                                            <td>
+                                                <button className={"item_button"} name={check.id} onClick={handleDelete}>Убрать</button>
+                                            </td>
+                                        </tr>
+                                    );
+                                }) :
+                                <tr>
+                                    <td colSpan={5}>Loading...</td>
+                                </tr>}
+                            </tbody>
+                        </table>
+                    </div>
                     <div className={"details-description"}>
                         <span className={"address"}>Адрес:</span>
-                        <input type={"text"} name={"name"} onChange={this.handleUserInput}
-                                   placeholder={"Название"}/>
-                        <textarea name={"description"} onChange={this.handleUserInput}
-                                  placeholder={"Полный адрес"}/>
+                        <div><input type="radio" id="address1" name="address" checked={!this.state.newAddress} onChange={onAddressChanged} value="Использовать существующий"/>Использовать существующий</div>
+                        <div>
+                            <select name="address_id" id="address_id" value={this.state.address_id} onChange={onAddressOptionChanged}>
+                                {(!this.state.newAddress && this.state.addresses) ? this.state.addresses.map(function (address) {
+                                    return (
+                                        <option value={address.name}>{address.name}</option>
+                                    );
+                                }) :
+                                    <option value=""/>
+                                }
+                            </select>
+                        </div>
+                        <div><input type="radio" id="address2" name="address" checked={this.state.newAddress} onChange={onAddressChanged} value="Создать новый"/>Создать новый</div>
+                        {(this.state.newAddress) &&
+                            <div>
+                                <input type={"text"} name={"name"} onChange={this.handleUserInput}
+                                       placeholder={"Название"}/>
+                                <textarea name={"description"} onChange={this.handleUserInput}
+                                      placeholder={"Полный адрес"}/>)}
+                            </div>
+                        }
                         <input type={"text"} name={"promo_code"} onChange={this.handleUserInput}
                                placeholder={"Промокод"}/>
                         <button onClick={this.sendData}>Оформить</button>

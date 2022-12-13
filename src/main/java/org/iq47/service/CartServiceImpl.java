@@ -51,7 +51,7 @@ public class CartServiceImpl implements CartService {
         if (shopItem.isPresent()) {
             Cart cart = repository.findCartByUser(user);
             cart.addShopItem(shopItem.get());
-            cart.setItem_count(cart.getItem_count() + 1);
+            //cart.setItem_count(cart.getItem_count() + 1);
             repository.save(cart);
         } else return new ResponseWrapper("error adding shopitem to cart: item not found");
 
@@ -64,7 +64,7 @@ public class CartServiceImpl implements CartService {
         if (shopItem.isPresent()) {
             Cart cart = repository.findCartByUser(user);
             cart.removeShopItem(shopItem.get().getId());
-            cart.setItem_count(cart.getItem_count() - 1);
+            //cart.setItem_count(cart.getItem_count() - 1);
             repository.save(cart);
         } else return new ResponseWrapper("error removing shopitem to cart: item not found");
 

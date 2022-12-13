@@ -1,5 +1,6 @@
 package org.iq47.service;
 
+import org.iq47.model.entity.Item;
 import org.iq47.network.ItemDTO;
 import org.iq47.network.request.ItemCreateRequest;
 import org.iq47.network.response.ItemResponse;
@@ -18,4 +19,5 @@ public interface ItemService {
     ResponseWrapper addFavoriteItem(int userId, int itemId);
     ResponseWrapper removeFavoriteItem(int userId, int itemId);
     List<ItemDTO> getFavoriteItems(int userId);
+    List<Item> getCatalog(int userId, int itemCount);
 }

@@ -133,4 +133,8 @@ public class ItemServiceImpl implements ItemService{
 
         return items;
     }
+
+    public List<Item> getCatalog(int userId, int itemCount) {
+        return itemRepository.getCatalog(userId, itemCount);
+    }
 }

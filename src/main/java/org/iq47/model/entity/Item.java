@@ -31,7 +31,8 @@ public class Item {
     @JoinTable(
             name = "item_categories",
             joinColumns = @JoinColumn(name = "category_name"),
-            inverseJoinColumns = @JoinColumn(name = "item_id")
+            inverseJoinColumns = @JoinColumn(name = "item_id"),
+            indexes = @Index(columnList = "category_name")
     )
     private List<Category> categories;
 

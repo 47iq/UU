@@ -3,8 +3,11 @@ package org.iq47.model;
 import org.iq47.model.entity.Item;
 import org.iq47.model.entity.item.Itemm;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Integer> {
     Collection<Item> getItemsByName(String name);
@@ -12,6 +15,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     Item getItemById(int id);
     Collection<Item> getItemsByNameStartsWithIgnoreCase(String name);
     Collection<Item> getTop5ItemsByNameContainsIgnoreCase(String name);
-
+    @Query(nativeQuery = true, value = "SELECT getCatalog(:userId, :itemCount)")
+    List<Item> getCatalog(@Param("userId") int userId, @Param("itemCount") int itemCount);
 
 }

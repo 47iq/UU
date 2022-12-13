@@ -80,4 +80,10 @@ public class ItemController {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         return ResponseEntity.ok().body(itemService.getFavoriteItems(uid.intValue()));
     }
+
+    @GetMapping("/get_catalog/{item_count}")
+    private ResponseEntity<?> getCatalog(@PathVariable int item_count) {
+        Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+        return ResponseEntity.ok().body(itemService.getCatalog(uid.intValue(), item_count));
+    }
 }

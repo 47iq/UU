@@ -30,8 +30,8 @@ public class Item {
     @ManyToMany
     @JoinTable(
             name = "item_categories",
-            joinColumns = @JoinColumn(name = "category_name"),
-            inverseJoinColumns = @JoinColumn(name = "item_id"),
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_name"),
             indexes = @Index(columnList = "category_name")
     )
     private List<Category> categories;

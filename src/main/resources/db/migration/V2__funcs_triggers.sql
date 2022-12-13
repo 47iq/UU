@@ -18,4 +18,3 @@ RETURN NEW;
 END; $update_cart_item_count_dec$ LANGUAGE plpgsql;
 CREATE TRIGGER update_cart_item_count_inc AFTER INSERT ON cart_items FOR EACH ROW EXECUTE FUNCTION update_cart_item_count_inc();
 CREATE TRIGGER update_cart_item_count_dec AFTER DELETE ON cart_items FOR EACH ROW EXECUTE FUNCTION update_cart_item_count_dec();
-

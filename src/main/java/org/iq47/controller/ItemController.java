@@ -46,7 +46,8 @@ public class ItemController {
 
     @GetMapping("/items")
     private ResponseEntity<?> getItems(@RequestParam String query) {
-        if (query == null) return ResponseEntity.badRequest().body(new ResponseWrapper("Item is not specified"));
+        Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+        if (query.isEmpty()) return ResponseEntity.ok().body(itemService.getCatalog(uid.intValue(), 10));
         return ResponseEntity.ok().body(itemService.getItemsByNameStartsWith(query));
     }
 

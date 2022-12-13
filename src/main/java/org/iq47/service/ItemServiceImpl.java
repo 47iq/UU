@@ -63,17 +63,18 @@ public class ItemServiceImpl implements ItemService{
         ArrayList<Category> tags = (ArrayList<Category>) categoryRepository.findByNameContainsIgnoreCase(query);
 
         for (Item item : s) {
-            ShopItem shopItem = shopItemRepository.getShopItemsByItemOrderByPrice(item);
-            if (shopItem != null) {
-                items.add(ItemDTOConverter.entityToDto(item, shopItem.getPrice()));
+            List<ShopItem> shopItems = shopItemRepository.getShopItemsByItemOrderByPrice(item);
+
+            if (shopItems.size() > 0 && shopItems.get(0) != null) {
+                items.add(ItemDTOConverter.entityToDto(item, shopItems.get(0).getPrice()));
             } else items.add(ItemDTOConverter.entityToDto(item, -1));
         }
 
         for (Category category : tags) {
             for (Item item : category.getItems()) {
-                ShopItem shopItem = shopItemRepository.getShopItemsByItemOrderByPrice(item);
-                if (shopItem != null) {
-                    items.add(ItemDTOConverter.entityToDto(item, shopItem.getPrice()));
+                List<ShopItem> shopItems = shopItemRepository.getShopItemsByItemOrderByPrice(item);
+                if (shopItems.size() > 0 && shopItems.get(0) != null) {
+                    items.add(ItemDTOConverter.entityToDto(item, shopItems.get(0).getPrice()));
                 } else items.add(ItemDTOConverter.entityToDto(item, -1));
             }
         }
@@ -84,9 +85,9 @@ public class ItemServiceImpl implements ItemService{
     public Optional<ItemDTO> getItemById(int id) {
         Item item = itemRepository.getItemById(id);
         if (item == null) return Optional.empty();
-        ShopItem shopItem = shopItemRepository.getShopItemsByItemOrderByPrice(item);
-        if (shopItem == null) return Optional.empty();
-        return Optional.of(ItemDTOConverter.entityToDto(item, shopItem.getPrice()));
+        List<ShopItem> shopItems = shopItemRepository.getShopItemsByItemOrderByPrice(item);
+        if (shopItems == null) return Optional.empty();
+        return Optional.of(ItemDTOConverter.entityToDto(item, shopItems.get(0).getPrice()));
     }
 
     public Collection<String> getAutocompleteEntries(String query) {

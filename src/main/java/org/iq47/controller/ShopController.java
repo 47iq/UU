@@ -59,11 +59,7 @@ public class ShopController {
 
     @PostMapping("/shop_items/add")
     private ResponseEntity<?> addShopItem(@RequestBody ShopItemCreateRequest request) {
-        try {
-            return ResponseEntity.ok().body(shopService.addShopItem(request));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
-        }
+        return ResponseEntity.ok().body(shopService.addShopItem(request));
     }
 
 }

@@ -1,9 +1,6 @@
 package org.iq47.network;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.iq47.model.entity.item.Tag;
 import org.iq47.model.entity.item.TagEnum;
 
@@ -14,6 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
+@EqualsAndHashCode
 public class ItemDTO {
 
     private int id;

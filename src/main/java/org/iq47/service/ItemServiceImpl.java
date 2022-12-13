@@ -99,6 +99,8 @@ public class ItemServiceImpl implements ItemService{
 
     public ResponseWrapper addFavoriteItem(int userId, int itemId) {
         User user = userRepository.getById(userId);
+        Item item = itemRepository.getItemById(itemId);
+
 
         user.addFavoriteItem(itemRepository.getItemById(itemId));
         userRepository.save(user);
@@ -114,8 +116,21 @@ public class ItemServiceImpl implements ItemService{
     }
 
     public List<ItemDTO> getFavoriteItems(int userId) {
+        List<ItemDTO> items = new ArrayList<>();
         User user = userRepository.getById(userId);
 
-        return user.getItems().stream().map(ItemDTOConverter::entityToDto).collect(Collectors.toList());
+        ArrayList<Item> s = (ArrayList<Item>) user.getItems();
+
+        for (Item item : s) {
+            List<ShopItem> shopItems = shopItemRepository.getShopItemsByItemOrderByPrice(item);
+
+            if (shopItems.size() > 0 && shopItems.get(0) != null) {
+                items.add(ItemDTOConverter.entityToDto(item, shopItems.get(0).getPrice()));
+            } else items.add(ItemDTOConverter.entityToDto(item, -1));
+        }
+
+
+
+        return items;
     }
 }

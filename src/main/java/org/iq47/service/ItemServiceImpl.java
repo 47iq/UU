@@ -63,7 +63,7 @@ public class ItemServiceImpl implements ItemService{
                 .map(ItemDTOConverter::entityToDto).collect(Collectors.toList());
     }
 
-    public Optional<ItemDTO> getItemById(long id) {
+    public Optional<ItemDTO> getItemById(int id) {
         Item item = itemRepository.getItemById(id);
         if (item == null) return Optional.empty();
         return Optional.of(ItemDTOConverter.entityToDto(item));
@@ -76,7 +76,7 @@ public class ItemServiceImpl implements ItemService{
                 items.stream().map(Item::getName).distinct()).collect(Collectors.toList());
     }
 
-    public ResponseWrapper addFavoriteItem(long userId, long itemId) {
+    public ResponseWrapper addFavoriteItem(long userId, int itemId) {
         User user = userRepository.getById(userId);
 
         user.addFavoriteItem(itemRepository.getItemById(itemId));
@@ -84,7 +84,7 @@ public class ItemServiceImpl implements ItemService{
         return new ResponseWrapper("ok");
     }
 
-    public ResponseWrapper removeFavoriteItem(long userId, long itemId) {
+    public ResponseWrapper removeFavoriteItem(long userId, int itemId) {
         User user = userRepository.getById(userId);
 
         user.removeFavoriteItem(itemId);

@@ -1,20 +1,39 @@
-.order-description input {
+.details-wrapper input {
     margin-top: 2%;
     padding: 10px 20px 10px 20px;
 }
 
-.order-description button {
+.details-wrapper button {
     margin-top: 5%;
 }
 
 .details-wrapper .order {
-    margin-bottom: 5%;
+    margin-bottom: 2%;
     font-size: x-large;
     font-weight: bold;
 }
 
-.order-description .address {
+.details-wrapper .address {
     font-size: large;
-    margin-bottom: 5%;
+    margin-bottom: 2%;
     font-weight: bold;
+}
+
+.details-description {
+    padding-right: 40%;
+}
+
+.details-description textarea {
+    flex: 2;
+    min-height: 200px;
+    max-height: 400px;
+    margin-top: 2%;
+}
+.details-description input[type=text] {
+    flex: 1;
+}
+
+.details-description {
+    display: flex;
+    flex-flow: column nowrap;
 }

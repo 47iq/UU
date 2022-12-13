@@ -18,8 +18,12 @@ export function getFavouriteItems(query) {
     return getResponse('/api/items/favourite', {query: query}, 'GET')
 }
 
+export function getOrders() {
+    return getResponse('/api/', null, 'GET')
+}
+
 export function getOrderInfo(query) {
-    return getResponse('/api/orders/', {query: query}, 'GET')
+    return getResponse('/api/orders/' + query, 'GET')
 }
 
 export function getBasket(query) {
@@ -31,13 +35,24 @@ export function addToBasket(query) {
 }
 
 export function getDetails(query) {
-    return getResponse('/api/items/item/' + query,{},'GET')
+    return getResponse('/api/items/item/' + query,null,'GET')
 }
 
 export function getAutocomplete(query) {
     return getResponse('/api/items/autocomplete/', {query: query},'GET')
 }
 
+export function createItem(query) {
+    return getResponse('/api/items/create/', query,'POST')
+}
+
+export function createShopItem(query) {
+    return getResponse('/api/items/autocomplete/', query,'GET')
+}
+
+export function addToFavourites(query) {
+    return getResponse('/api/items/favorite_item/add/' + query, null,'POST')
+}
 
 export function check(point) {
     return getResponse('/api/points/check', point)

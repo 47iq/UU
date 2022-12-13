@@ -10,8 +10,8 @@ import java.util.Optional;
 public interface ItemService {
     ResponseWrapper saveItem(long userId, ItemCreateRequest request);
     Collection<ItemDTO> getItemsByNameStartsWith(String name);
-    Optional<ItemDTO> getItemById(long id);
+    Optional<ItemDTO> getItemById(int id);
     Collection<String> getAutocompleteEntries(String query);
-    ResponseWrapper addFavoriteItem(long userId, long itemId);
-    ResponseWrapper removeFavoriteItem(long userId, long itemId);
+    ResponseWrapper addFavoriteItem(long userId, int itemId);
+    ResponseWrapper removeFavoriteItem(long userId, int itemId);
 }

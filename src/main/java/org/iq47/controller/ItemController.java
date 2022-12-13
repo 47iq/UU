@@ -52,7 +52,7 @@ public class ItemController {
     }
 
     @GetMapping("/item/{id}")
-    private ResponseEntity<?> getItem(@PathVariable long id) {
+    private ResponseEntity<?> getItem(@PathVariable int id) {
         Optional<ItemDTO> item = itemService.getItemById(id);
         if (item.isPresent()) {
             return ResponseEntity.ok().body(item.get());
@@ -65,13 +65,13 @@ public class ItemController {
     }
 
     @PostMapping("/favorite_item/add/{item_id}")
-    private ResponseEntity<?> addFavoriteItemToUser(@PathVariable long item_id) {
+    private ResponseEntity<?> addFavoriteItemToUser(@PathVariable int item_id) {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         return ResponseEntity.ok().body(itemService.addFavoriteItem(uid, item_id));
     }
 
     @PostMapping("/favorite_item/remove/{item_id}")
-    private ResponseEntity<?> removeFavoriteItemFromUser(@PathVariable long item_id) {
+    private ResponseEntity<?> removeFavoriteItemFromUser(@PathVariable int item_id) {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         return ResponseEntity.ok().body(itemService.removeFavoriteItem(uid, item_id));
     }

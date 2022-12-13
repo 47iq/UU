@@ -64,7 +64,7 @@ class Table extends Component {
                                 <tr key={check.id}>
                                     <td><img src={check.imageURL} /></td>
                                     <td>{check.name}</td>
-                                    <td>{check.price.toString() + ' рублей'}</td>
+                                    <td>{check.price + ' рублей'}</td>
                                     <td>
                                         <button className={"item_button"} name={check.id} onClick={handleClick}>Смотреть</button>
                                     </td>

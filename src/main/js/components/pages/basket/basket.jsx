@@ -153,20 +153,16 @@ class Basket extends Component {
             <div id="main">
                 <Header login={true} search={false}/>
                 {<div className={"details-wrapper"}>
+                    <span className={"order"}>Оформление заказа</span>
                     <Table photo={"Фото"} submit={"Ссылка"} coordinateX={"Название"} coordinateY={"Y"} radius={"R"} shop={"Магазин"} price={"Цена"} distance={"Расстояние"} checks={this.state.item.items}/>
                     <div className={"details-description"}>
-                        <span className={"order"}>Оформление заказа</span>
-                        <div>
-                            <span className={"address"}>Адрес:</span>
-                            <div>
-                                <input type={"text"} name={"name"} onChange={this.handleUserInput}
-                                       placeholder={"Название"}/>
-                                <input type={"text"} name={"description"} onChange={this.handleUserInput}
-                                       placeholder={"Полный адрес"}/>
-                            </div>
-                            <input type={"text"} name={"promo_code"} onChange={this.handleUserInput}
-                                   placeholder={"Промокод"}/>
-                        </div>
+                        <span className={"address"}>Адрес:</span>
+                        <input type={"text"} name={"name"} onChange={this.handleUserInput}
+                                   placeholder={"Название"}/>
+                        <textarea name={"description"} onChange={this.handleUserInput}
+                                  placeholder={"Полный адрес"}/>
+                        <input type={"text"} name={"promo_code"} onChange={this.handleUserInput}
+                               placeholder={"Промокод"}/>
                         <button onClick={this.sendData}>Оформить</button>
                         <div className={"success-message"}>{this.state.successMessage}</div>
                     </div>

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {getDetails, addToBasket, refresh} from "../../../api/request";
+import {getDetails, addToBasket, refresh, addToFavourites} from "../../../api/request";
 import Header from "../../organisms/header/header";
 import store from "../../../app/store";
 import Footer from "../../organisms/footer/footer";
@@ -77,6 +77,13 @@ class Details extends Component {
         })
     }
 
+    setError(name, message) {
+        let form = Object.assign({}, this.state.formErrors);
+        form[name] = message;
+        if(this.state.component_mounted)
+            this.setState({formErrors: form})
+    }
+
     componentWillUnmount() {
         this.state.mounted = false;
     }
@@ -94,6 +101,9 @@ class Details extends Component {
                 <Footer/>
             </div>)
         }
+        const handleFavourite = (e) => {
+            addToFavourites(e.target.name)
+        }
         const handleClick = (e) => {
             addToBasket({id: e.target.name})
         }
@@ -109,6 +119,7 @@ class Details extends Component {
                         <div className={"outputs-wrapper"}>
                                 <span id={"item-name"}>{this.state.item.name}</span>
                                 <span>Рейтинг: {this.state.item.rating}</span>
+                                <button className={"fav_button"} name={this.state.item.id} onClick={handleFavourite}>В избранное</button>
                         </div>
                     </div>
                     <div className={"details-description"}>Описание: {this.state.item.description}</div>

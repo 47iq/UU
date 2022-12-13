@@ -40,41 +40,28 @@ class Favourites extends Component {
         this.state.mounted = false;
     }
 
-    // getChecks = () => {
-    //     getFavouriteItems({username: store.getState().login})
-    //         .then(response => {
-    //             if (response.ok) {
-    //                 response.text().then(text => {
-    //                     store.dispatch({type: "setChecks", value: JSON.parse(text)})
-    //                 })
-    //             } else {
-    //                 refresh().then(response => response.json().then(json => {
-    //                     if (response.ok) {
-    //                         sessionStorage.setItem("token", json.accessToken)
-    //                         sessionStorage.setItem("refreshToken", json.refreshToken)
-    //                         this.getChecks()
-    //                     } else {
-    //                         this.setError("important", "Session has expired");
-    //                         setTimeout(() => {
-    //                             this.setError("important", '')
-    //                             store.dispatch({type: "changeLogin", value: null})
-    //                         }, 3000)
-    //                     }
-    //                 }))
-    //             }
-    //         })
-    // }
-
     getChecks = () => {
-        this.setState({
-            checks: [
-                    {
-                        id: "7",
-                        name: "11111",
-                        price: "1111",
-                        imageURL: "11111"
-                    },
-                ]
+        getFavouriteItems({username: store.getState().login})
+            .then(response => {
+                if (response.ok) {
+                    response.text().then(text => {
+                        store.dispatch({type: "setChecks", value: JSON.parse(text)})
+                    })
+                } else {
+                    refresh().then(response => response.json().then(json => {
+                        if (response.ok) {
+                            sessionStorage.setItem("token", json.accessToken)
+                            sessionStorage.setItem("refreshToken", json.refreshToken)
+                            this.getChecks()
+                        } else {
+                            this.setError("important", "Session has expired");
+                            setTimeout(() => {
+                                this.setError("important", '')
+                                store.dispatch({type: "changeLogin", value: null})
+                            }, 3000)
+                        }
+                    }))
+                }
             })
     }
 

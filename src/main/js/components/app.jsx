@@ -19,6 +19,7 @@ import Details from "./pages/details/details";
 import Order from "./pages/order/order";
 import Favourites from "./pages/favourites/favourites";
 import Basket from "./pages/basket/basket";
+import CreateItem from "./pages/create_item/create_item";
 
 const PrivateRoute = () => {
     const auth = store.getState().login; // determine if authorized, from context or however you're doing it
@@ -61,7 +62,7 @@ class App extends Component {
             <Router>
                 <Routes>
                     <Route exact path="/create" element={<PrivateRoute/>}>
-                        <Route exact path="/create" element={<Create/>}/>
+                        <Route exact path="/create" element={<CreateItem/>}/>
                     </Route>
                     <Route exact path="/" element={<PrivateRoute/>}>
                         <Route exact path="/" element={<Main/>}/>

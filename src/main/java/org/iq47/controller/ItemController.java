@@ -8,6 +8,7 @@ import org.iq47.network.request.ItemCreateRequest;
 import org.iq47.network.response.ResponseWrapper;
 import org.iq47.security.userDetails.CustomUserDetails;
 import org.iq47.service.ItemService;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,7 +48,13 @@ public class ItemController {
     @GetMapping("/items")
     private ResponseEntity<?> getItems(@RequestParam String query) {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        if (query.isEmpty()) return ResponseEntity.ok().body(itemService.getCatalog(uid.intValue(), 10));
+        if (query.isEmpty()) {
+            try {
+                return ResponseEntity.ok().body(itemService.getCatalog(uid.intValue(), 10));
+            } catch (PSQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
         return ResponseEntity.ok().body(itemService.getItemsByNameStartsWith(query));
     }
 
@@ -83,7 +90,7 @@ public class ItemController {
     }
 
     @GetMapping("/get_catalog/{item_count}")
-    private ResponseEntity<?> getCatalog(@PathVariable int item_count) {
+    private ResponseEntity<?> getCatalog(@PathVariable int item_count) throws PSQLException {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         return ResponseEntity.ok().body(itemService.getCatalog(uid.intValue(), item_count));
     }

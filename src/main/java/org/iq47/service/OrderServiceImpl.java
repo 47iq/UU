@@ -42,6 +42,7 @@ public class OrderServiceImpl implements OrderService{
         Order order = new Order();
         order.setAddress(address);
         order.setOrderStatus(OrderStatus.CREATED);
+        order.setUser(user);
 
         for (int i = 0; i < cart.getShopItem().size(); i++) {
             OrderItem orderItem = new OrderItem(cart.getShopItem().get(i), order);

@@ -5,6 +5,7 @@ import org.iq47.network.ItemDTO;
 import org.iq47.network.request.ItemCreateRequest;
 import org.iq47.network.response.ItemResponse;
 import org.iq47.network.response.ResponseWrapper;
+import org.postgresql.util.PSQLException;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,5 +20,5 @@ public interface ItemService {
     ResponseWrapper addFavoriteItem(int userId, int itemId);
     ResponseWrapper removeFavoriteItem(int userId, int itemId);
     List<ItemDTO> getFavoriteItems(int userId);
-    List<Item> getCatalog(int userId, int itemCount);
+    List<Item> getCatalog(int userId, int itemCount) throws PSQLException;
 }

@@ -1,10 +1,13 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: 123
+    url: jdbc:postgresql://localhost:5432/union
+    username: union
+    password: union
     driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: false
 
   jpa:
     hibernate:
       ddl-auto: create
+

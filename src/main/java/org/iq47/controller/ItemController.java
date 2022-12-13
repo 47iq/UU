@@ -51,8 +51,9 @@ public class ItemController {
         if (query.isEmpty()) {
             try {
                 return ResponseEntity.ok().body(itemService.getCatalog(uid.intValue(), 10));
-            } catch (PSQLException e) {
+            } catch (Exception e) {
                 System.err.println(e.getMessage());
+                return ResponseEntity.ok().body(itemService.getItemsByNameStartsWith(query));
             }
         }
         return ResponseEntity.ok().body(itemService.getItemsByNameStartsWith(query));

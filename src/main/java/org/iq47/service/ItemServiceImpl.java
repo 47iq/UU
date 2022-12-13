@@ -66,7 +66,7 @@ public class ItemServiceImpl implements ItemService{
             ShopItem shopItem = shopItemRepository.getShopItemsByItemOrderByPrice(item);
             if (shopItem != null) {
                 items.add(ItemDTOConverter.entityToDto(item, shopItem.getPrice()));
-            }
+            } else items.add(ItemDTOConverter.entityToDto(item, -1));
         }
 
         for (Category category : tags) {
@@ -74,7 +74,7 @@ public class ItemServiceImpl implements ItemService{
                 ShopItem shopItem = shopItemRepository.getShopItemsByItemOrderByPrice(item);
                 if (shopItem != null) {
                     items.add(ItemDTOConverter.entityToDto(item, shopItem.getPrice()));
-                }
+                } else items.add(ItemDTOConverter.entityToDto(item, -1));
             }
         }
 

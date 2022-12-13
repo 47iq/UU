@@ -16,7 +16,7 @@ public class ItemDTOConverter {
 
     public static ItemDTO entityToDto(Item itemEntity) {
         return new ItemDTO(
-                (long) itemEntity.getId(),
+                itemEntity.getId(),
                 itemEntity.getName(),
                 itemEntity.getDescription(),
                 itemEntity.getImageURL(),

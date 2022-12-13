@@ -6,5 +6,5 @@ import lombok.Data;
 public class OrderCreateRequest {
     private String promocode;
 
-    private long addrId;
+    private int addrId;
 }

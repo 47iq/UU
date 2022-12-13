@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class CartAddRequest {
-    private long item_id;
+    private int item_id;
 }

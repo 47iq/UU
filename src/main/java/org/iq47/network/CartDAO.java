@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class CartDAO {
-    private long userId;
+    private int userId;
     private int item_count;
     private List<ShopItemDTO> shopItems;
 }

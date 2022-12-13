@@ -41,14 +41,13 @@ public class ItemController {
     private ResponseEntity<?> save(Long userId, @RequestBody ItemCreateRequest req) {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
 
-        return ResponseEntity.ok().body(itemService.saveItem(uid, req));
+        return ResponseEntity.ok().body(itemService.saveItem(uid.intValue(), req));
     }
 
     @GetMapping("/items")
     private ResponseEntity<?> getItems(@RequestParam String query) {
         if (query == null) return ResponseEntity.badRequest().body(new ResponseWrapper("Item is not specified"));
-        Collection<ItemDTO> s = itemService.getItemsByNameStartsWith(query);
-        return ResponseEntity.ok().body(s);
+        return ResponseEntity.ok().body(itemService.getItemsByNameStartsWith(query));
     }
 
     @GetMapping("/item/{id}")
@@ -67,12 +66,18 @@ public class ItemController {
     @PostMapping("/favorite_item/add/{item_id}")
     private ResponseEntity<?> addFavoriteItemToUser(@PathVariable int item_id) {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        return ResponseEntity.ok().body(itemService.addFavoriteItem(uid, item_id));
+        return ResponseEntity.ok().body(itemService.addFavoriteItem(uid.intValue(), item_id));
     }
 
     @PostMapping("/favorite_item/remove/{item_id}")
     private ResponseEntity<?> removeFavoriteItemFromUser(@PathVariable int item_id) {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        return ResponseEntity.ok().body(itemService.removeFavoriteItem(uid, item_id));
+        return ResponseEntity.ok().body(itemService.removeFavoriteItem(uid.intValue(), item_id));
+    }
+
+    @GetMapping("/favourite_item")
+    private ResponseEntity<?> getUserFavoriteItems() {
+        Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+        return ResponseEntity.ok().body(itemService.getFavoriteItems(uid.intValue()));
     }
 }

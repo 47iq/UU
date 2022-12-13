@@ -13,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class UserDTO {
 
-    public Long id;
+    public int id;
     public String username;
     public String password;
     public Set<UserRole> roleSet;

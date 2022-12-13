@@ -18,7 +18,7 @@ import java.util.List;
 public class Cart implements Serializable {
 
     @Id
-    private long user_id;
+    private int user_id;
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "uid")
     @MapsId

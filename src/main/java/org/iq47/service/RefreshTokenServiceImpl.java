@@ -22,7 +22,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Override
     public Optional<String> createRefreshToken(Long userId) {
         RefreshToken refreshToken = new RefreshToken();
-        Optional<User> userOptional = userRepo.findById(userId);
+        Optional<User> userOptional = userRepo.findById(Math.toIntExact(userId));
 
         if (userOptional.isPresent()) {
             refreshToken.setUserEntity(userOptional.get());
@@ -38,7 +38,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     @Override
     public int deleteByUserId(Long userId) {
-        Optional<User> userOptional = userRepo.findById(userId);
+        Optional<User> userOptional = userRepo.findById(Math.toIntExact(userId));
         // how many records were deleted
         return userOptional.map(refreshTokenRepo::deleteByUserEntity).orElse(0);
     }

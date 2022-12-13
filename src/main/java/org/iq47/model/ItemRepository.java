@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;
 
-public interface ItemRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Integer> {
     Collection<Item> getItemsByName(String name);
     Item getItemByName(String name);
     Item getItemById(int id);
     Collection<Item> getItemsByNameStartsWithIgnoreCase(String name);
     Collection<Item> getTop5ItemsByNameContainsIgnoreCase(String name);
+
+
 }

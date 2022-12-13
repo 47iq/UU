@@ -12,12 +12,12 @@ public class PointDTOConverter {
 
     public static PointDTO entityToDto(Point pointEntity) {
         return PointDTO.newBuilder()
-                .setUserId(pointEntity.getUser().getUid())
+                .setUserId((long) pointEntity.getUser().getUid())
                 .setCoordinateX(pointEntity.getCoordinateX())
                 .setCoordinateY(pointEntity.getCoordinateY())
                 .setLocalTime(pointEntity.getLdt())
                 .setHit(pointEntity.getHit())
                 .setRadius(pointEntity.getRadius())
-                .setPointId(pointEntity.getId()).build();
+                .setPointId((long) pointEntity.getId()).build();
     }
 }

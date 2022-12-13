@@ -34,7 +34,7 @@ public class OrderAddressController {
     public ResponseEntity<?> createOrderAddress(@RequestBody OrderAddressCreateRequest request) {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-            return ResponseEntity.ok().body(orderAddressService.createOrderAddress(userId, request));
+            return ResponseEntity.ok().body(orderAddressService.createOrderAddress(userId.intValue(), request));
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
@@ -46,7 +46,7 @@ public class OrderAddressController {
     public ResponseEntity<?> getAllOrderAddressesByUser() {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-            return ResponseEntity.ok().body(orderAddressService.getAllOrderAddressesByUser(userId));
+            return ResponseEntity.ok().body(orderAddressService.getAllOrderAddressesByUser(userId.intValue()));
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
@@ -54,10 +54,10 @@ public class OrderAddressController {
         }
     }
     @GetMapping("/{addrId}")
-    public ResponseEntity<?> getAllOrderAddressById(@PathVariable long addrId) {
+    public ResponseEntity<?> getAllOrderAddressById(@PathVariable int addrId) {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-            return ResponseEntity.ok().body(orderAddressService.getAllOrderAddressById(userId, addrId));
+            return ResponseEntity.ok().body(orderAddressService.getAllOrderAddressById(userId.intValue(), addrId));
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {

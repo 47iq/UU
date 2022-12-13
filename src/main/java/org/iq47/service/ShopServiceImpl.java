@@ -16,6 +16,7 @@ import org.iq47.network.response.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public class ShopServiceImpl implements ShopService{
         return shopItemRepository.findAll().stream().map(ShopItemDTOConverter::entityToDto).collect(Collectors.toList());
     }
 
-    public ShopItemDTO getShopItemById(long id) {
+    public ShopItemDTO getShopItemById(int id) {
         return shopItemRepository.findById(id).map(ShopItemDTOConverter::entityToDto).orElse(null);
     }
 
@@ -61,6 +62,13 @@ public class ShopServiceImpl implements ShopService{
         shopItemRepository.save(shopItem);
 
         return new ResponseWrapper("ok");
+    }
+
+    public List<ShopItemDTO> getShopItemsByItemId(int itemId) {
+        Item item = itemRepository.getItemById(itemId);
+        if (item == null) return new ArrayList<>();
+
+        return shopItemRepository.getShopItemsByItem(item).stream().map(ShopItemDTOConverter::entityToDto).collect(Collectors.toList());
     }
 
 }

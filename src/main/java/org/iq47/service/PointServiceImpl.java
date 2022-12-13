@@ -25,12 +25,7 @@ public class PointServiceImpl implements PointService {
     @Override
     public Optional<PointDTO> savePoint(PointDTO point) {
         //validation
-        Optional<User> userOptional = userRepo.findById(point.getUserId());
-        if (!userOptional.isPresent()) {
-            return Optional.empty();
-        }
-        Point pointEntity = PointDTOConverter.dtoToEntity(point, userOptional.get());
-        return Optional.of(PointDTOConverter.entityToDto(pointRepo.save(pointEntity)));
+        return Optional.empty();
     }
 
     @Override

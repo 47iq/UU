@@ -16,7 +16,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue
-    Long uid;
+    int uid;
 
     @Column(nullable = false, unique = true)
     String username;

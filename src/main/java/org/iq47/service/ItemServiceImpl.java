@@ -3,22 +3,22 @@ package org.iq47.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.converter.ItemDTOConverter;
-import org.iq47.model.CategoryRepository;
-import org.iq47.model.ItemRepository;
-import org.iq47.model.TagRepository;
-import org.iq47.model.UserRepository;
+import org.iq47.model.*;
 import org.iq47.model.entity.Category;
 import org.iq47.model.entity.Item;
+import org.iq47.model.entity.ShopItem;
 import org.iq47.model.entity.User;
 import org.iq47.model.entity.item.Itemm;
 import org.iq47.model.entity.item.Tag;
 import org.iq47.network.ItemDTO;
 import org.iq47.network.request.ItemCreateRequest;
+import org.iq47.network.response.ItemResponse;
 import org.iq47.network.response.ResponseWrapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,7 +32,9 @@ public class ItemServiceImpl implements ItemService{
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
 
-    public ResponseWrapper saveItem(long userId, ItemCreateRequest request) {
+    private final ShopItemRepository shopItemRepository;
+
+    public ResponseWrapper saveItem(int userId, ItemCreateRequest request) {
         User user = userRepository.getById(userId);
 
         Item item = new Item();
@@ -57,10 +59,18 @@ public class ItemServiceImpl implements ItemService{
         return new ResponseWrapper("ok");
     }
 
-    public Collection<ItemDTO> getItemsByNameStartsWith(String query) {
-        Collection<Item> s = itemRepository.getItemsByNameStartsWithIgnoreCase(query);
-        return s.stream()
-                .map(ItemDTOConverter::entityToDto).collect(Collectors.toList());
+    public ItemResponse getItemsByNameStartsWith(String query) {
+        ItemResponse response = new ItemResponse();
+        ArrayList<Item> s = (ArrayList<Item>) itemRepository.getItemsByNameStartsWithIgnoreCase(query);
+        for (Item item : s) {
+            ShopItem shopItem = shopItemRepository.getShopItemsByItemOrderByPrice(item);
+            response.getLowestPrice().add(shopItem.getPrice());
+        }
+
+        response.setItems(s.stream()
+                .map(ItemDTOConverter::entityToDto).collect(Collectors.toList()));
+
+        return response;
     }
 
     public Optional<ItemDTO> getItemById(int id) {
@@ -76,7 +86,7 @@ public class ItemServiceImpl implements ItemService{
                 items.stream().map(Item::getName).distinct()).collect(Collectors.toList());
     }
 
-    public ResponseWrapper addFavoriteItem(long userId, int itemId) {
+    public ResponseWrapper addFavoriteItem(int userId, int itemId) {
         User user = userRepository.getById(userId);
 
         user.addFavoriteItem(itemRepository.getItemById(itemId));
@@ -84,11 +94,17 @@ public class ItemServiceImpl implements ItemService{
         return new ResponseWrapper("ok");
     }
 
-    public ResponseWrapper removeFavoriteItem(long userId, int itemId) {
+    public ResponseWrapper removeFavoriteItem(int userId, int itemId) {
         User user = userRepository.getById(userId);
 
         user.removeFavoriteItem(itemId);
         userRepository.save(user);
         return new ResponseWrapper("ok");
+    }
+
+    public List<ItemDTO> getFavoriteItems(int userId) {
+        User user = userRepository.getById(userId);
+
+        return user.getItems().stream().map(ItemDTOConverter::entityToDto).collect(Collectors.toList());
     }
 }

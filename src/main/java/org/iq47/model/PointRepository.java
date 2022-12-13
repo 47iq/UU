@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 
 @Repository
-public interface PointRepository extends JpaRepository<Point, Long> {
+public interface PointRepository extends JpaRepository<Point, Integer> {
     Collection<Point> findAllByUserUid(Long userId);
 
     @Transactional

@@ -31,7 +31,7 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private UserRepository userRepository;
 
-    public CartDAO getUserCart(long userId) {
+    public CartDAO getUserCart(int userId) {
         User user = userRepository.getById(userId);
         Cart cart = repository.findCartByUser(user);
         if (cart != null) {
@@ -39,13 +39,13 @@ public class CartServiceImpl implements CartService {
         } else return null;
     }
 
-    public ResponseWrapper createCart(long userId) {
+    public ResponseWrapper createCart(int userId) {
         User user = userRepository.getById(userId);
         repository.save(new Cart(user, 0));
         return new ResponseWrapper(String.format("cart created for user %s", user.getName()));
     }
 
-    public ResponseWrapper addShopItemToCart(long userId, long shopItemId) {
+    public ResponseWrapper addShopItemToCart(int userId, int shopItemId) {
         User user = userRepository.getById(userId);
         Optional<ShopItem> shopItem = shopItemRepository.findById(shopItemId);
         if (shopItem.isPresent()) {
@@ -58,7 +58,7 @@ public class CartServiceImpl implements CartService {
         return new ResponseWrapper("ok");
     }
 
-    public ResponseWrapper removeShopItemFromCart(long userId, long shopItemId) {
+    public ResponseWrapper removeShopItemFromCart(int userId, int shopItemId) {
         User user = userRepository.getById(userId);
         Optional<ShopItem> shopItem = shopItemRepository.findById(shopItemId);
         if (shopItem.isPresent()) {

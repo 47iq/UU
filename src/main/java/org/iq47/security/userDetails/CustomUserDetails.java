@@ -31,7 +31,7 @@ public class CustomUserDetails implements UserDetails {
                 .collect(Collectors.toList());
 
         return new CustomUserDetails(
-                userEntity.getUid(),
+                (long) userEntity.getUid(),
                 userEntity.getUsername(),
                 userEntity.getPassword(),
                 authorityList

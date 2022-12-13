@@ -12,6 +12,7 @@ public interface ShopService {
     ResponseWrapper createShop(ShopCreateRequest request);
 
     List<ShopItemDTO> getAllShopItems();
-    ShopItemDTO getShopItemById(long id);
+    ShopItemDTO getShopItemById(int id);
     ResponseWrapper addShopItem(ShopItemCreateRequest request);
+    List<ShopItemDTO> getShopItemsByItemId(int itemId);
 }

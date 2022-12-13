@@ -143,7 +143,7 @@ public class AuthorizationController {
                 throw new InvalidRequestException("Token not found");
             }
             User userEntity = optionalRTE.get().getUserEntity();
-            Optional<String> optionalRToken = refreshTokenService.updateRefreshToken(userEntity.getUid());
+            Optional<String> optionalRToken = refreshTokenService.updateRefreshToken((long) userEntity.getUid());
             if (!optionalRToken.isPresent()) {
                 throw new InvalidRequestException("User is not present in database");
             }

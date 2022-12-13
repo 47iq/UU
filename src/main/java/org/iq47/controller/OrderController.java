@@ -8,10 +8,7 @@ import org.iq47.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/orders")
@@ -37,7 +34,31 @@ public class OrderController {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
             if (request == null) return ResponseEntity.badRequest().body("empty request");
-            return ResponseEntity.ok().body(orderService.createOrder(userId, request.getAddrId()));
+            return ResponseEntity.ok().body(orderService.createOrder(userId.intValue(), request.getAddrId()));
+        } catch (ClassCastException e) {
+            return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
+        } catch (Exception e) {
+            return reportError(null, e);
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getUserOrders() {
+        try {
+            Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+            return ResponseEntity.ok().body(orderService.getUserOrders(Math.toIntExact(userId)));
+        } catch (ClassCastException e) {
+            return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
+        } catch (Exception e) {
+            return reportError(null, e);
+        }
+    }
+
+    @GetMapping("/{order_id}")
+    public ResponseEntity<?> getOrderById(@PathVariable int order_id) {
+        try {
+            Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+            return ResponseEntity.ok().body(orderService.getOrderById(order_id));
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {

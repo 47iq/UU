@@ -44,8 +44,14 @@ public class ShopController {
         return ResponseEntity.ok().body(items);
     }
 
+    @GetMapping("/shop_items/item_id/{id}")
+    private ResponseEntity<?> getShopItemsByItemId(@PathVariable int id) {
+        List<ShopItemDTO> items = shopService.getShopItemsByItemId(id);
+        return ResponseEntity.ok().body(items);
+    }
+
     @GetMapping("/shop_items/{id}")
-    private ResponseEntity<?> getShopItems(@PathVariable long id) {
+    private ResponseEntity<?> getShopItems(@PathVariable int id) {
         ShopItemDTO item = shopService.getShopItemById(id);
         if (item == null) return ResponseEntity.status(404).body("shopitem not found");
         return ResponseEntity.ok().body(item);

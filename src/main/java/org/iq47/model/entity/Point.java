@@ -18,7 +18,7 @@ import java.util.Objects;
 public class Point {
     @Id
     @GeneratedValue
-    private Long id;
+    private int id;
 
     @Column(name = "x")
     private double coordinateX;

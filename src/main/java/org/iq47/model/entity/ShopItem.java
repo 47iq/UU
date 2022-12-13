@@ -19,7 +19,7 @@ import java.util.List;
 public class ShopItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @Column(nullable = false)
     private int price;

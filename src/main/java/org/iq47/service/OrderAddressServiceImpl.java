@@ -27,7 +27,7 @@ public class OrderAddressServiceImpl implements OrderAddressService{
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseWrapper createOrderAddress(long userId, OrderAddressCreateRequest request) {
+    public ResponseWrapper createOrderAddress(int userId, OrderAddressCreateRequest request) {
         User user = userRepository.getById(userId);
 
         OrderAddress address = new OrderAddress();
@@ -42,14 +42,14 @@ public class OrderAddressServiceImpl implements OrderAddressService{
         return new ResponseWrapper("ok");
     }
 
-    public ResponseWrapper removeOrderAddress(long userId, long addrId) {
+    public ResponseWrapper removeOrderAddress(int userId, int addrId) {
         /*User user = userRepository.getById(userId);
 
         userRepository.*/
         return null; //TODO
     }
 
-    public List<OrderAddressDAO> getAllOrderAddressesByUser(long userId) {
+    public List<OrderAddressDAO> getAllOrderAddressesByUser(int userId) {
         User user = userRepository.getById(userId);
 
         return orderAddressRepository.findAll()
@@ -58,7 +58,7 @@ public class OrderAddressServiceImpl implements OrderAddressService{
                 .collect(Collectors.toList());
     }
 
-    public OrderAddressDAO getAllOrderAddressById(long userId, long addrId) {
+    public OrderAddressDAO getAllOrderAddressById(int userId, int addrId) {
         User user = userRepository.getById(userId);
 
         return orderAddressRepository.findById(addrId).map(OrderAddressDAOConverter::entityToDto).orElse(null);

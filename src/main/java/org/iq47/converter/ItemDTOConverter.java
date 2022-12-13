@@ -20,7 +20,19 @@ public class ItemDTOConverter {
                 itemEntity.getName(),
                 itemEntity.getDescription(),
                 itemEntity.getImageURL(),
-                itemEntity.getCategories().stream().map(Category::getName).collect(Collectors.toList())
+                itemEntity.getCategories().stream().map(Category::getName).collect(Collectors.toList()),
+                -1
+        );
+    }
+
+    public static ItemDTO entityToDto(Item itemEntity, int price) {
+        return new ItemDTO(
+                itemEntity.getId(),
+                itemEntity.getName(),
+                itemEntity.getDescription(),
+                itemEntity.getImageURL(),
+                itemEntity.getCategories().stream().map(Category::getName).collect(Collectors.toList()),
+                price
         );
     }
 }

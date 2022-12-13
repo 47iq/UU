@@ -22,4 +22,6 @@ public class ItemDTO {
     private String imageUrl;
     private List<String> categories;
 
+    private int price;
+
 }

@@ -16,10 +16,7 @@ import org.iq47.network.response.ItemResponse;
 import org.iq47.network.response.ResponseWrapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -59,18 +56,29 @@ public class ItemServiceImpl implements ItemService{
         return new ResponseWrapper("ok");
     }
 
-    public ItemResponse getItemsByNameStartsWith(String query) {
-        ItemResponse response = new ItemResponse();
+    public Set<ItemDTO> getItemsByNameStartsWith(String query) {
+        Set<ItemDTO> items = new HashSet<>();
+
         ArrayList<Item> s = (ArrayList<Item>) itemRepository.getItemsByNameStartsWithIgnoreCase(query);
+        ArrayList<Category> tags = (ArrayList<Category>) categoryRepository.findByNameContainsIgnoreCase(query);
+
         for (Item item : s) {
             ShopItem shopItem = shopItemRepository.getShopItemsByItemOrderByPrice(item);
-            response.getLowestPrice().add(shopItem.getPrice());
+            if (shopItem != null) {
+                items.add(ItemDTOConverter.entityToDto(item, shopItem.getPrice()));
+            }
         }
 
-        response.setItems(s.stream()
-                .map(ItemDTOConverter::entityToDto).collect(Collectors.toList()));
+        for (Category category : tags) {
+            for (Item item : category.getItems()) {
+                ShopItem shopItem = shopItemRepository.getShopItemsByItemOrderByPrice(item);
+                if (shopItem != null) {
+                    items.add(ItemDTOConverter.entityToDto(item, shopItem.getPrice()));
+                }
+            }
+        }
 
-        return response;
+        return items;
     }
 
     public Optional<ItemDTO> getItemById(int id) {

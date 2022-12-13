@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ShopRepository extends JpaRepository<Shop, Integer> {
-
+    Shop getByName(String name);
 }

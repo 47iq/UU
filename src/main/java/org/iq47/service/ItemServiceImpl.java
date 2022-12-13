@@ -83,8 +83,9 @@ public class ItemServiceImpl implements ItemService{
 
     public Optional<ItemDTO> getItemById(int id) {
         Item item = itemRepository.getItemById(id);
+        ShopItem shopItem = shopItemRepository.getShopItemsByItemOrderByPrice(item);
         if (item == null) return Optional.empty();
-        return Optional.of(ItemDTOConverter.entityToDto(item));
+        return Optional.of(ItemDTOConverter.entityToDto(item, shopItem.getPrice()));
     }
 
     public Collection<String> getAutocompleteEntries(String query) {

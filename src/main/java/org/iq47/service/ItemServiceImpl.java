@@ -85,6 +85,7 @@ public class ItemServiceImpl implements ItemService{
         Item item = itemRepository.getItemById(id);
         if (item == null) return Optional.empty();
         ShopItem shopItem = shopItemRepository.getShopItemsByItemOrderByPrice(item);
+        if (shopItem == null) return Optional.empty();
         return Optional.of(ItemDTOConverter.entityToDto(item, shopItem.getPrice()));
     }
 

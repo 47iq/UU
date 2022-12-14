@@ -3,10 +3,7 @@ package org.iq47.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.converter.OrderDTOConverter;
-import org.iq47.model.CartRepository;
-import org.iq47.model.OrderAddressRepository;
-import org.iq47.model.OrderRepository;
-import org.iq47.model.UserRepository;
+import org.iq47.model.*;
 import org.iq47.model.entity.*;
 import org.iq47.network.OrderDTO;
 import org.iq47.network.response.ResponseWrapper;
@@ -34,6 +31,10 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderAddressRepository orderAddressRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
+
     public ResponseWrapper createOrder(int userId, int addrId) {
         User user = userRepository.getById(userId);
         Cart cart = cartRepository.findCartByUser(user);
@@ -47,7 +48,7 @@ public class OrderServiceImpl implements OrderService{
         for (int i = 0; i < cart.getShopItem().size(); i++) {
             OrderItem orderItem = new OrderItem(cart.getShopItem().get(i), order);
             order.getOrderItems().add(orderItem);
-            orderItem.setOrder(order);
+            orderItemRepository.save(orderItem);
         }
 
         orderRepository.save(order);

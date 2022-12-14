@@ -42,6 +42,8 @@ class Main extends Component {
     }
 
     getChecks = (query) => {
+        if (query === undefined)
+            query = ""
         getAllItems(query)
             .then(response => {
                 if (response.ok) {

@@ -7,6 +7,7 @@ import Header from "../../organisms/header/header";
 import {clearCanvas, drawCanvas, drawPoint} from "../../../app/canvas";
 import store from "../../../app/store";
 import Footer from "../../organisms/footer/footer";
+import {Navigate} from "react-router-dom";
 
 class Favourites extends Component {
 
@@ -45,7 +46,7 @@ class Favourites extends Component {
             .then(response => {
                 if (response.ok) {
                     response.text().then(text => {
-                        store.dispatch({type: "setChecks", value: JSON.parse(text)})
+                        this.setState({checks: JSON.parse(text)})
                     })
                 } else {
                     refresh().then(response => response.json().then(json => {
@@ -76,6 +77,11 @@ class Favourites extends Component {
         const handleClick = (e) => {
             this.setState({redirect: "/order/?id=" + e.target.name})
         }
+        if (this.state.redirect) {
+            return (
+                <Navigate to={this.state.redirect} replace={true}/>
+            )
+        }
         return (
             <div id="main">
                 <Header login={true} getChecks={this.getChecks} search={true}/>
@@ -102,7 +108,7 @@ class Favourites extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {(this.props.checks) ? this.props.checks.map(function (check) {
+                            {(this.state.checks) ? this.state.checks.map(function (check) {
                                     return (
                                         <tr key={check.id}>
                                             <td>{check.created_at}</td>

@@ -119,7 +119,7 @@ public class ItemServiceImpl implements ItemService{
         List<ItemDTO> items = new ArrayList<>();
         User user = userRepository.getById(userId);
 
-        ArrayList<Item> s = (ArrayList<Item>) user.getItems();
+        List<Item> s = user.getItems();
 
         for (Item item : s) {
             List<ShopItem> shopItems = shopItemRepository.getShopItemsByItemOrderByPrice(item);

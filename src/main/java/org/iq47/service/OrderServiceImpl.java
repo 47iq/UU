@@ -44,6 +44,7 @@ public class OrderServiceImpl implements OrderService{
         order.setAddress(address);
         order.setOrderStatus(OrderStatus.CREATED);
         order.setUser(user);
+        orderRepository.save(order);
 
         for (int i = 0; i < cart.getShopItem().size(); i++) {
             OrderItem orderItem = new OrderItem(cart.getShopItem().get(i), order);
@@ -51,7 +52,6 @@ public class OrderServiceImpl implements OrderService{
             orderItemRepository.save(orderItem);
         }
 
-        orderRepository.save(order);
 
         cart.setShopItem(new ArrayList<>());
         cartRepository.save(cart);

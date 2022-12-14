@@ -14,7 +14,7 @@ public class OrderItemDTOConverter {
         return new OrderItemDTO(
                 orderItem.getId(),
                 ShopItemDTOConverter.entityToDto(orderItem.getShopItem()),
-                OrderDTOConverter.entityToDto(orderItem.getOrder())
+                null//OrderDTOConverter.entityToDto(orderItem.getOrder())
         );
     }
 }

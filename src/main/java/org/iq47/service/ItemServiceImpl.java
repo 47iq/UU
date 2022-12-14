@@ -135,11 +135,19 @@ public class ItemServiceImpl implements ItemService{
     }
 
     public List<ItemDTO> getCatalog(int userId, int itemCount) {
+        List<ItemDTO> itemsDTO = new ArrayList<>();
         List<Item> items = itemRepository.getCatalog(userId, itemCount);
         if (items == null || items.size() == 0) {
             return new ArrayList<>();
         } else {
-            return items.stream().map(ItemDTOConverter::entityToDto).collect(Collectors.toList());
+            for (Item item : items) {
+                List<ShopItem> shopItems = shopItemRepository.getShopItemsByItemOrderByPrice(item);
+
+                if (shopItems.size() > 0 && shopItems.get(0) != null) {
+                    itemsDTO.add(ItemDTOConverter.entityToDto(item, shopItems.get(0).getPrice()));
+                } else itemsDTO.add(ItemDTOConverter.entityToDto(item, -1));
+            }
+            return itemsDTO;
         }
     }
 }

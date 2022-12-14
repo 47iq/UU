@@ -15,7 +15,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     Item getItemById(int id);
     Collection<Item> getItemsByNameStartsWithIgnoreCase(String name);
     Collection<Item> getTop5ItemsByNameContainsIgnoreCase(String name);
-    @Query(nativeQuery = true, value = "SELECT getCatalog(:userId, :itemCount)")
+    @Query(nativeQuery = true, value = "SELECT * from getCatalog(:userId, :itemCount)")
     List<Item> getCatalog(@Param("userId") int userId, @Param("itemCount") int itemCount);
 
 }

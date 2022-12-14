@@ -134,7 +134,12 @@ public class ItemServiceImpl implements ItemService{
         return items;
     }
 
-    public List<Item> getCatalog(int userId, int itemCount) {
-        return itemRepository.getCatalog(userId, itemCount);
+    public List<ItemDTO> getCatalog(int userId, int itemCount) {
+        List<Item> items = itemRepository.getCatalog(userId, itemCount);
+        if (items == null || items.size() == 0) {
+            return new ArrayList<>();
+        } else {
+            return items.stream().map(ItemDTOConverter::entityToDto).collect(Collectors.toList());
+        }
     }
 }

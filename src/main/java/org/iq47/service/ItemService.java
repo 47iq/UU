@@ -20,5 +20,5 @@ public interface ItemService {
     ResponseWrapper addFavoriteItem(int userId, int itemId);
     ResponseWrapper removeFavoriteItem(int userId, int itemId);
     List<ItemDTO> getFavoriteItems(int userId);
-    List<Item> getCatalog(int userId, int itemCount) throws PSQLException;
+    List<ItemDTO> getCatalog(int userId, int itemCount) throws PSQLException;
 }

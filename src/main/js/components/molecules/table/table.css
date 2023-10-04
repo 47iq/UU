@@ -1,0 +1,80 @@
+th {
+    /*cursor: pointer;*/
+    background-color: rgb(232, 200, 255);
+    color: #000000;
+}
+
+th, td {
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+    height: 4vw;
+}
+
+th i {
+    float: right;
+}
+
+tr {
+    color: #000000;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f1f1f1;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2deff;
+}
+
+table {
+    margin-left: 1%;
+    margin-right: 1%;
+
+    table-layout: fixed;
+    width: 100%;
+    /*border: 5px outset ;*/
+    overflow:hidden;
+    /*border-radius: 2vw;*/
+    /*border: 7px outset rgba(0, 0, 255, 0.68);*/
+
+    /*border-collapse: collapse;*/
+}
+
+.no-results {
+    display: block;
+    font-size: 200%;
+    margin-top: 10%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.table-wrapper {
+    margin-top: 1.5%;
+    display: flex;
+    margin-bottom: 5%;
+}
+
+.name-column {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+
+@media screen and (max-width: 747px) {
+    table * {
+        font-size: small;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    table * {
+        font-size: 2vw;
+    }
+}
+
+@media screen and (min-width: 1176px) {
+    table * {
+        font-size: 1vw;
+    }
+}

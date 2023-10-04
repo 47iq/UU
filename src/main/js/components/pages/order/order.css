@@ -1,0 +1,14 @@
+.details-new-wrapper {
+    margin-top: 5%;
+}
+
+.details-new-wrapper span {
+    margin-left: 2%;
+    margin-top: 8%;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.details-new-wrapper .details-row-wrapper {
+    margin-top: 2%;
+}

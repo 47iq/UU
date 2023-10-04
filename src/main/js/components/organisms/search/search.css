@@ -1,0 +1,22 @@
+#search-input {
+    padding: 1vw 20vw;
+    display: inline-block;
+    border: 0.15vw solid white;
+    border-radius: 0.5vw;
+    box-sizing: border-box;
+    flex: 9;
+}
+
+.search-wrapper {
+    display: flex;
+    margin: 1vw 2vw 1vw;
+}
+
+.btn {
+    margin-left: 8%;
+    flex: 1;
+}
+
+.search-button {
+    font-size: small;
+}

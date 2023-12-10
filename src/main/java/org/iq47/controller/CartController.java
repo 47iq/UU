@@ -1,7 +1,6 @@
 package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iq47.network.request.CartAddRequest;
 import org.iq47.network.response.ResponseWrapper;
 import org.iq47.security.userDetails.CustomUserDetails;
 import org.iq47.service.CartService;
@@ -10,11 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/cart")
+@RequestMapping("${urls.base}/${urls.carts.base}")
 @Slf4j
 public class CartController {
 
-    private CartService service;
+    private final CartService service;
 
     public CartController(CartService service) {
         this.service = service;
@@ -28,7 +27,7 @@ public class CartController {
         return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
     }
 
-    @PostMapping("/cart_create")
+    @PostMapping("/${urls.carts.cart.base}")
     public ResponseEntity<?> createCart() {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
@@ -40,7 +39,7 @@ public class CartController {
         }
     }
 
-    @GetMapping("/cart")
+    @GetMapping("/${urls.carts.cart.base}")
     public ResponseEntity<?> getUserCart() {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
@@ -52,7 +51,7 @@ public class CartController {
         }
     }
 
-    @PostMapping("/cart/add/{item_id}")
+    @PostMapping("/${urls.carts.cart.add}/{item_id}")
     public ResponseEntity<?> addShopItemToCart(@PathVariable int item_id) {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
@@ -64,7 +63,7 @@ public class CartController {
         }
     }
 
-    @PostMapping("/cart/remove/{item_id}")
+    @PostMapping("/${urls.carts.cart.remove}/{item_id}")
     public ResponseEntity<?> removeShopItemFromCart(@PathVariable int item_id) {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();

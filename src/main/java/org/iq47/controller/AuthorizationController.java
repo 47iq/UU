@@ -1,6 +1,7 @@
 package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.iq47.exception.InvalidRequestException;
 import org.iq47.model.entity.RefreshToken;
 import org.iq47.model.entity.User;
 import org.iq47.network.UserDTO;
@@ -13,10 +14,8 @@ import org.iq47.network.response.ResponseWrapper;
 import org.iq47.security.JwtTokenService;
 import org.iq47.security.userDetails.CustomUserDetails;
 import org.iq47.security.userDetails.UserRole;
-import org.iq47.service.CartService;
 import org.iq47.service.RefreshTokenService;
 import org.iq47.service.UserService;
-import org.iq47.validate.PointValidator;
 import org.iq47.validate.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,17 +27,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.common.exceptions.InvalidRequestException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("${urls.base}/${urls.auth.base}")
 @Slf4j
 public class AuthorizationController {
 
@@ -52,15 +53,7 @@ public class AuthorizationController {
     private final String TOKEN_TYPE = "Bearer";
 
     @Autowired
-    public AuthorizationController(
-            JwtTokenService jwtTokenService,
-            AuthenticationManager authenticationManager,
-            UserService userService,
-            RefreshTokenService refreshTokenService,
-            PointValidator itemValidator,
-            UserValidator userValidator,
-            PasswordEncoder passwordEncoder
-    ) {
+    public AuthorizationController(JwtTokenService jwtTokenService, AuthenticationManager authenticationManager, UserService userService, RefreshTokenService refreshTokenService, UserValidator userValidator, PasswordEncoder passwordEncoder) {
         this.authService = jwtTokenService;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
@@ -69,7 +62,7 @@ public class AuthorizationController {
 
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/${urls.auth.login}")
     public ResponseEntity<?> login(@RequestBody LoginRequest req) {
         try {
             if (req.getUsername() == null || req.getUsername().equals("")) {
@@ -105,7 +98,7 @@ public class AuthorizationController {
         }
     }
 
-    @PostMapping(value = "/register")
+    @PostMapping(value = "/${urls.auth.register}")
     public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
         try {
             if (req.getUsername() == null || req.getUsername().equals("")) {
@@ -134,7 +127,7 @@ public class AuthorizationController {
         }
     }
 
-    @PostMapping("/refresh")
+    @PostMapping("/${urls.auth.refresh}")
     public ResponseEntity<?> refreshToken(@RequestBody RefreshRequest req) {
         try {
             // refresh token

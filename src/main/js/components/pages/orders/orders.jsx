@@ -1,10 +1,6 @@
 import React, {Component} from "react";
-import CoordinatesForm from "../../organisms/coordinatesForm/coordinatesForm";
-import Table from "../../molecules/table/table";
-import Graph from "../../atoms/graph/graph";
-import {addToBasket, check, clear, getOrders, refresh} from "../../../api/request";
+import {getOrders, refresh} from "../../../api/request";
 import Header from "../../organisms/header/header";
-import {clearCanvas, drawCanvas, drawPoint} from "../../../app/canvas";
 import store from "../../../app/store";
 import Footer from "../../organisms/footer/footer";
 import {Navigate} from "react-router-dom";

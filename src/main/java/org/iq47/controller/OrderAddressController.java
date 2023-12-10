@@ -11,11 +11,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/order_address")
+@RequestMapping("${urls.base}/${urls.order_address.base}")
 @Slf4j
 public class OrderAddressController {
 
-    private OrderAddressService orderAddressService;
+    private final OrderAddressService orderAddressService;
 
     @Autowired
     public OrderAddressController(OrderAddressService orderAddressService) {
@@ -30,7 +30,7 @@ public class OrderAddressController {
         return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<?> createOrderAddress(@RequestBody OrderAddressCreateRequest request) {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();

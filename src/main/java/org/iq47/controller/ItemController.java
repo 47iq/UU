@@ -1,8 +1,6 @@
 package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iq47.exception.PointSaveException;
-import org.iq47.model.entity.item.TagEnum;
 import org.iq47.network.ItemDTO;
 import org.iq47.network.request.ItemCreateRequest;
 import org.iq47.network.response.ResponseWrapper;
@@ -14,13 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/items")
+@RequestMapping("${urls.base}/${urls.items.base}")
 @Slf4j
 public class ItemController {
     private final ItemService itemService;
@@ -45,7 +40,7 @@ public class ItemController {
         return ResponseEntity.ok().body(itemService.saveItem(uid.intValue(), req));
     }
 
-    @GetMapping("/items")
+    @GetMapping("/${urls.items.item}")
     private ResponseEntity<?> getItems(@RequestParam String query) {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         if (query.isEmpty()) {
@@ -59,7 +54,7 @@ public class ItemController {
         return ResponseEntity.ok().body(itemService.getItemsByNameStartsWith(query));
     }
 
-    @GetMapping("/item/{id}")
+    @GetMapping("/${urls.items.item}/{id}")
     private ResponseEntity<?> getItem(@PathVariable int id) {
         Optional<ItemDTO> item = itemService.getItemById(id);
         if (item.isPresent()) {
@@ -67,30 +62,31 @@ public class ItemController {
         } else return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/autocomplete")
+    @GetMapping("/${urls.items.autocomplete}")
     private ResponseEntity<?> autocompleteItem(@RequestParam String query) {
         return ResponseEntity.ok().body(itemService.getAutocompleteEntries(query));
     }
 
-    @PostMapping("/favorite_item/add/{item_id}")
+
+    @PostMapping("/${urls.items.favourite}/{item_id}")
     private ResponseEntity<?> addFavoriteItemToUser(@PathVariable int item_id) {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         return ResponseEntity.ok().body(itemService.addFavoriteItem(uid.intValue(), item_id));
     }
 
-    @PostMapping("/favorite_item/remove/{item_id}")
+    @DeleteMapping("/${urls.items.favourite}/{item_id}")
     private ResponseEntity<?> removeFavoriteItemFromUser(@PathVariable int item_id) {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         return ResponseEntity.ok().body(itemService.removeFavoriteItem(uid.intValue(), item_id));
     }
 
-    @GetMapping("/favourite_item")
+    @GetMapping("/${urls.items.favourite}")
     private ResponseEntity<?> getUserFavoriteItems() {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         return ResponseEntity.ok().body(itemService.getFavoriteItems(uid.intValue()));
     }
 
-    @GetMapping("/get_catalog/{item_count}")
+    @GetMapping("/${urls.items.catalog}/{item_count}")
     private ResponseEntity<?> getCatalog(@PathVariable int item_count) throws PSQLException {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         return ResponseEntity.ok().body(itemService.getCatalog(uid.intValue(), item_count));

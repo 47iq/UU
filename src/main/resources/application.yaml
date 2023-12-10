@@ -1,13 +1,74 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/union
-    username: union
-    password: union
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 123
     driver-class-name: org.postgresql.Driver
-  flyway:
-    enabled: false
 
   jpa:
     hibernate:
       ddl-auto: create
 
+urls:
+  base:
+    "api"
+  auth:
+    login:
+      "login"
+    register:
+      "register"
+    refresh:
+      "refresh"
+    base:
+      "users"
+  home:
+    index:
+      "index"
+    create:
+      "create"
+    login:
+      "login"
+    details:
+      "details"
+    order:
+      "order"
+    basket:
+      "basket"
+    favourites:
+      "favourites"
+    orders:
+      "orders"
+    base:
+      "home"
+  items:
+    item:
+      "item"
+    autocomplete:
+      "autocomplete"
+    base:
+      "items"
+    favourite:
+      "favourite"
+    catalog:
+      "catalog"
+  carts:
+    base:
+      "carts"
+    cart:
+      base:
+        "carts"
+      add:
+        "carts/add"
+      remove:
+        "carts/remove"
+  order_address:
+    base:
+      "order_address"
+  orders:
+    base:
+      "orders"
+  shops:
+    base:
+      "shops"
+    items:
+      "shop_items"

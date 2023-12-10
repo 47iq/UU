@@ -1,5 +1,4 @@
 import store from "./store";
-import {check} from "../api/request";
 
 const MAX_RADIUS = 3
 

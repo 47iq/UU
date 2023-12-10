@@ -11,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/orders")
+@RequestMapping("${urls.base}/${urls.orders.base}")
 @Slf4j
 public class OrderController {
     private final OrderService orderService;
@@ -29,7 +29,7 @@ public class OrderController {
         return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<?> createOrder(@RequestBody OrderCreateRequest request) {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
@@ -42,7 +42,7 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<?> getUserOrders() {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();

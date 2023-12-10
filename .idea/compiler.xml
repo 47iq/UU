@@ -7,12 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="UU" />
+        <module name="YourUnion" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="UU" target="1.8" />
-      <module name="YourUnion" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

@@ -1,7 +1,7 @@
 package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iq47.exception.PointSaveException;
+import org.iq47.exception.InvalidRequestException;
 import org.iq47.model.entity.item.TagEnum;
 import org.iq47.network.ItemDTO;
 import org.iq47.network.request.ItemCreateRequest;
@@ -38,9 +38,9 @@ public class ItemController {
     }
 
     @PostMapping("/create")
-    private ResponseEntity<?> save(Long userId, @RequestBody ItemCreateRequest req) throws PointSaveException {
+    private ResponseEntity<?> save(Long userId, @RequestBody ItemCreateRequest req) throws InvalidRequestException {
         if (req.getName() == null || req.getDescription() == null || req.getTags() == null) {
-            throw new PointSaveException("Item has not been saved.");
+            throw new InvalidRequestException("Item has not been saved.");
         }
 
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
@@ -66,7 +66,7 @@ public class ItemController {
         itemDTO.setTags(tags);
         Optional<ItemDTO> itemDtoOptional = itemService.saveItem(itemDTO);
         if (!itemDtoOptional.isPresent()) {
-            throw new PointSaveException("Item has not been saved.");
+            throw new InvalidRequestException("Item has not been saved.");
         }
         return ResponseEntity.ok().body(itemDtoOptional.get());
     }

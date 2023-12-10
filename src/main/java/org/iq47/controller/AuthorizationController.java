@@ -1,6 +1,7 @@
 package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.iq47.exception.InvalidRequestException;
 import org.iq47.model.entity.RefreshToken;
 import org.iq47.model.entity.User;
 import org.iq47.network.UserDTO;
@@ -27,7 +28,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.common.exceptions.InvalidRequestException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,12 +1,12 @@
 package org.iq47.exception;
 
-public class PointSaveException extends RuntimeException {
+public class InvalidRequestException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 123247653489L;
 
     private final String message;
 
-    public PointSaveException(String message) {
+    public InvalidRequestException(String message) {
         this.message = message;
     }
 

@@ -16,7 +16,6 @@ import org.iq47.security.userDetails.CustomUserDetails;
 import org.iq47.security.userDetails.UserRole;
 import org.iq47.service.RefreshTokenService;
 import org.iq47.service.UserService;
-import org.iq47.validate.PointValidator;
 import org.iq47.validate.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -50,7 +52,7 @@ public class AuthorizationController {
     private final String TOKEN_TYPE = "Bearer";
 
     @Autowired
-    public AuthorizationController(JwtTokenService jwtTokenService, AuthenticationManager authenticationManager, UserService userService, RefreshTokenService refreshTokenService, PointValidator itemValidator, UserValidator userValidator, PasswordEncoder passwordEncoder) {
+    public AuthorizationController(JwtTokenService jwtTokenService, AuthenticationManager authenticationManager, UserService userService, RefreshTokenService refreshTokenService, UserValidator userValidator, PasswordEncoder passwordEncoder) {
         this.authService = jwtTokenService;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
@@ -118,7 +120,7 @@ public class AuthorizationController {
 
         } catch (InvalidRequestException ex) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(ex.getMessage()));
-        }  catch (Exception ex) {
+        } catch (Exception ex) {
             return reportError(req, ex);
         }
     }
@@ -144,13 +146,13 @@ public class AuthorizationController {
 
         } catch (InvalidRequestException ex) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(ex.getMessage()));
-        }  catch (Exception ex) {
+        } catch (Exception ex) {
             return reportError(req, ex);
         }
     }
 
     private ResponseEntity<ResponseWrapper> reportError(Object req, Exception e) {
-        if(req != null)
+        if (req != null)
             log.error(String.format("Got %s while processing %s", e.getClass(), req));
         else
             log.error(String.format("Got %s while processing request", e.getClass()));

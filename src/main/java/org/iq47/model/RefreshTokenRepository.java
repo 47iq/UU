@@ -9,9 +9,7 @@ import javax.transaction.Transactional;
 
 @Repository
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, String> {
-
     @Transactional
     int deleteByUserEntity(User userEntity);
-
     RefreshToken findByRefreshToken(String refreshToken);
 }

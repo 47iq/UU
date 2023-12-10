@@ -9,7 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Collection;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
-
-    Tag findByTagName(TagEnum tagName);
     Collection<Tag> findByNameContainsIgnoreCase(String name);
 }

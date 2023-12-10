@@ -1,7 +1,7 @@
 package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iq47.exception.PointSaveException;
+import org.iq47.exception.InvalidRequestException;
 import org.iq47.network.PointDTO;
 import org.iq47.network.request.PointPlaceRequest;
 import org.iq47.network.response.ResponseWrapper;
@@ -53,7 +53,7 @@ public class PointController {
         return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
     }
 
-    private ResponseEntity<?> save(Long userId, PointPlaceRequest req) throws PointSaveException {
+    private ResponseEntity<?> save(Long userId, PointPlaceRequest req) throws InvalidRequestException {
         PointDTO pointDto = PointDTO.newBuilder()
                 .setUserId(userId)
                 .setCoordinateX(req.getX())
@@ -61,7 +61,7 @@ public class PointController {
                 .setRadius(req.getR()).build();
         Optional<PointDTO> pointDtoOptional = itemService.savePoint(pointDto);
         if (!pointDtoOptional.isPresent()) {
-            throw new PointSaveException("Point has not been saved.");
+            throw new InvalidRequestException("Point has not been saved.");
         }
         return ResponseEntity.ok().body(pointDtoOptional.get());
     }

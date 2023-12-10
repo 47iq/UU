@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 public class JwtTokenServiceImpl implements JwtTokenService{
 
     private final CustomUserDetailsService customUserDetailsService;
-    @Value("aboba123")
+    @Value("${jwt.secret_key}")
     private String secretKey;
 
     @PostConstruct

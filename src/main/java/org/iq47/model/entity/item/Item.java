@@ -3,8 +3,6 @@ package org.iq47.model.entity.item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.iq47.model.entity.Point;
-import org.iq47.model.entity.Role;
 import org.iq47.model.entity.User;
 
 import javax.persistence.*;

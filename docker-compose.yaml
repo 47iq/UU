@@ -12,12 +12,3 @@ services:
       - POSTGRES_PASSWORD=union
       - POSTGRES_DB=union
 
-  pgadmin4:
-    image: dpage/pgadmin4:latest
-    restart: always
-    environment:
-      - PGADMIN_LISTEN_PORT=5555
-      - PGADMIN_DEFAULT_EMAIL=spynad@spynad.com
-      - PGADMIN_DEFAULT_PASSWORD=spynad
-    ports:
-      - 5555:5555

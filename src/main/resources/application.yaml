@@ -47,3 +47,28 @@ urls:
       "autocomplete"
     base:
       "items"
+    favourite:
+      "favourite"
+    catalog:
+      "catalog"
+  carts:
+    base:
+      "carts"
+    cart:
+      base:
+        "carts"
+      add:
+        "carts/add"
+      remove:
+        "carts/remove"
+  order_address:
+    base:
+      "order_address"
+  orders:
+    base:
+      "orders"
+  shops:
+    base:
+      "shops"
+    items:
+      "shop_items"

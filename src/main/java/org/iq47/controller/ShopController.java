@@ -1,7 +1,6 @@
 package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iq47.model.entity.ShopItem;
 import org.iq47.network.ShopItemDTO;
 import org.iq47.network.request.ShopCreateRequest;
 import org.iq47.network.request.ShopItemCreateRequest;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/shop")
+@RequestMapping("${urls.base}/${urls.shops.base}")
 @Slf4j
 public class ShopController {
     private final ShopService shopService;
@@ -24,7 +23,7 @@ public class ShopController {
         this.shopService = shopService;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<?> createShop(@RequestBody ShopCreateRequest request) {
         ResponseWrapper wrapper = shopService.createShop(request);
 
@@ -33,24 +32,19 @@ public class ShopController {
         } else return ResponseEntity.internalServerError().body(wrapper);
     }
 
-    /*@GetMapping("/all")
-    public ResponseEntity<?> getShops() {
-
-    }*/
-
-    @GetMapping("/shop_items")
+    @GetMapping("/${urls.shops.shop_items}")
     private ResponseEntity<?> getShopItems() {
         List<ShopItemDTO> items = shopService.getAllShopItems();
         return ResponseEntity.ok().body(items);
     }
 
-    @GetMapping("/shop_items/item_id/{id}")
+    @GetMapping("/${urls.shops.shop_items}/{id}")
     private ResponseEntity<?> getShopItemsByItemId(@PathVariable int id) {
         List<ShopItemDTO> items = shopService.getShopItemsByItemId(id);
         return ResponseEntity.ok().body(items);
     }
 
-    @GetMapping("/shop_items/{id}")
+    @GetMapping("/{id}/${urls.shops.shop_items}")
     private ResponseEntity<?> getShopItems(@PathVariable int id) {
         ShopItemDTO item = shopService.getShopItemById(id);
         if (item == null) return ResponseEntity.status(404).body("shopitem not found");

@@ -1,93 +1,93 @@
+const BASE_URL = "/api/"
+const AUTH_BASE = BASE_URL + "users/"
+const ITEMS_BASE = BASE_URL + "items/"
+const ORDER_BASE = BASE_URL + "orders/"
+const ADDERSS_BASE = BASE_URL + "order_address/"
+const CART_BASE = BASE_URL + "carts/"
+const SHOPS_BASE = BASE_URL + "shops/"
+
+
 export function register(login, password) {
-    return getResponse('/api/users/register', {username: login, password: password, roles: []}, 'POST', false)
+    return getResponse(AUTH_BASE + 'register', {username: login, password: password, roles: []}, 'POST', false)
 }
 
 export function login(login, password) {
-    return getResponse('/api/users/login', {username: login, password: password}, 'POST', false)
-}
-
-export function getAll() {
-    return getResponse('/api/points/get', {}, 'GET')
+    return getResponse(AUTH_BASE + 'login', {username: login, password: password}, 'POST', false)
 }
 
 export function getAllItems(query) {
-    return getResponse('/api/items/items', {query: query}, 'GET')
+    return getResponse(ITEMS_BASE + 'items', {query: query}, 'GET')
 }
 
 export function getFavouriteItems() {
-    return getResponse('/api/items/favourite_item', null, 'GET')
+    return getResponse(ITEMS_BASE + '/favourite', null, 'GET')
 }
 
 export function getOrders() {
-    return getResponse('/api/orders/all', null, 'GET')
+    return getResponse(ITEMS_BASE, null, 'GET')
 }
 
 export function getOrderInfo(query) {
-    return getResponse('/api/orders/' + query, null,'GET')
+    return getResponse(ORDER_BASE + query, null,'GET')
 }
 
 export function getBasket() {
-    return getResponse('/api/cart/cart/', null, 'GET')
+    return getResponse(CART_BASE, null, 'GET')
 }
 
 export function getAddresses() {
-    return getResponse('/api/order_address/', null, 'GET')
+    return getResponse(ADDERSS_BASE, null, 'GET')
 }
 
 export function addAddress(data) {
-    return getResponse('/api/order_address/create', data, 'POST')
+    return getResponse(ADDERSS_BASE, data, 'POST')
 }
 
 export function createOrder(data) {
-    return getResponse('/api/orders/create', data, 'POST')
+    return getResponse(ORDER_BASE, data, 'POST')
 }
 
 export function deleteFromBasket(id) {
-    return getResponse('/api/cart/cart/remove/' + id, null, 'POST')
+    return getResponse(CART_BASE + 'cart/remove/' + id, null, 'POST')
 }
 
 export function deleteFromFavourites(id) {
-    return getResponse('/api/items/favorite_item/remove/' + id, null, 'POST')
+    return getResponse(ITEMS_BASE + 'favorite/' + id, null, 'DELETE')
 }
 
 export function addToBasket(query) {
-    return getResponse('/api/cart/cart/add/' + query, null)
+    return getResponse(CART_BASE + 'cart/add/' + query, null)
 }
 
 export function getDetails(query) {
-    return getResponse('/api/items/item/' + query,null,'GET')
+    return getResponse(ITEMS_BASE + query,null,'GET')
 }
 
 export function getAutocomplete(query) {
-    return getResponse('/api/items/autocomplete/', {query: query},'GET')
+    return getResponse(ITEMS_BASE + 'autocomplete/', {query: query},'GET')
 }
 
 export function createItem(query) {
-    return getResponse('/api/items/create/', query,'POST')
+    return getResponse(ITEMS_BASE, query,'POST')
 }
 
 export function createShopItem(query) {
-    return getResponse('/api/shop/shop_items/add', query,'POST')
+    return getResponse(SHOPS_BASE + 'shop_items/', query,'POST')
 }
 
 export function getShopItems(query) {
-    return getResponse('/api/shop/shop_items/item_id/' + query, null,'GET')
+    return getResponse(SHOPS_BASE + 'shop_items/' + query, null,'GET')
 }
 
 export function addToFavourites(query) {
-    return getResponse('/api/items/favorite_item/add/' + query, null,'POST')
-}
-
-export function check(point) {
-    return getResponse('/api/points/check', point)
+    return getResponse(ITEMS_BASE + 'favorite/' + query, null,'POST')
 }
 
 export function create(item) {
-    return getResponse('/api/items/create', item)
+    return getResponse(ITEMS_BASE, item)
 }
 
 export function refresh() {
-    //todo
     return fetch('/api/users/refresh', {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         headers: {
@@ -96,16 +96,13 @@ export function refresh() {
         },
         body: JSON.stringify({refreshToken: sessionStorage.getItem("refreshToken")}) // body data type must match "Content-Type" header
     });
-    //return getResponse('/api/users/refresh', {refreshToken: sessionStorage.getItem("refreshToken")})
 }
 
 export function clear() {
     return getResponse('/api/points/clear')
 }
 
-// Пример отправки POST запроса:
 function getResponse(url = '', data = null, method='POST', tokenNeeded = true) {
-    // Default options are marked with *
     let token = sessionStorage.getItem("token")
     let httpHeaders
     if(tokenNeeded && token && token !== 'null'){

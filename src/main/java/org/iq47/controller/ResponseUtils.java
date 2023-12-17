@@ -3,8 +3,10 @@ package org.iq47.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.network.response.ResponseWrapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 @Slf4j
+@Service
 public class ResponseUtils {
     public static ResponseEntity<ResponseWrapper> reportError(Object req, Exception e) {
         if(req != null)

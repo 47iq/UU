@@ -2,7 +2,9 @@ package org.iq47.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.iq47.converter.ShopDTOConverter;
 import org.iq47.converter.ShopItemDTOConverter;
+import org.iq47.network.ShopDTO;
 import org.iq47.repository.ItemRepository;
 import org.iq47.repository.ShopItemRepository;
 import org.iq47.repository.ShopRepository;
@@ -36,13 +38,12 @@ public class ShopServiceImpl implements ShopService{
         this.itemRepository = itemRepository;
     }
 
-    public ResponseWrapper createShop(ShopCreateRequest request) {
+    public ShopDTO createShop(ShopCreateRequest request) {
         if (!request.getShopName().isEmpty()) {
-            shopRepository.save(new Shop(request.getShopName()));
-            return new ResponseWrapper(String.format("shop %s created", request.getShopName()));
+            return ShopDTOConverter.entityToDto(shopRepository.save(new Shop(request.getShopName())));
         }
 
-        return new ResponseWrapper(String.format("error creating shop %s: %s", request.getShopName(), ""));
+        return null;
     }
 
     public List<ShopItemDTO> getAllShopItems() {

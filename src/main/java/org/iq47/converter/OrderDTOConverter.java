@@ -9,7 +9,7 @@ public class OrderDTOConverter {
     public static OrderDTO entityToDto(Order order) {
         return new OrderDTO(
                 order.getId(),
-                order.getCreated_at(),
+                order.getCreatedAt(),
                 order.getOrderItems().stream().map(OrderItemDTOConverter::entityToDto).collect(Collectors.toList()),
                 UserDTOConverter.entityToDto(order.getUser()),
                 order.getOrderStatus()

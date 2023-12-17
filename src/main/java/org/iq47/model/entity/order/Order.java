@@ -23,9 +23,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @Column
+    @Column(name = "created_at")
     @CreationTimestamp
-    private Date created_at;
+    private Date createdAt;
 
     @ManyToOne
     @JoinColumn(name = "promo_code")

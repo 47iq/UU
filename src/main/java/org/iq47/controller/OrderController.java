@@ -44,11 +44,10 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/{order_id}")
-    public ResponseEntity<?> getOrderById(@PathVariable int order_id) {
+    @GetMapping("/{orderId}")
+    public ResponseEntity<?> getOrderById(@PathVariable int orderId) {
         try {
-            Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-            return ResponseEntity.ok().body(orderService.getOrderById(order_id));
+            return ResponseEntity.ok().body(orderService.getOrderById(orderId));
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {

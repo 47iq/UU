@@ -3,9 +3,7 @@ import {getDetails, addToBasket, refresh, addToFavourites, getShopItems} from ".
 import Header from "../../organisms/header/header";
 import store from "../../../app/store";
 import Footer from "../../organisms/footer/footer";
-import GoogleMapReact from 'google-map-react';
 import "./details.css"
-import {getDistance} from "../../../app/utils";
 import {Navigate} from "react-router-dom";
 
 class Details extends Component {

@@ -1,13 +1,10 @@
 import React, {Component} from "react";
-import {create, deleteFromBasket, getBasket, refresh, getAddresses, addAddress, createOrder} from "../../../api/request";
+import {deleteFromBasket, getBasket, refresh, getAddresses, addAddress, createOrder} from "../../../api/request";
 import Header from "../../organisms/header/header";
 import store from "../../../app/store";
 import Footer from "../../organisms/footer/footer";
-import GoogleMapReact from 'google-map-react';
-import {getDistance} from "../../../app/utils";
 import './basket.css';
 import {Navigate} from "react-router-dom";
-import Table from "../../molecules/table/table";
 
 class Basket extends Component {
 
@@ -268,7 +265,7 @@ class Basket extends Component {
                                 <input type={"text"} name={"name"} onChange={this.handleUserInput}
                                        placeholder={"Название"}/>
                                 <textarea name={"description"} onChange={this.handleUserInput}
-                                      placeholder={"Полный адрес"}/>)}
+                                      placeholder={"Полный адрес"}/>)
                             </div>
                         }
                         <input type={"text"} name={"promo_code"} onChange={this.handleUserInput}

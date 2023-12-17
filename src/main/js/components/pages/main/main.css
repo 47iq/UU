@@ -31,7 +31,6 @@
 .coordinates-wrapper {
     display: flex;
     flex: 5;
-    /*margin-left: auto;*/
 }
 
 @media screen and (max-width: 1176px) and (min-width: 747px) {
@@ -52,39 +51,23 @@
     .button-wrapper {
         margin: 0;
         flex: 1.5;
-        /*margin-left: 5%;*/
     }
 
     .form-wrapper {
         margin: 0
-        /*margin-right: 5%;*/
     }
 
     .coordinates-wrapper {
         width: 100%;
         margin-top: 5%;
-        /* margin-left: 5%;*/
-        /*margin-right: 5%;*/
     }
 }
 
 @media screen and (max-width: 490px) {
-    .coordinates-wrapper {
-        /*flex-flow: column-reverse nowrap;*/
-    }
-
-    /*.button-wrapper {
-        width: 80%;
-        margin: 5% auto 0 auto
-    }*/
 
     .button-wrapper .form-errors {
         min-height: 60px;
     }
-
-    /*canvas {
-        width: 100%
-    }*/
 
 }
 

@@ -63,11 +63,11 @@ public class AuthorizationController {
     @PostMapping(value = "/${urls.auth.login}")
     public ResponseEntity<?> login(@RequestBody LoginRequest req) {
         try {
-            if (req.getUsername() == null || req.getUsername().equals("")) {
-                throw new InvalidRequestException("Invalid request data: username is not set.");
+            if (req.getUsername() == null || req.getUsername().isEmpty()) {
+                throw new InvalidRequestException("username is not set");
             }
-            if (req.getPassword() == null || req.getPassword().equals("")) {
-                throw new InvalidRequestException("Invalid request data: password is not set.");
+            if (req.getPassword() == null || req.getPassword().isEmpty()) {
+                throw new InvalidRequestException("password is not set");
             }
 
             Authentication authentication = authenticationManager
@@ -80,8 +80,8 @@ public class AuthorizationController {
             String accessToken = authService.createToken(userDetails);
             // delete if existed
             Optional<String> refreshTokenOptional = refreshTokenService.updateRefreshToken(userDetails.getId());
-            if (!refreshTokenOptional.isPresent()) {
-                throw new InvalidRequestException("User is not found in database");
+            if (refreshTokenOptional.isEmpty()) {
+                throw new InvalidRequestException("user %s is not found in database".formatted(req.getUsername()));
             }
 
             return ResponseEntity.status(HttpStatus.CREATED).body(new JwtResponse(accessToken, TOKEN_TYPE,
@@ -90,7 +90,7 @@ public class AuthorizationController {
         } catch (InvalidRequestException ex) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(ex.getMessage()));
         } catch (BadCredentialsException ex) {
-            return ResponseEntity.badRequest().body(new ResponseWrapper("Invalid username or password"));
+            return ResponseEntity.badRequest().body(new ResponseWrapper("invalid username or password"));
         } catch (Exception ex) {
             return ResponseUtils.reportError(req, ex);
         }
@@ -99,14 +99,14 @@ public class AuthorizationController {
     @PostMapping(value = "/${urls.auth.register}")
     public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
         try {
-            if (req.getUsername() == null || req.getUsername().equals("")) {
-                throw new InvalidRequestException("Invalid request data: username is not set");
+            if (req.getUsername() == null || req.getUsername().isEmpty()) {
+                throw new InvalidRequestException("username is not set");
             }
-            if (req.getPassword() == null || req.getPassword().equals("")) {
-                throw new InvalidRequestException("Invalid request data: password is not set");
+            if (req.getPassword() == null || req.getPassword().isEmpty()) {
+                throw new InvalidRequestException("password is not set");
             }
             if (userService.userExistByName(req.getUsername())) {
-                throw new InvalidRequestException(String.format("User with username '%s' already exists", req.getUsername()));
+                throw new InvalidRequestException(String.format("username '%s' already exists", req.getUsername()));
             }
             Optional<String> message = userValidator.getErrorMessage(req);
             if (message.isPresent()) {
@@ -116,6 +116,9 @@ public class AuthorizationController {
             Set<UserRole> roleSet = new HashSet<>();
             roleSet.add(UserRole.ROLE_USER);
             userDto.setRoleSet(roleSet);
+
+            log.info("user %s registered".formatted(req.getUsername()));
+
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(userDto));
 
         } catch (InvalidRequestException ex) {
@@ -130,13 +133,13 @@ public class AuthorizationController {
         try {
             // refresh token
             Optional<RefreshToken> optionalRTE = refreshTokenService.findByRefreshTokenName(req.getRefreshToken());
-            if (!optionalRTE.isPresent()) {
-                throw new InvalidRequestException("Token not found");
+            if (optionalRTE.isEmpty()) {
+                throw new InvalidRequestException("token not found");
             }
             User userEntity = optionalRTE.get().getUserEntity();
             Optional<String> optionalRToken = refreshTokenService.updateRefreshToken((long) userEntity.getUid());
-            if (!optionalRToken.isPresent()) {
-                throw new InvalidRequestException("User is not present in database");
+            if (optionalRToken.isEmpty()) {
+                throw new InvalidRequestException("user is not present in database");
             }
             // access token
             CustomUserDetails customUserDetails = CustomUserDetails.build(userEntity);

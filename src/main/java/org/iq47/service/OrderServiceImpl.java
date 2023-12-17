@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService{
         this.orderItemRepository = orderItemRepository;
     }
 
-    public ResponseWrapper createOrder(int userId, int addrId) {
+    public OrderDTO createOrder(int userId, int addrId) {
         User user = userRepository.getById(userId);
         Cart cart = cartRepository.findCartByUser(user);
         OrderAddress address = orderAddressRepository.getById(addrId);
@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService{
         order.setAddress(address);
         order.setOrderStatus(OrderStatus.CREATED);
         order.setUser(user);
-        orderRepository.save(order);
+        order = orderRepository.save(order);
 
         for (int i = 0; i < cart.getShopItem().size(); i++) {
             OrderItem orderItem = new OrderItem(cart.getShopItem().get(i), order);
@@ -64,7 +64,11 @@ public class OrderServiceImpl implements OrderService{
         cart.setShopItem(new ArrayList<>());
         cartRepository.save(cart);
 
-        return new ResponseWrapper(String.format("created order for %s", userId));
+        order = orderRepository.getById(order.getId());
+
+        log.info("created new order %s".formatted(order.getId()));
+
+        return OrderDTOConverter.entityToDto(order);
     }
 
     public List<OrderDTO> getUserOrders(int userId) {

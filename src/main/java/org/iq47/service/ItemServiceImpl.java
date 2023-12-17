@@ -32,7 +32,6 @@ public class ItemServiceImpl implements ItemService{
     private final ShopItemRepository shopItemRepository;
 
     public ResponseWrapper saveItem(int userId, ItemCreateRequest request) {
-        User user = userRepository.getById(userId);
 
         Item item = new Item();
         item.setName(request.getName());

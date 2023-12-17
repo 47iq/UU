@@ -5,7 +5,7 @@ import org.iq47.network.response.ResponseWrapper;
 
 public interface CartService {
     CartDAO getUserCart(int userId);
-    ResponseWrapper createCart(int userId);
-    ResponseWrapper addShopItemToCart(int userId, int shopItemId);
-    ResponseWrapper removeShopItemFromCart(int userId, int shopItemId);
+    CartDAO createCart(int userId);
+    boolean addShopItemToCart(int userId, int shopItemId);
+    boolean removeShopItemFromCart(int userId, int shopItemId);
 }

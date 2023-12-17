@@ -37,31 +37,37 @@ public class CartController {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
             return ResponseEntity.ok().body(service.getUserCart(userId.intValue()));
         } catch (ClassCastException e) {
-            return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
+            return ResponseEntity.status(403).body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
             return ResponseUtils.reportError(null, e);
         }
     }
 
-    @PostMapping("/${urls.carts.cart.add}/{item_id}")
-    public ResponseEntity<?> addShopItemToCart(@PathVariable int item_id) {
+    @PostMapping("/${urls.carts.cart.add}/{itemId}")
+    public ResponseEntity<?> addShopItemToCart(@PathVariable int itemId) {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-            return ResponseEntity.ok().body(service.addShopItemToCart(userId.intValue(), item_id));
+
+            boolean res = service.addShopItemToCart(userId.intValue(), itemId);
+
+            if (res) return ResponseEntity.ok().build();
+            else return ResponseEntity.status(404).body(new ResponseWrapper("shop item not found"));
         } catch (ClassCastException e) {
-            return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
+            return ResponseEntity.status(403).body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
             return ResponseUtils.reportError(null, e);
         }
     }
 
-    @PostMapping("/${urls.carts.cart.remove}/{item_id}")
-    public ResponseEntity<?> removeShopItemFromCart(@PathVariable int item_id) {
+    @PostMapping("/${urls.carts.cart.remove}/{itemId}")
+    public ResponseEntity<?> removeShopItemFromCart(@PathVariable int itemId) {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-            return ResponseEntity.ok().body(service.removeShopItemFromCart(userId.intValue(), item_id));
+            boolean res = service.removeShopItemFromCart(userId.intValue(), itemId);
+            if (res) return ResponseEntity.ok().build();
+            else return ResponseEntity.status(404).body(new ResponseWrapper("shop item not found"));
         } catch (ClassCastException e) {
-            return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
+            return ResponseEntity.status(403).body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
             return ResponseUtils.reportError(null, e);
         }

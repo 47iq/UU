@@ -23,10 +23,11 @@ public class OrderController {
     public ResponseEntity<?> createOrder(@RequestBody OrderCreateRequest request) {
         try {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-            if (request == null) return ResponseEntity.badRequest().body("empty request");
+            if (request == null) return ResponseEntity.badRequest().body(new ResponseWrapper("request empty"));
+
             return ResponseEntity.ok().body(orderService.createOrder(userId.intValue(), request.getAddrId()));
         } catch (ClassCastException e) {
-            return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
+            return ResponseEntity.badRequest().body(new ResponseWrapper("access denied"));
         } catch (Exception e) {
             return ResponseUtils.reportError(null, e);
         }
@@ -38,7 +39,7 @@ public class OrderController {
             Long userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
             return ResponseEntity.ok().body(orderService.getUserOrders(Math.toIntExact(userId)));
         } catch (ClassCastException e) {
-            return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
+            return ResponseEntity.badRequest().body(new ResponseWrapper("access denied"));
         } catch (Exception e) {
             return ResponseUtils.reportError(null, e);
         }
@@ -49,7 +50,7 @@ public class OrderController {
         try {
             return ResponseEntity.ok().body(orderService.getOrderById(orderId));
         } catch (ClassCastException e) {
-            return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
+            return ResponseEntity.badRequest().body(new ResponseWrapper("access denied"));
         } catch (Exception e) {
             return ResponseUtils.reportError(null, e);
         }

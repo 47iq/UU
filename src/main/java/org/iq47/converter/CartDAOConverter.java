@@ -7,6 +7,6 @@ import java.util.stream.Collectors;
 
 public class CartDAOConverter {
     public static CartDAO entityToDto(Cart cart) {
-        return new CartDAO(cart.getUser().getUid(), cart.getItem_count(), cart.getShopItem().stream().map(ShopItemDTOConverter::entityToDto).collect(Collectors.toList()));
+        return new CartDAO(cart.getUser().getUid(), cart.getItemCount(), cart.getShopItem().stream().map(ShopItemDTOConverter::entityToDto).collect(Collectors.toList()));
     }
 }

@@ -22,14 +22,14 @@ public class ItemController {
         this.itemService = service;
     }
 
-    @PostMapping("/create")
-    private ResponseEntity<?> save(Long userId, @RequestBody ItemCreateRequest req) {
+    @PostMapping("/")
+    private ResponseEntity<?> save(@RequestBody ItemCreateRequest req) {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
 
         return ResponseEntity.ok().body(itemService.saveItem(uid.intValue(), req));
     }
 
-    @GetMapping("/${urls.items.item}")
+    @GetMapping("/")
     private ResponseEntity<?> getItems(@RequestParam String query) {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         if (query.isEmpty()) {
@@ -43,7 +43,7 @@ public class ItemController {
         return ResponseEntity.ok().body(itemService.getItemsByNameStartsWith(query));
     }
 
-    @GetMapping("/${urls.items.item}/{id}")
+    @GetMapping("/{id}")
     private ResponseEntity<?> getItem(@PathVariable int id) {
         Optional<ItemDTO> item = itemService.getItemById(id);
         if (item.isPresent()) {

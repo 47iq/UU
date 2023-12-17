@@ -29,7 +29,7 @@ public class OrderAddressServiceImpl implements OrderAddressService{
         this.userRepository = userRepository;
     }
 
-    public ResponseWrapper createOrderAddress(int userId, OrderAddressCreateRequest request) {
+    public OrderAddressDAO createOrderAddress(int userId, OrderAddressCreateRequest request) {
         User user = userRepository.getById(userId);
 
         OrderAddress address = new OrderAddress();
@@ -40,8 +40,9 @@ public class OrderAddressServiceImpl implements OrderAddressService{
         address.setUser(user);
         address.setOrders(new ArrayList<>());
 
-        orderAddressRepository.save(address);
-        return new ResponseWrapper("ok");
+        address = orderAddressRepository.save(address);
+
+        return OrderAddressDAOConverter.entityToDto(address);
     }
 
     public List<OrderAddressDAO> getAllOrderAddressesByUser(int userId) {

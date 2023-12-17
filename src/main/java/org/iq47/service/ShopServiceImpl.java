@@ -54,7 +54,7 @@ public class ShopServiceImpl implements ShopService{
         return shopItemRepository.findById(id).map(ShopItemDTOConverter::entityToDto).orElse(null);
     }
 
-    public ResponseWrapper addShopItem(ShopItemCreateRequest request) {
+    public ShopItemDTO addShopItem(ShopItemCreateRequest request) {
         Item item = itemRepository.getById(request.getItem_id());
         Shop shop = shopRepository.getByName(request.getShopName());
 
@@ -68,9 +68,9 @@ public class ShopServiceImpl implements ShopService{
         shopItem.setItem(item);
         shopItem.setPrice(request.getPrice());
 
-        shopItemRepository.save(shopItem);
+        shopItem = shopItemRepository.save(shopItem);
 
-        return new ResponseWrapper("ok");
+        return ShopItemDTOConverter.entityToDto(shopItem);
     }
 
     public List<ShopItemDTO> getShopItemsByItemId(int itemId) {

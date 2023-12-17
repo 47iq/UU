@@ -13,6 +13,6 @@ public interface ShopService {
 
     List<ShopItemDTO> getAllShopItems();
     ShopItemDTO getShopItemById(int id);
-    ResponseWrapper addShopItem(ShopItemCreateRequest request);
+    ShopItemDTO addShopItem(ShopItemCreateRequest request);
     List<ShopItemDTO> getShopItemsByItemId(int itemId);
 }

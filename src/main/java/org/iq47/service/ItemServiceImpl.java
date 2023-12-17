@@ -31,7 +31,7 @@ public class ItemServiceImpl implements ItemService{
 
     private final ShopItemRepository shopItemRepository;
 
-    public ResponseWrapper saveItem(int userId, ItemCreateRequest request) {
+    public ItemDTO saveItem(int userId, ItemCreateRequest request) {
 
         Item item = new Item();
         item.setName(request.getName());
@@ -50,9 +50,11 @@ public class ItemServiceImpl implements ItemService{
             }
         }
 
-        itemRepository.save(item);
+        item = itemRepository.save(item);
 
-        return new ResponseWrapper("ok");
+        log.info("saved item %s".formatted(item.getId()));
+
+        return ItemDTOConverter.entityToDto(item);
     }
 
     public Set<ItemDTO> getItemsByNameStartsWith(String query) {
@@ -64,7 +66,7 @@ public class ItemServiceImpl implements ItemService{
         for (Item item : s) {
             List<ShopItem> shopItems = shopItemRepository.getShopItemsByItemOrderByPrice(item);
 
-            if (shopItems.size() > 0 && shopItems.get(0) != null) {
+            if (!shopItems.isEmpty() && shopItems.get(0) != null) {
                 items.add(ItemDTOConverter.entityToDto(item, shopItems.get(0).getPrice()));
             } else items.add(ItemDTOConverter.entityToDto(item, -1));
         }
@@ -72,7 +74,7 @@ public class ItemServiceImpl implements ItemService{
         for (Category category : tags) {
             for (Item item : category.getItems()) {
                 List<ShopItem> shopItems = shopItemRepository.getShopItemsByItemOrderByPrice(item);
-                if (shopItems.size() > 0 && shopItems.get(0) != null) {
+                if (!shopItems.isEmpty() && shopItems.get(0) != null) {
                     items.add(ItemDTOConverter.entityToDto(item, shopItems.get(0).getPrice()));
                 } else items.add(ItemDTOConverter.entityToDto(item, -1));
             }
@@ -96,22 +98,20 @@ public class ItemServiceImpl implements ItemService{
                 items.stream().map(Item::getName).distinct()).collect(Collectors.toList());
     }
 
-    public ResponseWrapper addFavoriteItem(int userId, int itemId) {
+    public boolean addFavoriteItem(int userId, int itemId) {
         User user = userRepository.getById(userId);
-        Item item = itemRepository.getItemById(itemId);
-
 
         user.addFavoriteItem(itemRepository.getItemById(itemId));
         userRepository.save(user);
-        return new ResponseWrapper("ok");
+        return true;
     }
 
-    public ResponseWrapper removeFavoriteItem(int userId, int itemId) {
+    public boolean removeFavoriteItem(int userId, int itemId) {
         User user = userRepository.getById(userId);
 
         user.removeFavoriteItem(itemId);
         userRepository.save(user);
-        return new ResponseWrapper("ok");
+        return true;
     }
 
     public List<ItemDTO> getFavoriteItems(int userId) {

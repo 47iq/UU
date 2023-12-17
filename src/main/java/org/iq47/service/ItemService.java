@@ -11,12 +11,12 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface ItemService {
-    ResponseWrapper saveItem(int userId, ItemCreateRequest request);
+    ItemDTO saveItem(int userId, ItemCreateRequest request);
     Set<ItemDTO> getItemsByNameStartsWith(String query);
     Optional<ItemDTO> getItemById(int id);
     Collection<String> getAutocompleteEntries(String query);
-    ResponseWrapper addFavoriteItem(int userId, int itemId);
-    ResponseWrapper removeFavoriteItem(int userId, int itemId);
+    boolean addFavoriteItem(int userId, int itemId);
+    boolean removeFavoriteItem(int userId, int itemId);
     List<ItemDTO> getFavoriteItems(int userId);
     List<ItemDTO> getCatalog(int userId, int itemCount) throws PSQLException;
 }

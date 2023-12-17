@@ -3,6 +3,7 @@ package org.iq47.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.network.ItemDTO;
 import org.iq47.network.request.ItemCreateRequest;
+import org.iq47.network.response.ResponseWrapper;
 import org.iq47.security.userDetails.CustomUserDetails;
 import org.iq47.service.ItemService;
 import org.postgresql.util.PSQLException;
@@ -59,25 +60,45 @@ public class ItemController {
 
     @PostMapping("/${urls.items.favourite}/{item_id}")
     private ResponseEntity<?> addFavoriteItemToUser(@PathVariable int item_id) {
-        Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        return ResponseEntity.ok().body(itemService.addFavoriteItem(uid.intValue(), item_id));
+        try {
+            Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+            boolean res = itemService.addFavoriteItem(uid.intValue(), item_id);
+            if (res) return ResponseEntity.ok().build();
+            else return ResponseEntity.status(404).body(new ResponseWrapper("item not found"));
+        } catch (Exception e) {
+            return ResponseUtils.reportError(null, e);
+        }
     }
 
     @DeleteMapping("/${urls.items.favourite}/{item_id}")
     private ResponseEntity<?> removeFavoriteItemFromUser(@PathVariable int item_id) {
-        Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        return ResponseEntity.ok().body(itemService.removeFavoriteItem(uid.intValue(), item_id));
+        try {
+            Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+            boolean res = itemService.removeFavoriteItem(uid.intValue(), item_id);
+            if (res) return ResponseEntity.ok().build();
+            else return ResponseEntity.status(404).body(new ResponseWrapper("item not found"));
+        } catch (Exception e) {
+            return ResponseUtils.reportError(null, e);
+        }
     }
 
     @GetMapping("/${urls.items.favourite}")
     private ResponseEntity<?> getUserFavoriteItems() {
-        Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        return ResponseEntity.ok().body(itemService.getFavoriteItems(uid.intValue()));
+        try {
+            Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+            return ResponseEntity.ok().body(itemService.getFavoriteItems(uid.intValue()));
+        } catch (Exception e) {
+            return ResponseUtils.reportError(null, e);
+        }
     }
 
     @GetMapping("/${urls.items.catalog}/{item_count}")
-    private ResponseEntity<?> getCatalog(@PathVariable int item_count) throws PSQLException {
-        Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        return ResponseEntity.ok().body(itemService.getCatalog(uid.intValue(), item_count));
+    private ResponseEntity<?> getCatalog(@PathVariable int item_count) {
+        try {
+            Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+            return ResponseEntity.ok().body(itemService.getCatalog(uid.intValue(), item_count));
+        } catch (Exception e) {
+            return ResponseUtils.reportError(null, e);
+        }
     }
 }

@@ -3,17 +3,16 @@ package org.iq47.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.converter.ShopItemDTOConverter;
-import org.iq47.model.ItemRepository;
-import org.iq47.model.ShopItemRepository;
-import org.iq47.model.ShopRepository;
-import org.iq47.model.entity.Item;
-import org.iq47.model.entity.Shop;
-import org.iq47.model.entity.ShopItem;
+import org.iq47.repository.ItemRepository;
+import org.iq47.repository.ShopItemRepository;
+import org.iq47.repository.ShopRepository;
+import org.iq47.model.entity.item.Item;
+import org.iq47.model.entity.shop.Shop;
+import org.iq47.model.entity.shop.ShopItem;
 import org.iq47.network.ShopItemDTO;
 import org.iq47.network.request.ShopCreateRequest;
 import org.iq47.network.request.ShopItemCreateRequest;
 import org.iq47.network.response.ResponseWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,13 +24,17 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ShopServiceImpl implements ShopService{
 
-    @Autowired
     private ShopRepository shopRepository;
-    @Autowired
+
     private ShopItemRepository shopItemRepository;
 
-    @Autowired
     private ItemRepository itemRepository;
+
+    public ShopServiceImpl(ShopRepository shopRepository, ShopItemRepository shopItemRepository, ItemRepository itemRepository) {
+        this.shopRepository = shopRepository;
+        this.shopItemRepository = shopItemRepository;
+        this.itemRepository = itemRepository;
+    }
 
     public ResponseWrapper createShop(ShopCreateRequest request) {
         if (!request.getShopName().isEmpty()) {

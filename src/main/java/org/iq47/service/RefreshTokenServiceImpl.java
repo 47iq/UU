@@ -2,10 +2,10 @@ package org.iq47.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.iq47.model.RefreshTokenRepository;
-import org.iq47.model.UserRepository;
-import org.iq47.model.entity.User;
-import org.iq47.model.entity.RefreshToken;
+import org.iq47.repository.RefreshTokenRepository;
+import org.iq47.repository.UserRepository;
+import org.iq47.model.entity.user.User;
+import org.iq47.model.entity.user.RefreshToken;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

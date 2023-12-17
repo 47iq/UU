@@ -19,14 +19,6 @@ public class CartController {
         this.service = service;
     }
 
-    private ResponseEntity<ResponseWrapper> reportError(Object req, Exception e) {
-        if(req != null)
-            log.error(String.format("Got %s while processing %s", e.getClass(), req));
-        else
-            log.error(String.format("Got %s while processing request", e.getClass()));
-        return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
-    }
-
     @PostMapping("/${urls.carts.cart.base}")
     public ResponseEntity<?> createCart() {
         try {
@@ -35,7 +27,7 @@ public class CartController {
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
-            return reportError(null, e);
+            return ResponseUtils.reportError(null, e);
         }
     }
 
@@ -47,7 +39,7 @@ public class CartController {
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
-            return reportError(null, e);
+            return ResponseUtils.reportError(null, e);
         }
     }
 
@@ -59,7 +51,7 @@ public class CartController {
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
-            return reportError(null, e);
+            return ResponseUtils.reportError(null, e);
         }
     }
 
@@ -71,7 +63,7 @@ public class CartController {
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
-            return reportError(null, e);
+            return ResponseUtils.reportError(null, e);
         }
     }
 

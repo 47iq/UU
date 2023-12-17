@@ -3,14 +3,13 @@ package org.iq47.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.converter.OrderAddressDAOConverter;
-import org.iq47.model.OrderAddressRepository;
-import org.iq47.model.UserRepository;
-import org.iq47.model.entity.OrderAddress;
-import org.iq47.model.entity.User;
+import org.iq47.repository.OrderAddressRepository;
+import org.iq47.repository.UserRepository;
+import org.iq47.model.entity.order.OrderAddress;
+import org.iq47.model.entity.user.User;
 import org.iq47.network.OrderAddressDAO;
 import org.iq47.network.request.OrderAddressCreateRequest;
 import org.iq47.network.response.ResponseWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,11 +20,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class OrderAddressServiceImpl implements OrderAddressService{
-    @Autowired
     private OrderAddressRepository orderAddressRepository;
 
-    @Autowired
     private UserRepository userRepository;
+
+    public OrderAddressServiceImpl(OrderAddressRepository orderAddressRepository, UserRepository userRepository) {
+        this.orderAddressRepository = orderAddressRepository;
+        this.userRepository = userRepository;
+    }
 
     public ResponseWrapper createOrderAddress(int userId, OrderAddressCreateRequest request) {
         User user = userRepository.getById(userId);
@@ -42,16 +44,7 @@ public class OrderAddressServiceImpl implements OrderAddressService{
         return new ResponseWrapper("ok");
     }
 
-    public ResponseWrapper removeOrderAddress(int userId, int addrId) {
-        /*User user = userRepository.getById(userId);
-
-        userRepository.*/
-        return null; //TODO
-    }
-
     public List<OrderAddressDAO> getAllOrderAddressesByUser(int userId) {
-        User user = userRepository.getById(userId);
-
         return orderAddressRepository.findAll()
                 .stream()
                 .map(OrderAddressDAOConverter::entityToDto)
@@ -59,8 +52,6 @@ public class OrderAddressServiceImpl implements OrderAddressService{
     }
 
     public OrderAddressDAO getAllOrderAddressById(int userId, int addrId) {
-        User user = userRepository.getById(userId);
-
         return orderAddressRepository.findById(addrId).map(OrderAddressDAOConverter::entityToDto).orElse(null);
     }
 

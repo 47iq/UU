@@ -11,16 +11,7 @@ class Favourites extends Component {
         super(props);
         this.state = {
             output: React.createRef(),
-            x_form: '',
-            y_form: '',
-            r_form: '',
             refreshAttempted: false,
-            formErrors: {
-                x: '',
-                y: '',
-                r: '',
-                important: ''
-            },
         }
     }
 

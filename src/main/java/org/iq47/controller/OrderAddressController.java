@@ -5,7 +5,6 @@ import org.iq47.network.request.OrderAddressCreateRequest;
 import org.iq47.network.response.ResponseWrapper;
 import org.iq47.security.userDetails.CustomUserDetails;
 import org.iq47.service.OrderAddressService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +16,8 @@ public class OrderAddressController {
 
     private final OrderAddressService orderAddressService;
 
-    @Autowired
     public OrderAddressController(OrderAddressService orderAddressService) {
         this.orderAddressService = orderAddressService;
-    }
-
-    private ResponseEntity<ResponseWrapper> reportError(Object req, Exception e) {
-        if(req != null)
-            log.error(String.format("Got %s while processing %s", e.getClass(), req));
-        else
-            log.error(String.format("Got %s while processing request", e.getClass()));
-        return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
     }
 
     @PostMapping("/")
@@ -38,7 +28,7 @@ public class OrderAddressController {
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
-            return reportError(null, e);
+            return ResponseUtils.reportError(null, e);
         }
     }
 
@@ -50,7 +40,7 @@ public class OrderAddressController {
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
-            return reportError(null, e);
+            return ResponseUtils.reportError(null, e);
         }
     }
     @GetMapping("/{addrId}")
@@ -61,7 +51,7 @@ public class OrderAddressController {
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
-            return reportError(null, e);
+            return ResponseUtils.reportError(null, e);
         }
     }
 

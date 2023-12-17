@@ -2,7 +2,6 @@ import React, {Component} from "react";
 
 import './table.css';
 import store from "../../../app/store";
-import {getDistance} from "../../../app/utils";
 import {Navigate} from "react-router-dom";
 
 class Table extends Component {
@@ -48,7 +47,7 @@ class Table extends Component {
                             {this.props.photo}
                         </th>
                         <th className={"name-column"} name="name">
-                            {this.props.coordinateX}
+                            {this.props.name}
                         </th>
                         <th name="price">
                             {this.props.price}

@@ -3,11 +3,9 @@ package org.iq47.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.network.ItemDTO;
 import org.iq47.network.request.ItemCreateRequest;
-import org.iq47.network.response.ResponseWrapper;
 import org.iq47.security.userDetails.CustomUserDetails;
 import org.iq47.service.ItemService;
 import org.postgresql.util.PSQLException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -20,17 +18,8 @@ import java.util.Optional;
 public class ItemController {
     private final ItemService itemService;
 
-    @Autowired
     public ItemController(ItemService service) {
         this.itemService = service;
-    }
-
-    private ResponseEntity<ResponseWrapper> reportError(Object req, Exception e) {
-        if(req != null)
-            log.error(String.format("Got %s while processing %s", e.getClass(), req));
-        else
-            log.error(String.format("Got %s while processing request", e.getClass()));
-        return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
     }
 
     @PostMapping("/create")

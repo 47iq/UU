@@ -5,7 +5,6 @@ import {login, register} from "../../../api/request";
 import FormErrors from "../../molecules/errors/errors";
 import Header from "../../organisms/header/header";
 import AuthInput from "../../atoms/authInput/authInput";
-import FormButton from "../../atoms/formButton/formButton";
 import { Navigate } from "react-router-dom";
 
 class Login extends Component {
@@ -139,8 +138,6 @@ class Login extends Component {
                                    errorElement={this.state.formErrors.password} value={this.state.password}
                                    handleUserInput={this.handleUserInput} maxLength={20}/>
                         <div className={"login-buttons"}>
-                            {/*<FormButton submit={this.signUp} text={"Sign Up"}/>
-                            <FormButton submit={this.signIn} text={"Sign In"}/>*/}
                             <button className="button" type="button" onClick={this.signUp}>Sign Up</button>
                             <button className="button" type="button" onClick={this.signIn}>Sign In</button>
                         </div>

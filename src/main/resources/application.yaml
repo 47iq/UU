@@ -41,8 +41,6 @@ urls:
     base:
       "home"
   items:
-    item:
-      "item"
     autocomplete:
       "autocomplete"
     base:

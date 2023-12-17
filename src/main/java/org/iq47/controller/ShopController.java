@@ -1,12 +1,12 @@
 package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.iq47.network.ShopDTO;
 import org.iq47.network.ShopItemDTO;
 import org.iq47.network.request.ShopCreateRequest;
 import org.iq47.network.request.ShopItemCreateRequest;
 import org.iq47.network.response.ResponseWrapper;
 import org.iq47.service.ShopService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,18 +18,18 @@ import java.util.List;
 public class ShopController {
     private final ShopService shopService;
 
-    @Autowired
     public ShopController(ShopService shopService) {
         this.shopService = shopService;
     }
 
     @PostMapping("/")
     public ResponseEntity<?> createShop(@RequestBody ShopCreateRequest request) {
-        ResponseWrapper wrapper = shopService.createShop(request);
+        if (request == null) return ResponseEntity.badRequest().body(new ResponseWrapper("body is empty"));
+        ShopDTO shop = shopService.createShop(request);
 
-        if ( ! wrapper.getMessage().contains("error")) {
-            return ResponseEntity.ok(wrapper);
-        } else return ResponseEntity.internalServerError().body(wrapper);
+        if (shop != null) {
+            return ResponseEntity.ok(shop);
+        } else return ResponseEntity.internalServerError().body(new ResponseWrapper("unable to create shop"));
     }
 
     @GetMapping("/${urls.shops.shop_items}")
@@ -53,6 +53,7 @@ public class ShopController {
 
     @PostMapping("/shop_items/add")
     private ResponseEntity<?> addShopItem(@RequestBody ShopItemCreateRequest request) {
+        if (request == null) return ResponseEntity.badRequest().body(new ResponseWrapper("body is empty"));
         return ResponseEntity.ok().body(shopService.addShopItem(request));
     }
 

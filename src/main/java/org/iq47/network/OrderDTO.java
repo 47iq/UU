@@ -2,7 +2,7 @@ package org.iq47.network;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.iq47.model.entity.OrderStatus;
+import org.iq47.model.entity.order.OrderStatus;
 
 import java.util.Date;
 import java.util.List;

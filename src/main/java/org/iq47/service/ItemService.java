@@ -1,9 +1,7 @@
 package org.iq47.service;
 
-import org.iq47.model.entity.Item;
 import org.iq47.network.ItemDTO;
 import org.iq47.network.request.ItemCreateRequest;
-import org.iq47.network.response.ItemResponse;
 import org.iq47.network.response.ResponseWrapper;
 import org.postgresql.util.PSQLException;
 

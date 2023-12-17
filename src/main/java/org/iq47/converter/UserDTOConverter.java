@@ -1,7 +1,7 @@
 package org.iq47.converter;
 
-import org.iq47.model.entity.Role;
-import org.iq47.model.entity.User;
+import org.iq47.model.entity.user.Role;
+import org.iq47.model.entity.user.User;
 import org.iq47.network.UserDTO;
 
 import java.util.Set;

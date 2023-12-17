@@ -2,7 +2,7 @@ package org.iq47.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.iq47.model.TagRepository;
+import org.iq47.repository.TagRepository;
 import org.iq47.model.entity.item.Tag;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,5 @@
 package org.iq47.service;
 
-import org.iq47.model.entity.User;
 import org.iq47.network.CartDAO;
 import org.iq47.network.response.ResponseWrapper;
 

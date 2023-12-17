@@ -3,15 +3,14 @@ package org.iq47.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.converter.CartDAOConverter;
-import org.iq47.model.CartRepository;
-import org.iq47.model.ShopItemRepository;
-import org.iq47.model.UserRepository;
-import org.iq47.model.entity.Cart;
-import org.iq47.model.entity.ShopItem;
-import org.iq47.model.entity.User;
+import org.iq47.repository.CartRepository;
+import org.iq47.repository.ShopItemRepository;
+import org.iq47.repository.UserRepository;
+import org.iq47.model.entity.user.Cart;
+import org.iq47.model.entity.shop.ShopItem;
+import org.iq47.model.entity.user.User;
 import org.iq47.network.CartDAO;
 import org.iq47.network.response.ResponseWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,14 +20,17 @@ import java.util.Optional;
 @Slf4j
 public class CartServiceImpl implements CartService {
 
-    @Autowired
     private CartRepository repository;
 
-    @Autowired
     private ShopItemRepository shopItemRepository;
 
-    @Autowired
     private UserRepository userRepository;
+
+    public CartServiceImpl(CartRepository repository, ShopItemRepository shopItemRepository, UserRepository userRepository) {
+        this.repository = repository;
+        this.shopItemRepository = shopItemRepository;
+        this.userRepository = userRepository;
+    }
 
     public CartDAO getUserCart(int userId) {
         User user = userRepository.getById(userId);

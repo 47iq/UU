@@ -1,13 +1,11 @@
 package org.iq47;
 import lombok.extern.slf4j.Slf4j;
-import org.iq47.model.entity.Role;
+import org.iq47.model.entity.user.Role;
 import org.iq47.model.entity.item.Tag;
 import org.iq47.model.entity.item.TagEnum;
 import org.iq47.security.userDetails.UserRole;
 import org.iq47.service.RoleService;
 import org.iq47.service.TagService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

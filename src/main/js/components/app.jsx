@@ -8,13 +8,9 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Link,
-    useRouteMatch,
-    useParams,
     Navigate,
     Outlet
 } from "react-router-dom";
-import Create from "./pages/create/create";
 import Details from "./pages/details/details";
 import Order from "./pages/order/order";
 import Favourites from "./pages/favourites/favourites";
@@ -23,10 +19,7 @@ import CreateItem from "./pages/create_item/create_item";
 import Orders from "./pages/orders/orders";
 
 const PrivateRoute = () => {
-    const auth = store.getState().login; // determine if authorized, from context or however you're doing it
-
-    // If authorized, return an outlet that will render child elements
-    // If not, return element that will navigate to login page
+    const auth = store.getState().login;
     return auth ? <Outlet /> : <Navigate to="/login" />;
 }
 
@@ -37,25 +30,6 @@ class App extends Component {
             this.setState({reduxState: store.getState()});
         })
         getGeolocation()
-        function relMouseCoords(event) {
-            let totalOffsetX = 0;
-            let totalOffsetY = 0;
-            let canvasX = 0;
-            let canvasY = 0;
-            let currentElement = this;
-            do {
-                totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
-                totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
-            }
-            while (currentElement === currentElement.offsetParent)
-
-            canvasX = event.pageX - totalOffsetX;
-            canvasY = event.pageY - totalOffsetY;
-
-            return {x: canvasX, y: canvasY}
-        }
-
-        HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
     }
 
     render() {
@@ -86,9 +60,6 @@ class App extends Component {
                     <Route exact path="/login" element={<Login/>}/>
                 </Routes>
             </Router>
-            /*<div className="first-page">
-                {store.getState().login && store.getState().login !== "null" ? <Main/> : <Login/>}
-            </div>*/
         )
     }
 }

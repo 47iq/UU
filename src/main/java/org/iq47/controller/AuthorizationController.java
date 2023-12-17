@@ -2,8 +2,8 @@ package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.exception.InvalidRequestException;
-import org.iq47.model.entity.RefreshToken;
-import org.iq47.model.entity.User;
+import org.iq47.model.entity.user.RefreshToken;
+import org.iq47.model.entity.user.User;
 import org.iq47.network.UserDTO;
 import org.iq47.network.request.LoginRequest;
 import org.iq47.network.request.RefreshRequest;
@@ -17,7 +17,6 @@ import org.iq47.security.userDetails.UserRole;
 import org.iq47.service.RefreshTokenService;
 import org.iq47.service.UserService;
 import org.iq47.validate.UserValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -52,7 +51,6 @@ public class AuthorizationController {
 
     private final String TOKEN_TYPE = "Bearer";
 
-    @Autowired
     public AuthorizationController(JwtTokenService jwtTokenService, AuthenticationManager authenticationManager, UserService userService, RefreshTokenService refreshTokenService, UserValidator userValidator, PasswordEncoder passwordEncoder) {
         this.authService = jwtTokenService;
         this.authenticationManager = authenticationManager;
@@ -94,7 +92,7 @@ public class AuthorizationController {
         } catch (BadCredentialsException ex) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Invalid username or password"));
         } catch (Exception ex) {
-            return reportError(req, ex);
+            return ResponseUtils.reportError(req, ex);
         }
     }
 
@@ -123,7 +121,7 @@ public class AuthorizationController {
         } catch (InvalidRequestException ex) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(ex.getMessage()));
         }  catch (Exception ex) {
-            return reportError(req, ex);
+            return ResponseUtils.reportError(req, ex);
         }
     }
 
@@ -149,15 +147,9 @@ public class AuthorizationController {
         } catch (InvalidRequestException ex) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(ex.getMessage()));
         }  catch (Exception ex) {
-            return reportError(req, ex);
+            return ResponseUtils.reportError(req, ex);
         }
     }
 
-    private ResponseEntity<ResponseWrapper> reportError(Object req, Exception e) {
-        if(req != null)
-            log.error(String.format("Got %s while processing %s", e.getClass(), req));
-        else
-            log.error(String.format("Got %s while processing request", e.getClass()));
-        return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
-    }
+
 }

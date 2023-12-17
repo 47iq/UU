@@ -1,6 +1,4 @@
 import React, {Component} from "react";
-import AppHeader from "../../molecules/appHeader/appHeader"
-import store from "../../../app/store";
 import {Navigate} from "react-router-dom";
 import './footer.css'
 

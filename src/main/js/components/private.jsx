@@ -8,9 +8,6 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Link,
-    useRouteMatch,
-    useParams
 } from "react-router-dom";
 
 class App extends Component {
@@ -36,9 +33,6 @@ class App extends Component {
                     </Route>
                 </Routes>
             </Router>
-            /*<div className="first-page">
-                {store.getState().login && store.getState().login !== "null" ? <Main/> : <Login/>}
-            </div>*/
         )
     }
 }

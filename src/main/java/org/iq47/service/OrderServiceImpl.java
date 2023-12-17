@@ -3,11 +3,15 @@ package org.iq47.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.converter.OrderDTOConverter;
-import org.iq47.model.*;
-import org.iq47.model.entity.*;
+import org.iq47.model.entity.order.Order;
+import org.iq47.model.entity.order.OrderAddress;
+import org.iq47.model.entity.order.OrderItem;
+import org.iq47.model.entity.order.OrderStatus;
+import org.iq47.model.entity.user.Cart;
+import org.iq47.model.entity.user.User;
 import org.iq47.network.OrderDTO;
 import org.iq47.network.response.ResponseWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.iq47.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,21 +23,25 @@ import java.util.stream.Collectors;
 @Slf4j
 public class OrderServiceImpl implements OrderService{
 
-    @Autowired
     private OrderRepository orderRepository;
 
-    @Autowired
     private CartRepository cartRepository;
 
-    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
     private OrderAddressRepository orderAddressRepository;
 
-    @Autowired
     private OrderItemRepository orderItemRepository;
 
+    public OrderServiceImpl(OrderRepository orderRepository, CartRepository cartRepository,
+                            UserRepository userRepository, OrderAddressRepository orderAddressRepository,
+                            OrderItemRepository orderItemRepository) {
+        this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
+        this.userRepository = userRepository;
+        this.orderAddressRepository = orderAddressRepository;
+        this.orderItemRepository = orderItemRepository;
+    }
 
     public ResponseWrapper createOrder(int userId, int addrId) {
         User user = userRepository.getById(userId);

@@ -1,9 +1,6 @@
 package org.iq47.converter;
 
-import org.iq47.model.entity.Cart;
-import org.iq47.model.entity.Order;
-import org.iq47.model.entity.User;
-import org.iq47.network.CartDAO;
+import org.iq47.model.entity.order.Order;
 import org.iq47.network.OrderDTO;
 
 import java.util.stream.Collectors;

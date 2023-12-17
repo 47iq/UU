@@ -2,8 +2,8 @@ package org.iq47.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.exception.InvalidRequestException;
-import org.iq47.model.entity.RefreshToken;
-import org.iq47.model.entity.User;
+import org.iq47.model.entity.user.RefreshToken;
+import org.iq47.model.entity.user.User;
 import org.iq47.network.UserDTO;
 import org.iq47.network.request.LoginRequest;
 import org.iq47.network.request.RefreshRequest;
@@ -94,7 +94,7 @@ public class AuthorizationController {
         } catch (BadCredentialsException ex) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Invalid username or password"));
         } catch (Exception ex) {
-            return reportError(req, ex);
+            return ResponseUtils.reportError(req, ex);
         }
     }
 
@@ -123,7 +123,7 @@ public class AuthorizationController {
         } catch (InvalidRequestException ex) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(ex.getMessage()));
         }  catch (Exception ex) {
-            return reportError(req, ex);
+            return ResponseUtils.reportError(req, ex);
         }
     }
 
@@ -149,15 +149,9 @@ public class AuthorizationController {
         } catch (InvalidRequestException ex) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(ex.getMessage()));
         }  catch (Exception ex) {
-            return reportError(req, ex);
+            return ResponseUtils.reportError(req, ex);
         }
     }
 
-    private ResponseEntity<ResponseWrapper> reportError(Object req, Exception e) {
-        if(req != null)
-            log.error(String.format("Got %s while processing %s", e.getClass(), req));
-        else
-            log.error(String.format("Got %s while processing request", e.getClass()));
-        return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
-    }
+
 }

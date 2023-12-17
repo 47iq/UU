@@ -22,14 +22,6 @@ public class OrderAddressController {
         this.orderAddressService = orderAddressService;
     }
 
-    private ResponseEntity<ResponseWrapper> reportError(Object req, Exception e) {
-        if(req != null)
-            log.error(String.format("Got %s while processing %s", e.getClass(), req));
-        else
-            log.error(String.format("Got %s while processing request", e.getClass()));
-        return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
-    }
-
     @PostMapping("/")
     public ResponseEntity<?> createOrderAddress(@RequestBody OrderAddressCreateRequest request) {
         try {
@@ -38,7 +30,7 @@ public class OrderAddressController {
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
-            return reportError(null, e);
+            return ResponseUtils.reportError(null, e);
         }
     }
 
@@ -50,7 +42,7 @@ public class OrderAddressController {
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
-            return reportError(null, e);
+            return ResponseUtils.reportError(null, e);
         }
     }
     @GetMapping("/{addrId}")
@@ -61,7 +53,7 @@ public class OrderAddressController {
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper("Access denied"));
         } catch (Exception e) {
-            return reportError(null, e);
+            return ResponseUtils.reportError(null, e);
         }
     }
 

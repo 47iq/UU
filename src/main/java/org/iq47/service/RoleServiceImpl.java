@@ -2,8 +2,8 @@ package org.iq47.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.iq47.model.RoleRepository;
-import org.iq47.model.entity.Role;
+import org.iq47.repository.RoleRepository;
+import org.iq47.model.entity.user.Role;
 import org.springframework.stereotype.Service;
 
 @Service

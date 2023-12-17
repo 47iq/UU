@@ -25,14 +25,6 @@ public class ItemController {
         this.itemService = service;
     }
 
-    private ResponseEntity<ResponseWrapper> reportError(Object req, Exception e) {
-        if(req != null)
-            log.error(String.format("Got %s while processing %s", e.getClass(), req));
-        else
-            log.error(String.format("Got %s while processing request", e.getClass()));
-        return ResponseEntity.internalServerError().body(new ResponseWrapper("Something went wrong"));
-    }
-
     @PostMapping("/create")
     private ResponseEntity<?> save(Long userId, @RequestBody ItemCreateRequest req) {
         Long uid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();

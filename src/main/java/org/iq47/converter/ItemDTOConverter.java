@@ -1,10 +1,8 @@
 package org.iq47.converter;
 
-import org.iq47.model.entity.Category;
-import org.iq47.model.entity.Item;
-import org.iq47.model.entity.User;
-import org.iq47.model.entity.item.Itemm;
-import org.iq47.model.entity.item.Tag;
+import org.iq47.model.entity.item.Category;
+import org.iq47.model.entity.item.Item;
+import org.iq47.model.entity.user.User;
 import org.iq47.network.ItemDTO;
 
 import java.util.stream.Collectors;

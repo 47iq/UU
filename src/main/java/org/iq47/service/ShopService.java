@@ -1,6 +1,5 @@
 package org.iq47.service;
 
-import org.iq47.model.entity.ShopItem;
 import org.iq47.network.ShopItemDTO;
 import org.iq47.network.request.ShopCreateRequest;
 import org.iq47.network.request.ShopItemCreateRequest;

@@ -1,6 +1,6 @@
 package org.iq47.service;
 
-import org.iq47.model.entity.RefreshToken;
+import org.iq47.model.entity.user.RefreshToken;
 
 import java.util.Optional;
 

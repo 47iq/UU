@@ -1,6 +1,5 @@
 package org.iq47.service;
 
-import org.iq47.model.OrderAddressRepository;
 import org.iq47.network.OrderAddressDAO;
 import org.iq47.network.request.OrderAddressCreateRequest;
 import org.iq47.network.response.ResponseWrapper;

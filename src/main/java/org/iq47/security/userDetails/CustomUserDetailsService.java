@@ -1,8 +1,8 @@
 package org.iq47.security.userDetails;
 
 import lombok.RequiredArgsConstructor;
-import org.iq47.model.UserRepository;
-import org.iq47.model.entity.User;
+import org.iq47.repository.UserRepository;
+import org.iq47.model.entity.user.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -3,15 +3,14 @@ package org.iq47.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.iq47.converter.UserDTOConverter;
-import org.iq47.model.RoleRepository;
-import org.iq47.model.UserRepository;
-import org.iq47.model.entity.Role;
-import org.iq47.model.entity.User;
+import org.iq47.repository.RoleRepository;
+import org.iq47.repository.UserRepository;
+import org.iq47.model.entity.user.Role;
+import org.iq47.model.entity.user.User;
 import org.iq47.network.UserDTO;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 

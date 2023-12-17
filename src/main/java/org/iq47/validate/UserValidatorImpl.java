@@ -1,6 +1,5 @@
 package org.iq47.validate;
 
-import org.iq47.model.entity.User;
 import org.iq47.network.request.RegisterRequest;
 import org.springframework.stereotype.Service;
 

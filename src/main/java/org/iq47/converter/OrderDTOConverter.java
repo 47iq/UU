@@ -6,10 +6,6 @@ import org.iq47.network.OrderDTO;
 import java.util.stream.Collectors;
 
 public class OrderDTOConverter {
-    public static Order dtoToEntity(OrderDTO shopItemDTO) {
-        return null;
-    }
-
     public static OrderDTO entityToDto(Order order) {
         return new OrderDTO(
                 order.getId(),

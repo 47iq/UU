@@ -20,9 +20,6 @@ public class Shop {
     @Column(length = 40, nullable = false)
     String name;
 
-    //@OneToMany(mappedBy = "shop")
-    //private List<Role> roles;
-
     @OneToMany(mappedBy = "shop")
     private List<ShopItem> shopItems;
 

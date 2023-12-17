@@ -8,10 +8,6 @@ import org.iq47.network.ItemDTO;
 import java.util.stream.Collectors;
 
 public class ItemDTOConverter {
-    public static Item dtoToEntity(ItemDTO itemDTO, User user) {
-        return null;
-    }
-
     public static ItemDTO entityToDto(Item itemEntity) {
         return new ItemDTO(
                 itemEntity.getId(),

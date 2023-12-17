@@ -6,7 +6,6 @@ import org.iq47.network.request.ShopCreateRequest;
 import org.iq47.network.request.ShopItemCreateRequest;
 import org.iq47.network.response.ResponseWrapper;
 import org.iq47.service.ShopService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,6 @@ import java.util.List;
 public class ShopController {
     private final ShopService shopService;
 
-    @Autowired
     public ShopController(ShopService shopService) {
         this.shopService = shopService;
     }

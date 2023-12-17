@@ -12,7 +12,6 @@ import org.iq47.model.entity.user.User;
 import org.iq47.network.OrderDTO;
 import org.iq47.network.response.ResponseWrapper;
 import org.iq47.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,21 +23,25 @@ import java.util.stream.Collectors;
 @Slf4j
 public class OrderServiceImpl implements OrderService{
 
-    @Autowired
     private OrderRepository orderRepository;
 
-    @Autowired
     private CartRepository cartRepository;
 
-    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
     private OrderAddressRepository orderAddressRepository;
 
-    @Autowired
     private OrderItemRepository orderItemRepository;
 
+    public OrderServiceImpl(OrderRepository orderRepository, CartRepository cartRepository,
+                            UserRepository userRepository, OrderAddressRepository orderAddressRepository,
+                            OrderItemRepository orderItemRepository) {
+        this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
+        this.userRepository = userRepository;
+        this.orderAddressRepository = orderAddressRepository;
+        this.orderItemRepository = orderItemRepository;
+    }
 
     public ResponseWrapper createOrder(int userId, int addrId) {
         User user = userRepository.getById(userId);

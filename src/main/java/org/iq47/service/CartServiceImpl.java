@@ -11,7 +11,6 @@ import org.iq47.model.entity.shop.ShopItem;
 import org.iq47.model.entity.user.User;
 import org.iq47.network.CartDAO;
 import org.iq47.network.response.ResponseWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,14 +20,17 @@ import java.util.Optional;
 @Slf4j
 public class CartServiceImpl implements CartService {
 
-    @Autowired
     private CartRepository repository;
 
-    @Autowired
     private ShopItemRepository shopItemRepository;
 
-    @Autowired
     private UserRepository userRepository;
+
+    public CartServiceImpl(CartRepository repository, ShopItemRepository shopItemRepository, UserRepository userRepository) {
+        this.repository = repository;
+        this.shopItemRepository = shopItemRepository;
+        this.userRepository = userRepository;
+    }
 
     public CartDAO getUserCart(int userId) {
         User user = userRepository.getById(userId);

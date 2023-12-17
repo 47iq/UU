@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface OrderAddressService {
     ResponseWrapper createOrderAddress(int userId, OrderAddressCreateRequest request);
-    ResponseWrapper removeOrderAddress(int userId, int addrId);
     List<OrderAddressDAO> getAllOrderAddressesByUser(int userId);
     OrderAddressDAO getAllOrderAddressById(int userId, int addrId);
 }

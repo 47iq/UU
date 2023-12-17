@@ -5,7 +5,6 @@ import org.iq47.network.request.OrderCreateRequest;
 import org.iq47.network.response.ResponseWrapper;
 import org.iq47.security.userDetails.CustomUserDetails;
 import org.iq47.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     private final OrderService orderService;
 
-    @Autowired
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }

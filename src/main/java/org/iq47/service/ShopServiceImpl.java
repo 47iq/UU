@@ -13,7 +13,6 @@ import org.iq47.network.ShopItemDTO;
 import org.iq47.network.request.ShopCreateRequest;
 import org.iq47.network.request.ShopItemCreateRequest;
 import org.iq47.network.response.ResponseWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,13 +24,17 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ShopServiceImpl implements ShopService{
 
-    @Autowired
     private ShopRepository shopRepository;
-    @Autowired
+
     private ShopItemRepository shopItemRepository;
 
-    @Autowired
     private ItemRepository itemRepository;
+
+    public ShopServiceImpl(ShopRepository shopRepository, ShopItemRepository shopItemRepository, ItemRepository itemRepository) {
+        this.shopRepository = shopRepository;
+        this.shopItemRepository = shopItemRepository;
+        this.itemRepository = itemRepository;
+    }
 
     public ResponseWrapper createShop(ShopCreateRequest request) {
         if (!request.getShopName().isEmpty()) {

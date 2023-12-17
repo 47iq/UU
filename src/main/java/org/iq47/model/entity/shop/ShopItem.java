@@ -40,4 +40,3 @@ public class ShopItem {
     private List<Cart> carts;
 
 }
-//UNIQUE(item_id, shop_id)

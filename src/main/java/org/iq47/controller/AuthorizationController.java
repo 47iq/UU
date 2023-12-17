@@ -17,7 +17,6 @@ import org.iq47.security.userDetails.UserRole;
 import org.iq47.service.RefreshTokenService;
 import org.iq47.service.UserService;
 import org.iq47.validate.UserValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -52,7 +51,6 @@ public class AuthorizationController {
 
     private final String TOKEN_TYPE = "Bearer";
 
-    @Autowired
     public AuthorizationController(JwtTokenService jwtTokenService, AuthenticationManager authenticationManager, UserService userService, RefreshTokenService refreshTokenService, UserValidator userValidator, PasswordEncoder passwordEncoder) {
         this.authService = jwtTokenService;
         this.authenticationManager = authenticationManager;

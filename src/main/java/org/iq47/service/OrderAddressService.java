@@ -7,7 +7,7 @@ import org.iq47.network.response.ResponseWrapper;
 import java.util.List;
 
 public interface OrderAddressService {
-    ResponseWrapper createOrderAddress(int userId, OrderAddressCreateRequest request);
+    OrderAddressDAO createOrderAddress(int userId, OrderAddressCreateRequest request);
     List<OrderAddressDAO> getAllOrderAddressesByUser(int userId);
     OrderAddressDAO getAllOrderAddressById(int userId, int addrId);
 }

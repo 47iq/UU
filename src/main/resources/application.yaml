@@ -70,3 +70,6 @@ urls:
       "shops"
     items:
       "shop_items"
+  reviews:
+    base:
+      "reviews"

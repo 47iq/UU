@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Check;
 import org.iq47.model.entity.shop.ShopItem;
-import org.iq47.model.entity.user.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,8 +25,8 @@ public class Cart implements Serializable {
     @MapsId
     private User user;
 
-    @Column(nullable = false)
-    private int item_count;
+    @Column(name = "item_count", nullable = false)
+    private int itemCount;
 
     @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
@@ -37,9 +36,9 @@ public class Cart implements Serializable {
     )
     private List<ShopItem> shopItem;
 
-    public Cart(User user, int item_count) {
+    public Cart(User user, int itemCount) {
         this.user = user;
-        this.item_count = item_count;
+        this.itemCount = itemCount;
     }
 
     public void addShopItem(ShopItem shopItem) {

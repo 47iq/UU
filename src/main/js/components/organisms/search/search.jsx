@@ -7,9 +7,6 @@ class SearchForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            xValid: false,
-            yValid: false,
-            rValid: false,
             list: []
         }
         this.search = React.createRef();

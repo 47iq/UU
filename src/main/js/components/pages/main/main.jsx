@@ -12,16 +12,7 @@ class Main extends Component {
         super(props);
         this.state = {
             output: React.createRef(),
-            x_form: '',
-            y_form: '',
-            r_form: '',
             refreshAttempted: false,
-            formErrors: {
-                x: '',
-                y: '',
-                r: '',
-                important: ''
-            },
         }
     }
 
@@ -118,7 +109,7 @@ class Main extends Component {
                         В разработке...
                     </div>
                     <div className={"main-table"}>
-                        <Table photo={"Фото"} submit={"Ссылка"} coordinateX={"Название"} coordinateY={"Y"} radius={"R"} shop={"Магазин"} price={"Цена"} distance={"Расстояние"} checks={store.getState().checks}/>
+                        <Table photo={"Фото"} submit={"Ссылка"} name={"Название"} shop={"Магазин"} price={"Цена"} distance={"Расстояние"} checks={store.getState().checks}/>
                     </div>
                 </div>}
                 <div className={"push"}/>

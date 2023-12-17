@@ -3,7 +3,6 @@ import {createStore} from "redux";
 const initialState = {
     login: sessionStorage.getItem("login"),
     checks: null,
-    radius: null,
     coordinates: null
 };
 
@@ -18,12 +17,6 @@ function reducer(state, action) {
             state.checks = null
             state.formErrors = initialState.formErrors
             return state;
-        case "appendCheck":
-            state.checks.push(action.value)
-            return state;
-        case "changeRadius":
-            state.radius = action.value
-            return state
         case "setChecks":
             sessionStorage.setItem("checks", action.value)
             state.checks = action.value
